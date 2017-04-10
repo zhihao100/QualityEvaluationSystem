@@ -1,0 +1,189 @@
+<!-- 首页 -->
+<!-- BEGIN PAGE HEADER-->
+<div ng-controller="initializeHomeCtrl">
+    <h3 class="page-title">首页</h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a ui-sref="home">首页</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN 目前已贷总额...贷款逾期总额 -->
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue-soft">
+                <div class="visual"><i class="fa fa-rmb"></i></div>
+                <div class="details">
+                    <div class="number" ng-bind="initHomedata.loanedTotalMoney  | currency:'¥'"></div>
+                    <div class="desc">累计已贷总额</div>
+                </div>
+                <span class="more"><i class="m-icon-swapup m-icon-white"></i></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red-soft">
+                <div class="visual">
+                    <i class="icon-calendar"></i>
+                </div>
+                <div class="details">
+                    <div class="number" ng-bind="initHomedata.leftLoanTotalMoney | currency:'¥'"></div>
+                    <div class="desc">当前还款中金额</div>
+                </div>
+                <span class="more"><i class="m-icon-swapup m-icon-white"></i></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-soft" href="javascript:;">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number" ng-bind="initHomedata.leftGoodsTotalMoney | currency:'¥'"></div>
+                    <div class="desc">当前抵押物资总额</div>
+                </div>
+                <span class="more"><i class="m-icon-swapup m-icon-white"></i></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat purple-soft" href="javascript:;">
+                <div class="visual"><i class="fa fa-database"></i></div>
+                <div class="details">
+                    <div class="number" ng-bind="initHomedata.overdueLoanTotalMoney | currency:'¥'"></div>
+                    <div class="desc">贷款逾期总额</div>
+                </div>
+                <span class="more"><i class="m-icon-swapup m-icon-white"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- END 目前已贷总额...贷款逾期总额 -->
+    <div class="clearfix"></div>
+    <!-- BEGIN 待办事项 -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="portlet-title tabbable-line">
+                    <div class="caption">
+                        <i class="icon-bell font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold">待办事项</span>
+                    </div>
+                    <div class="actions more">
+                        <!-- <a href="news.html">查看更多&nbsp;&nbsp;<i class="m-icon-swapright m-icon"></i></a> -->
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1_1">
+                            <div class="scroller" data-always-visible="1" data-rail-visible="0">
+                                <ul class="feeds">
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-bullhorn"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        您有<span class="num"
+                                                                ng-bind="initHomedata.unregisteredDealer"></span>个经销商未完善资料
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <a class="label label-sm label-info" ui-sref="dealerSearch"> 去查看 </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-success">
+                                                        <i class="fa fa-bell-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        您有<span class="num"
+                                                                ng-bind="initHomedata.waitingAuditDealer"></span>个经销商等待资料审批
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <a class="label label-sm label-info" ui-sref="dealerAudit"> 去审批 </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-danger">
+                                                        <i class="fa fa-bolt"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        您有<span class="num"
+                                                                ng-bind="initHomedata.waitingAuditLoan"></span>笔贷款申请等待审批
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <a class="label label-sm label-info" ui-sref="waitingAuditLoan"> 去审批 </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-warning">
+                                                        <i class="fa fa-plus"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        您有<span class="num"
+                                                                ng-bind="initHomedata.waitingAuditPickup"></span>笔提货申请等待审批
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <a class="label label-sm label-info" ui-sref="waitingLoadList"> 去审批 </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END 待办事项-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
