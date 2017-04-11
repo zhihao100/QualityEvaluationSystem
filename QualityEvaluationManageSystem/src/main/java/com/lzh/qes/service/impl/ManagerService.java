@@ -60,21 +60,6 @@ public class ManagerService implements IManagerService {
 
     @Transactional
     @Override
-    public String deleteManager(long managerId) {
-        /* 获取当前登录的管理员，并判断是否为超级管理员 */
-        Manager superManager = findManager();
-        if (superManager.isSuperManager()) {
-            Manager exitedManager = managerDao.findByManagerId(managerId);
-            if (null != exitedManager) {
-                managerDao.delete(exitedManager);
-                return "删除成功";
-            }
-        }
-        return "删除失败,只有超级管理员可执行次操作";
-    }
-
-    @Transactional
-    @Override
     public String updateManagerState(Manager manager) {
         /* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();

@@ -50,7 +50,7 @@ qesModule.controller('instituteManageCtrl', [
         function ($scope, $http, $stateParams) {
             //学院详情
             $scope.instituteId = $stateParams.instituteId;
-            $http.post('showinstituteDetails', $scope.instituteId).success(function (response) {
+            $http.post('showInstituteDetails', $scope.instituteId).success(function (response) {
                 $scope.instituteInfo = response;
             });
         }])
@@ -64,16 +64,15 @@ qesModule.controller('instituteManageCtrl', [
         function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
             //学院编辑
             $scope.instituteId = $stateParams.instituteId;
-            $http.post('showinstituteDetails', $scope.instituteId).success(function (response) {
+            $http.post('showInstituteDetails', $scope.instituteId).success(function (response) {
                 $scope.instituteInfo = response;
-                // console.log($scope.instituteInfo);
             });
-            $scope.manageSubmit = function () {
+            $scope.instituteSubmit = function () {
                 $scope.institute = {};
                 $scope.institute = $scope.instituteInfo;
                 $scope.institute.instituteId = $scope.instituteId;
                 $scope.result = {};
-                $http.post("updateinstitute", $scope.institute).success(function (response) {
+                $http.post("updateInstitute", $scope.institute).success(function (response) {
                     $scope.result.title = "提示消息";
                     $scope.result.msg = response;
                     $scope.open('sm');

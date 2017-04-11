@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">用户详情</h3>
+<h3 class="page-title">学院详情</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li class="active">
@@ -8,15 +8,15 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="javascript:void(0)">权限管理</a>
+            <a href="javascript:void(0)">基础设置</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li class="active">
-            <a ui-sref="instituteManage">用户管理</a>
+            <a ui-sref="instituteManage">学院管理</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="javascript:void(0)">用户详情</a>
+            <a href="javascript:void(0)">学院详情</a>
         </li>
     </ul>
 </div>
@@ -27,7 +27,7 @@
         <div class="portlet light">
             <div class="portlet-title">
                 <div class="caption">
-                    <span class="caption-subject font-green-sharp bold">用户详情</span>
+                    <span class="caption-subject font-green-sharp bold">学院详情</span>
                 </div>
             </div>
 
@@ -35,23 +35,15 @@
                 <form class="form form-horizontal" role="form">
                     <div class="form-body">
                         <section class="infogroup">
-                            <h4>人员信息</h4>
+                            <h4>学院信息</h4>
                             <div class="row">
-                                <div class="col-md-6">管理员编号：<span ng-bind="managerInfo.managerId"></span></div>
+                                <div class="col-md-6">学院编号：<span ng-bind="instituteInfo.instituteId"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">管理员名称：<span ng-bind="managerInfo.managerName"></span></div>
+                                <div class="col-md-6">学院名称：<span ng-bind="instituteInfo.instituteName"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">管理员状态：<span ng-bind="managerInfo.managerState"></span></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">注册时间：<span
-                                        ng-bind="managerInfo.registerDate | date:'yyyy/MM/dd HH:mm:ss'"></span></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">最后登录时间：<span
-                                        ng-bind="managerInfo.lastLoginDate | date:'yyyy/MM/dd HH:mm:ss'"></span></div>
+                                <div class="col-md-6">学院状态：<span ng-bind="instituteInfo.instituteState"></span></div>
                             </div>
                         </section>
                     </div>

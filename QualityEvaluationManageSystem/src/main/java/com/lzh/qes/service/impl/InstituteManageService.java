@@ -39,15 +39,7 @@ public class InstituteManageService implements IInstituteManageService {
         return "该学院已存在";
     }
 
-    @Override
-    public String deleteInstitute(int instituteId) {
-        Institute exitedInstitute = instituteDao.findByInstituteId(instituteId);
-        if (null != exitedInstitute) {
-            instituteDao.delete(exitedInstitute);
-            return "删除成功";
-        }
-        return "该学院不存在";
-    }
+
 
     @Override
     public String updateInstituteState(Institute institute) {
@@ -103,11 +95,22 @@ public class InstituteManageService implements IInstituteManageService {
 
     @Override
     public Institute showInstituteDetails(int instituteId) {
-        return null;
+        return instituteDao.findByInstituteId(instituteId);
     }
 
     @Override
     public String updateInstitute(Institute institute) {
-        return null;
+        Institute exitedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
+        Institute exitedInstituteName = instituteDao.findByInstituteName(institute.getInstituteName());
+        if (null == exitedInstitute) {
+            return "该学院不存在";
+        }
+        if (!exitedInstitute.getInstituteName().equals(institute.getInstituteName()) && null != exitedInstituteName) {
+            return "该学院已存在";
+        }
+        exitedInstitute.setInstituteName(institute.getInstituteName());
+        exitedInstitute.setInstituteState(institute.getInstituteState());
+        instituteDao.save(institute);
+        return "修改成功";
     }
 }

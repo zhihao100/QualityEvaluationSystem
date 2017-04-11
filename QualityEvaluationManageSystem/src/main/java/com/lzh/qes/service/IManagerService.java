@@ -23,13 +23,6 @@ public interface IManagerService {
     String createManager(Manager manager);
 
 
-    /**
-     * 删除管理员
-     *
-     * @param managerId
-     * @return
-     */
-    String deleteManager(long managerId);
 
     /**
      * 修改管理员状态

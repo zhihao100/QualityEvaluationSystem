@@ -17,13 +17,6 @@ public interface IInstituteManageService {
     String createInstitute(Institute institute);
 
 
-    /**
-     * 删除学院
-     *
-     * @param instituteId
-     * @return
-     */
-    String deleteInstitute(int instituteId);
 
     /**
      * 修改学院状态

@@ -71,4 +71,32 @@ public class InstituteManageController {
         return instituteManageService.updateInstituteState(institute);
     }
 
+    /**
+     * 学院详情
+     *
+     * @param instituteId
+     * @return
+     */
+    @RequestMapping(value = "showInstituteDetails", method = RequestMethod.POST)
+    @ResponseBody
+    public Institute showInstituteDetails(@RequestBody Integer instituteId) {
+        LOGGER.info("学院详情");
+        Assert.notNull(instituteId);
+        return instituteManageService.showInstituteDetails(instituteId);
+    }
+
+    /**
+     * 修改学院
+     *
+     * @param institute
+     * @return
+     */
+    @RequestMapping(value = "updateInstitute", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateInstitute(@RequestBody Institute institute) {
+        LOGGER.info("修改学院");
+        Assert.notNull(institute);
+        return instituteManageService.updateInstitute(institute);
+    }
+
 }

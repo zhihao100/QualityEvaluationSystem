@@ -54,6 +54,11 @@ public class Manager implements Serializable {
      */
     private Date lastLoginDate;
 
+    /**
+     * 所属学院
+     */
+    private Integer instituteId;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -112,5 +117,13 @@ public class Manager implements Serializable {
 
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public Integer getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Integer instituteId) {
+        this.instituteId = instituteId;
     }
 }

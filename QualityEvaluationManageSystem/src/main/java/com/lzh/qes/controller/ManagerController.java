@@ -89,19 +89,6 @@ public class ManagerController {
         return managerService.updateManager(manager);
     }
 
-    /**
-     * 删除管理员
-     *
-     * @param managerId
-     * @return
-     */
-    @RequestMapping(value = "deleteManager", method = RequestMethod.POST)
-    @ResponseBody
-    public String deleteManager(@RequestBody long managerId) {
-        LOGGER.info("删除管理员");
-        Assert.notNull(managerId);
-        return managerService.deleteManager(managerId);
-    }
 
     /**
      * 修改管理员状态

@@ -80,6 +80,7 @@
                             <th width="6%">序号</th>
                             <th width="8%">管理员编号</th>
                             <th width="12%">管理员姓名</th>
+                            <th width="14%">所属学院</th>
                             <th width="8%">管理员状态</th>
                             <th width="10%">是否超级管理员</th>
                             <th width="18%">操作</th>
@@ -90,6 +91,7 @@
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
                             <td ng-bind="personManage.managerId"></td>
                             <td ng-bind="personManage.managerName"></td>
+                            <td ng-bind="personManage.instituteName"></td>
                             <td ng-if="personManage.managerState=='停用'"><span
                                     class="label label-sm label-default">停用</span></td>
                             <td ng-if="personManage.managerState=='启用'"><span
