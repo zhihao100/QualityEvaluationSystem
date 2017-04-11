@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="routerModule">
+<html ng-app="qesModule">
 <head>
     <meta charset="utf-8"/>
     <title>湖工大-学生综合素质测评管理平台</title>
@@ -25,7 +25,6 @@
     <link id="style_color" href="assets/admin/layout2/css/themes/grey.css" rel="stylesheet" type="text/css"/>
     <link href="assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME STYLES -->
-    <link rel="shortcut icon" href="image/favicon.ico"/>
 
     <!-- BEGIN CORE PLUGINS -->
     <!--[if lt IE 9]>
@@ -43,6 +42,8 @@
     <script src="framework/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="framework/tm.pagination.js"></script>
+
     <!-- END CORE PLUGINS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
@@ -52,8 +53,13 @@
 
 
     <!-- 功能模块js -->
-    <script type="text/javascript" src="js/qemsRouter.js"></script>
+    <script type="text/javascript" src="js/indexRouter.js"></script>
+    <script type="text/javascript" src="js/commonService.js"></script>
     <script type="text/javascript" src="js/indexController.js"></script>
+    <script type="text/javascript" src="js/personManageRouter.js"></script>
+    <script type="text/javascript" src="js/personManageController.js"></script>
+    <script type="text/javascript" src="js/basicManageRouter.js"></script>
+    <script type="text/javascript" src="js/basicManageController.js"></script>
 
 
 </head>
@@ -65,7 +71,7 @@
     <div class="page-header-inner">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="weijiuBack.html">
+            <a href="index.html">
                 <img src="assets/admin/layout2/img/logo.png" alt="logo" class="logo-default"/>
             </a>
             <div class="menu-toggler sidebar-toggler"></div>
@@ -123,11 +129,7 @@
                         <span class="selected"></span>
                     </a>
                 </li>
-                <li ng-class="{active: ('dealerAudit' | includedByState) ||
-                                       ('auditDetail' | includedByState) ||
-                                       ('dealerSearch' | includedByState) ||
-                                       ('searchDetail' | includedByState) ||
-                                       ('dealerInfoEdit' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="fa fa-users"></i>
                         <span class="title">经销商管理</span>
@@ -146,24 +148,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: ('waitingAuditLoan' | includedByState) ||
-                                       ('waitingAuditLoanDetail' | includedByState) ||
-                                       ('dealerInfo' | includedByState) ||
-                                       ('loanedRecord' | includedByState) ||
-                                       ('loanedRecordDetail' | includedByState) ||
-                                       ('overdueRecord' | includedByState) ||
-                                       ('NotPassLoan' | includedByState) ||
-                                       ('NotPassLoanDetail' | includedByState) ||
-                                       ('AuditedLoan' | includedByState) ||
-                                       ('AuditedLoanDetail' | includedByState) ||
-                                       ('registerDeposit' | includedByState) ||
-                                       ('registerDepositLoanInfo' | includedByState) ||
-                                       ('lendingInfo' | includedByState) ||
-                                       ('lendingLoanInfo' | includedByState) ||
-                                       ('lendingSuccess' | includedByState) ||
-                                       ('OkNotice' | includedByState) ||
-                                       ('searchRepayDetails' | includedByState) ||
-                                       ('pickupRecords' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="fa fa-rmb"></i>
                         <span class="title">贷款管理</span>
@@ -187,13 +172,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: ('waitingLoadList' | includedByState) ||
-                                       ('registeredDelivery' | includedByState) ||
-                                       ('registeredCollection' | includedByState) ||
-                                       ('pickupList' | includedByState) ||
-                                       ('loadList' | includedByState) ||
-                                       ('loadListDetail' | includedByState) ||
-                                       ('printReceipt' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="fa fa-edit"></i>
                         <span class="title">提货管理</span>
@@ -210,13 +189,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: ('formsOverdueLoan' | includedByState) ||
-                                       ('formsOverdueLoanInfo' | includedByState) ||
-                                       ('formsOverdueLoanDetails' | includedByState) ||
-                                       ('formsMonthIncome' | includedByState) ||
-                                       ('formsMonthIncomeInfo' | includedByState) ||
-                                       ('formsMonthRegisterRepay' | includedByState) ||
-                                       ('formsMonthRegisterLoan' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="fa fa-file-o"></i>
                         <span class="title">报表</span>
@@ -235,26 +208,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: ('basicRateSet' | includedByState) ||
-                                       ('basicCitySet' | includedByState) ||
-                                       ('basicCityAdd' | includedByState) ||
-                                       ('basicCityEdit' | includedByState) ||
-                                       ('basicCityInfo' | includedByState) ||
-                                       ('basicAgentManage' | includedByState) ||
-                                       ('basicAgentManageAdd' | includedByState) ||
-                                       ('basicAgentManageInfo' | includedByState) ||
-                                       ('basicAgentManageInfoIdentiInfo' | includedByState) ||
-                                       ('basicAgentManageInfoDetails' | includedByState) ||
-                                       ('basicAgentManageInfoDetailsInfo' | includedByState) ||
-                                       ('basicAgentManageInfoEdit' | includedByState) ||
-                                       ('basicDistilleryManage' | includedByState) ||
-                                       ('basicDistilleryManageAddDistillery' | includedByState) ||
-                                       ('basicDistilleryManageDistilleryEdit' | includedByState) ||
-                                       ('basicDistilleryManageDistilleryInfo' | includedByState) ||
-                                       ('basicDistilleryManageVariety' | includedByState) ||
-                                       ('basicBankManage' | includedByState) ||
-                                       ('bankManageAdd' | includedByState) ||
-                                       ('bankManageEdit' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="fa fa-gear"></i>
                         <span class="title">基础设置</span>
@@ -262,8 +216,8 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a ui-sref="basicRateSet">
-                                利率设置
+                            <a ui-sref="instituteManage">
+                                学院信息管理
                             </a>
                         </li>
                         <li>
@@ -288,10 +242,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: ('personManage' | includedByState) ||
-                                       ('personManageInfo' | includedByState) ||
-                                       ('personManageEdit' | includedByState) ||
-                                       ('personManageAdd' | includedByState) }">
+                <li>
                     <a href="javascript:;">
                         <i class="icon-user"></i>
                         <span class="title">权限管理</span>
@@ -320,7 +271,7 @@
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
-<div class="page-footer">Copyright <sup>&copy;</sup> 2015 京ICP备14008437号-4</div>
+<div class="page-footer">Copyright <sup>&copy;</sup> 2017 京ICP备17008437号-4</div>
 <!-- END FOOTER -->
 <!-- BEGIN SCROLL-TO -->
 <div class="scroll-to-top">

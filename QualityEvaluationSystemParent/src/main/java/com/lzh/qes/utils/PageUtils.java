@@ -1,5 +1,6 @@
 package com.lzh.qes.utils;
 
+import com.lzh.qes.bean.Institute;
 import com.lzh.qes.bean.Manager;
 
 /**
@@ -20,6 +21,11 @@ public class PageUtils {
      * 管理员
      */
     private Manager manager;
+
+    /**
+     * 学院
+     */
+    private Institute institute;
 
     public int getCurrentPage() {
         return currentPage;
@@ -43,5 +49,13 @@ public class PageUtils {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    public Institute getInstitute() {
+        return institute;
+    }
+
+    public void setInstitute(Institute institute) {
+        this.institute = institute;
     }
 }

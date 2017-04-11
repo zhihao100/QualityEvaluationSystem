@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="quality_evaluation_system" uuid="6414652c-a4ee-4844-aa83-f54cad5cca11">
+    <database-info product="MySQL" version="5.5.50" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+      <schema id="1" name="quality_evaluation_system">
+        <visible>1</visible>
+      </schema>
+      <schema id="2" name="emp"/>
+      <schema id="3" name="hibernate_first"/>
+      <schema id="4" name="information_schema"/>
+      <schema id="5" name="jpa"/>
+      <schema id="6" name="mybatis"/>
+      <schema id="7" name="myplan"/>
+      <schema id="8" name="mysql"/>
+      <schema id="9" name="performance"/>
+      <schema id="10" name="shiro"/>
+      <schema id="11" name="spring"/>
+      <schema id="12" name="spring_mybatis_test"/>
+      <schema id="13" name="student"/>
+      <schema id="14" name="test"/>
+      <schema id="15" name="user"/>
+      <schema id="16" name="weijiudai"/>
+      <table id="17" parent="1" name="manager"/>
+      <table id="18" parent="1" name="institute"/>
+      <column id="19" parent="17" name="manager_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)|0</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="20" parent="17" name="is_super_manager">
+        <mandatory>1</mandatory>
+        <data-type>bit(1)|0</data-type>
+      </column>
+      <column id="21" parent="17" name="last_login_date">
+        <data-type>datetime|0</data-type>
+      </column>
+      <column id="22" parent="17" name="manager_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="23" parent="17" name="manager_state">
+        <data-type>int(11)|0</data-type>
+      </column>
+      <column id="24" parent="17" name="password">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="25" parent="17" name="register_date">
+        <data-type>datetime|0</data-type>
+      </column>
+      <key id="26" parent="17" name="PRIMARY">
+        <columns>manager_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="27" parent="18" name="instituteId">
+        <comment>学院编号</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)|0</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="28" parent="18" name="instituteName">
+        <comment>学院名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="29" parent="18" name="instituteState">
+        <comment>学院状态</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(8)|0</data-type>
+      </column>
+      <column id="30" parent="18" name="institute_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)|0</data-type>
+      </column>
+      <column id="31" parent="18" name="institute_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="32" parent="18" name="institute_state">
+        <data-type>int(11)|0</data-type>
+      </column>
+      <key id="33" parent="18" name="PRIMARY">
+        <columns>instituteId</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>

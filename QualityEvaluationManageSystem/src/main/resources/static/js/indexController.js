@@ -1,14 +1,16 @@
 /**
  * Created by liuzhihao on 2017/3/10.
  */
-routerModule.controller("indexCtrl", [
+qesModule.controller("indexCtrl", [
     '$http',
     '$scope',
-    function ($http, $scope) {
+    'userService',
+    function ($http, $scope, userService) {
         //登录进入，获取用户名显示
-        $http.post("getCurrentManager").success(function (data) {
-            $scope.user = data;
+        userService.user().then(function (res) {
+            $scope.user = res.data;
         });
+
         $scope.logout = function () {
             $http.post('logout', {}).success(function () {
                 window.location.reload();
