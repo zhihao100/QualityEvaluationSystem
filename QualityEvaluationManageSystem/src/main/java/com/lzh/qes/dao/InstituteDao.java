@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Created by liuzhihao on 2017/4/11.
  */
@@ -34,4 +36,11 @@ public interface InstituteDao extends CrudRepository<Institute, Integer> {
      * @return
      */
     Page<Institute> findAll(Specification<Institute> spec, Pageable pageable);
+
+    /**
+     * 查询所有学院
+     *
+     * @return
+     */
+    List<Institute> findAll();
 }

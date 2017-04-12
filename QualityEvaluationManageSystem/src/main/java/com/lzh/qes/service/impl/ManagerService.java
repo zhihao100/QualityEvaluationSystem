@@ -1,19 +1,26 @@
 package com.lzh.qes.service.impl;
 
+import com.lzh.qes.bean.LoginHistory;
+import com.lzh.qes.bean.Manager;
+import com.lzh.qes.dao.LoginHistoryDao;
 import com.lzh.qes.dao.ManagerDao;
+import com.lzh.qes.enums.LoginPerson;
+import com.lzh.qes.modal.vo.ManagerVO;
+import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.service.IManagerService;
+import com.lzh.qes.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.lzh.qes.bean.Manager;
-import com.lzh.qes.utils.PageUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -31,6 +38,10 @@ public class ManagerService implements IManagerService {
 
     @Autowired
     private ManagerDao managerDao;
+    @Autowired
+    private LoginHistoryDao loginHistoryDao;
+    @Autowired
+    private IInstituteManageService iInstituteManageService;
 
 
     @Override
@@ -51,6 +62,9 @@ public class ManagerService implements IManagerService {
                 manager.setRegisterDate(new Date());
                 managerDao.save(manager);
                 return "添加成功";
+            }
+            if (null == manager.getInstituteId()) {
+                return "请选择学院再添加";
             }
             return "该管理员已存在";
         }
@@ -75,12 +89,12 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public Page<Manager> findAllManagerByMultiConditionAndPage(PageUtils pageUtils) {
-		/* 按管理员ID升序排列 */
+    public List<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils) {
+        /* 按管理员ID升序排列 */
         Sort sort = new Sort(Sort.Direction.ASC, "managerId");
         PageRequest pageRequest = new PageRequest(pageUtils.getCurrentPage() - 1, pageUtils.getPageSize(), sort);
 
-        return managerDao.findAll(new Specification<Manager>() {
+        Page<Manager> managerPage = managerDao.findAll(new Specification<Manager>() {
 
             @Override
             public Predicate toPredicate(Root<Manager> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -90,6 +104,16 @@ public class ManagerService implements IManagerService {
                 return null;
             }
         }, pageRequest);
+        List<ManagerVO> voList = new ArrayList<>();
+        for (Manager manager : managerPage) {
+            ManagerVO managerVO = new ManagerVO();
+            if (manager != null && manager.getInstituteId() != null) {
+                managerVO.setInstituteName(iInstituteManageService.showInstituteDetails(manager.getInstituteId()).getInstituteName());
+                managerVO.setManager(manager);
+            }
+            voList.add(managerVO);
+        }
+        return voList;
     }
 
     /**
@@ -115,8 +139,12 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public Manager showManagerDetails(long managerId) {
-        return managerDao.findByManagerId(managerId);
+    public ManagerVO showManagerDetails(long managerId) {
+        Manager manager = managerDao.findByManagerId(managerId);
+        ManagerVO managerVO = new ManagerVO();
+        managerVO.setInstituteName(iInstituteManageService.showInstituteDetails(manager.getInstituteId()).getInstituteName());
+        managerVO.setManager(manager);
+        return managerVO;
     }
 
     @Transactional
@@ -130,15 +158,45 @@ public class ManagerService implements IManagerService {
             if (null == exitedManager) {
                 return "该管理员不存在";
             }
+            if (null == manager.getInstituteId()) {
+                return "请选择学院";
+            }
             if (!exitedManager.getManagerName().equals(manager.getManagerName()) && null != exitedManagerName) {
                 return "该管理员已存在";
             }
             exitedManager.setManagerName(manager.getManagerName());
             exitedManager.setPassword(manager.getPassword());
             exitedManager.setManagerState(manager.getManagerState());
+            exitedManager.setInstituteId(manager.getInstituteId());
             managerDao.save(manager);
             return "修改成功";
         }
         return "修改失败,只有超级管理员可执行次操作";
     }
+
+    @Transactional
+    @Override
+    public void createLoginHistory() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) auth.getDetails();
+        String name = userDetails.getUsername();
+        Manager exitedManager = managerDao.findByManagerName(name);
+        if (null != exitedManager) {
+            LoginHistory loginHistory = new LoginHistory();
+            /* 登陆时间 */
+            loginHistory.setLoginDate(new Date());
+			/* 登录人类型 */
+            loginHistory.setLoginPerson(LoginPerson.管理员);
+			/* 登录人ID */
+            loginHistory.setBusinessId(exitedManager.getManagerId());
+			/* 登录人IP */
+            loginHistory.setIp(webAuthenticationDetails.getRemoteAddress());
+            loginHistoryDao.save(loginHistory);
+			/* 更新最后登录时间 */
+            exitedManager.setLastLoginDate(new Date());
+            managerDao.save(exitedManager);
+        }
+    }
+
 }

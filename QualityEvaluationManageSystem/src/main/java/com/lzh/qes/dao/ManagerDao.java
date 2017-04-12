@@ -1,10 +1,10 @@
 package com.lzh.qes.dao;
 
+import com.lzh.qes.bean.Manager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
-import com.lzh.qes.bean.Manager;
 
 /**
  * Created by liuzhihao on 2017/4/7.

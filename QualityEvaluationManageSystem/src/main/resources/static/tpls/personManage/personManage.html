@@ -89,36 +89,38 @@
                         <tbody>
                         <tr role="row" ng-repeat="personManage in personManages">
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
-                            <td ng-bind="personManage.managerId"></td>
-                            <td ng-bind="personManage.managerName"></td>
+                            <td ng-bind="personManage.manager.managerId"></td>
+                            <td ng-bind="personManage.manager.managerName"></td>
                             <td ng-bind="personManage.instituteName"></td>
-                            <td ng-if="personManage.managerState=='停用'"><span
+                            <td ng-if="personManage.manager.managerState=='停用'"><span
                                     class="label label-sm label-default">停用</span></td>
-                            <td ng-if="personManage.managerState=='启用'"><span
+                            <td ng-if="personManage.manager.managerState=='启用'"><span
                                     class="label label-sm label-success">启用</span></td>
 
                             <!-- <td ng-bind="personManage.managerState"></td> -->
-                            <td ng-if="personManage.superManager"><span class="label label-sm label-success">是</span>
+                            <td ng-if="personManage.manager.superManager"><span
+                                    class="label label-sm label-success">是</span>
                             </td>
-                            <td ng-if="!personManage.superManager"><span class="label label-sm label-default">否</span>
+                            <td ng-if="!personManage.manager.superManager"><span
+                                    class="label label-sm label-default">否</span>
                             </td>
                             <td>
-                                <a ng-href="#/personManageInfo/{{personManage.managerId}}"
+                                <a ng-href="#/personManageInfo/{{personManage.manager.managerId}}"
                                    class="btn btn-xs default btn-editable">
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
-                                <a ng-href="#/personManageEdit/{{personManage.managerId}}"
+                                <a ng-href="#/personManageEdit/{{personManage.manager.managerId}}"
                                    class="btn btn-xs default btn-editable" ng-if="user.superManager">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
-                                <a ng-click="changeState('停用',personManage.managerId)"
+                                <a ng-click="changeState('停用',personManage.manager.managerId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="personManage.managerState=='启用'&&user.superManager">
+                                   ng-if="personManage.manager.managerState=='启用'&&user.superManager">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
-                                <a ng-click="changeState('启用',personManage.managerId)"
+                                <a ng-click="changeState('启用',personManage.manager.managerId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="personManage.managerState=='停用'&&user.superManager">
+                                   ng-if="personManage.manager.managerState=='停用'&&user.superManager">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
                             </td>

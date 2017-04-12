@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="quality_evaluation_system" uuid="6414652c-a4ee-4844-aa83-f54cad5cca11">
+  <data-source name="quality_evaluation_system" uuid="3ef55a23-1bcd-415a-9f96-61df685547b5">
     <database-info product="MySQL" version="5.5.50" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -25,67 +25,79 @@
       <schema id="14" name="test"/>
       <schema id="15" name="user"/>
       <schema id="16" name="weijiudai"/>
-      <table id="17" parent="1" name="manager"/>
-      <table id="18" parent="1" name="institute"/>
-      <column id="19" parent="17" name="manager_id">
+      <table id="17" parent="1" name="institute"/>
+      <table id="18" parent="1" name="login_history"/>
+      <table id="19" parent="1" name="manager"/>
+      <column id="20" parent="17" name="institute_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)|0</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="21" parent="17" name="institute_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="22" parent="17" name="institute_state">
+        <mandatory>1</mandatory>
+        <data-type>int(11)|0</data-type>
+      </column>
+      <key id="23" parent="17" name="PRIMARY">
+        <columns>institute_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="24" parent="18" name="login_history_id">
         <mandatory>1</mandatory>
         <data-type>bigint(20)|0</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="20" parent="17" name="is_super_manager">
+      <column id="25" parent="18" name="business_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)|0</data-type>
+      </column>
+      <column id="26" parent="18" name="ip">
+        <data-type>varchar(255)|0</data-type>
+      </column>
+      <column id="27" parent="18" name="login_date">
+        <data-type>datetime|0</data-type>
+      </column>
+      <column id="28" parent="18" name="login_person">
+        <data-type>int(11)|0</data-type>
+      </column>
+      <key id="29" parent="18" name="PRIMARY">
+        <columns>login_history_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="30" parent="19" name="manager_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)|0</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="31" parent="19" name="is_super_manager">
         <mandatory>1</mandatory>
         <data-type>bit(1)|0</data-type>
       </column>
-      <column id="21" parent="17" name="last_login_date">
+      <column id="32" parent="19" name="last_login_date">
         <data-type>datetime|0</data-type>
       </column>
-      <column id="22" parent="17" name="manager_name">
+      <column id="33" parent="19" name="manager_name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)|0</data-type>
       </column>
-      <column id="23" parent="17" name="manager_state">
+      <column id="34" parent="19" name="manager_state">
         <data-type>int(11)|0</data-type>
       </column>
-      <column id="24" parent="17" name="password">
+      <column id="35" parent="19" name="password">
         <mandatory>1</mandatory>
         <data-type>varchar(255)|0</data-type>
       </column>
-      <column id="25" parent="17" name="register_date">
+      <column id="36" parent="19" name="register_date">
         <data-type>datetime|0</data-type>
       </column>
-      <key id="26" parent="17" name="PRIMARY">
+      <column id="37" parent="19" name="institute_id">
+        <data-type>int(11)|0</data-type>
+      </column>
+      <key id="38" parent="19" name="PRIMARY">
         <columns>manager_id</columns>
-        <primary>1</primary>
-      </key>
-      <column id="27" parent="18" name="instituteId">
-        <comment>学院编号</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(11)|0</data-type>
-        <sequence-identity>1</sequence-identity>
-      </column>
-      <column id="28" parent="18" name="instituteName">
-        <comment>学院名称</comment>
-        <mandatory>1</mandatory>
-        <data-type>varchar(255)|0</data-type>
-      </column>
-      <column id="29" parent="18" name="instituteState">
-        <comment>学院状态</comment>
-        <mandatory>1</mandatory>
-        <data-type>int(8)|0</data-type>
-      </column>
-      <column id="30" parent="18" name="institute_id">
-        <mandatory>1</mandatory>
-        <data-type>int(11)|0</data-type>
-      </column>
-      <column id="31" parent="18" name="institute_name">
-        <mandatory>1</mandatory>
-        <data-type>varchar(255)|0</data-type>
-      </column>
-      <column id="32" parent="18" name="institute_state">
-        <data-type>int(11)|0</data-type>
-      </column>
-      <key id="33" parent="18" name="PRIMARY">
-        <columns>instituteId</columns>
         <primary>1</primary>
       </key>
     </database-model>

@@ -40,7 +40,6 @@ public class InstituteManageService implements IInstituteManageService {
     }
 
 
-
     @Override
     public String updateInstituteState(Institute institute) {
         Institute exitedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
@@ -86,11 +85,21 @@ public class InstituteManageService implements IInstituteManageService {
         if (null != institute.getInstituteState()) {
             predicates.add(builder.equal(root.get("instituteState"), institute.getInstituteState()));
         }
-		/* 加入学院名，模糊查询 */
+        /* 加入学院名，模糊查询 */
         if (StringUtils.isNotBlank(institute.getInstituteName())) {
             predicates.add(builder.like(root.get("instituteName"), "%" + institute.getInstituteName() + "%"));
         }
         return predicates;
+    }
+
+    /**
+     * 查找所有学院
+     *
+     * @return
+     */
+    @Override
+    public List<Institute> findAllInstitute() {
+        return instituteDao.findAll();
     }
 
     @Override

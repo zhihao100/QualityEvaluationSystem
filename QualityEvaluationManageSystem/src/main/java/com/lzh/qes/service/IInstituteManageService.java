@@ -4,6 +4,8 @@ import com.lzh.qes.bean.Institute;
 import com.lzh.qes.utils.PageUtils;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * Created by liuzhihao on 2017/4/11.
  */
@@ -33,6 +35,13 @@ public interface IInstituteManageService {
      * @return
      */
     Page<Institute> findAllInstituteByMultiConditionAndPage(PageUtils pageUtils);
+
+    /**
+     * 查询所有学院
+     *
+     * @return
+     */
+    List<Institute> findAllInstitute();
 
     /**
      * 学院详情

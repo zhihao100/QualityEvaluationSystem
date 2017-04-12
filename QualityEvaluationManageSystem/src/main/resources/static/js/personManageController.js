@@ -13,8 +13,8 @@ qesModule.controller('personManageCtrl', [
                 manager: $scope.personManage,
             };
             $http.post('findAllManagerByMultiConditionAndPage', postData).success(function (response) {
-                $scope.paginationConf.totalItems = response.totalElements;
-                $scope.personManages = response.content;
+                $scope.paginationConf.totalItems = response.length;
+                $scope.personManages = response;
             });
         };
         $scope.search = search;
@@ -22,7 +22,7 @@ qesModule.controller('personManageCtrl', [
         //配置分页基本参数
         $scope.paginationConf = {
             currentPage: 1,
-            itemsPerPage: 10,
+            itemsPerPage: 5,
             perPageOptions: [5, 10, 20]
         };
         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);
@@ -60,14 +60,17 @@ qesModule.controller('personManageCtrl', [
         '$log',
         function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
             //管理员编辑
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
             $scope.managerId = $stateParams.managerId;
             $http.post('showManagerDetails', $scope.managerId).success(function (response) {
                 $scope.managerInfo = response;
-                // console.log($scope.managerInfo);
             });
             $scope.manageSubmit = function () {
                 $scope.manager = {};
-                $scope.manager = $scope.managerInfo;
+                $scope.manager = $scope.managerInfo.manager;
                 $scope.manager.managerId = $scope.managerId;
                 $scope.result = {};
                 $http.post("updateManager", $scope.manager).success(function (response) {
@@ -126,6 +129,11 @@ qesModule.controller('personManageCtrl', [
         '$log',
         function ($scope, $http, $modal, $location, $log, $modalInstance) {
             //管理员添加
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            //提交
             $scope.manageSubmit = function () {
                 $scope.manager = {};
                 $scope.managerInitState = "启用";

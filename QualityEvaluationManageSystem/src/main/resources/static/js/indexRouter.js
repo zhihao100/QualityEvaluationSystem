@@ -2,7 +2,7 @@
  * 基于ui-router路由插件的前端路由实现
  * Created by liuzhihao on 2017/4/7.
  */
-var qesModule = angular.module('qesModule', ['ui.router', 'ui.bootstrap']);
+var qesModule = angular.module('qesModule', ['ui.router', 'ui.bootstrap', 'tm.pagination']);
 
 qesModule.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/home");

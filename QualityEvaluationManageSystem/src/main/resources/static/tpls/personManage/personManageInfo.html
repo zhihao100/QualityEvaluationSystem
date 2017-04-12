@@ -37,21 +37,28 @@
                         <section class="infogroup">
                             <h4>人员信息</h4>
                             <div class="row">
-                                <div class="col-md-6">管理员编号：<span ng-bind="managerInfo.managerId"></span></div>
+                                <div class="col-md-6">管理员编号：<span ng-bind="managerInfo.manager.managerId"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">管理员名称：<span ng-bind="managerInfo.managerName"></span></div>
+                                <div class="col-md-6">管理员名称：<span ng-bind="managerInfo.manager.managerName"></span>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">管理员状态：<span ng-bind="managerInfo.managerState"></span></div>
+                                <div class="col-md-6">所属学院：<span ng-bind="managerInfo.instituteName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">管理员状态：<span ng-bind="managerInfo.manager.managerState"></span>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">注册时间：<span
-                                        ng-bind="managerInfo.registerDate | date:'yyyy/MM/dd HH:mm:ss'"></span></div>
+                                        ng-bind="managerInfo.manager.registerDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">最后登录时间：<span
-                                        ng-bind="managerInfo.lastLoginDate | date:'yyyy/MM/dd HH:mm:ss'"></span></div>
+                                        ng-bind="managerInfo.manager.lastLoginDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
+                                </div>
                             </div>
                         </section>
                     </div>

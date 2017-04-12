@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by liuzhihao on 2017/4/11.
  */
@@ -55,6 +57,16 @@ public class InstituteManageController {
         Page<Institute> institutes = instituteManageService.findAllInstituteByMultiConditionAndPage(pageUtils);
         LOGGER.info("学院数据条数" + institutes.getContent().size());
         return institutes;
+    }
+
+    /**
+     * 查找所有学院
+     */
+    @RequestMapping(value = "findAllInstitute", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Institute> findAllInstitute() {
+        LOGGER.info("查询所有学院");
+        return instituteManageService.findAllInstitute();
     }
 
     /**

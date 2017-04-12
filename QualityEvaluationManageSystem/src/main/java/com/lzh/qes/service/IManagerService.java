@@ -1,8 +1,10 @@
 package com.lzh.qes.service;
 
-import org.springframework.data.domain.Page;
 import com.lzh.qes.bean.Manager;
+import com.lzh.qes.modal.vo.ManagerVO;
 import com.lzh.qes.utils.PageUtils;
+
+import java.util.List;
 
 /**
  * Created by liuzhihao on 2017/4/7.
@@ -38,7 +40,7 @@ public interface IManagerService {
      * @param pageUtils
      * @return
      */
-    Page<Manager> findAllManagerByMultiConditionAndPage(PageUtils pageUtils);
+    List<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils);
 
     /**
      * 管理员详情
@@ -46,7 +48,7 @@ public interface IManagerService {
      * @param managerId
      * @return
      */
-    Manager showManagerDetails(long managerId);
+    ManagerVO showManagerDetails(long managerId);
 
     /**
      * 修改管理员
@@ -55,4 +57,9 @@ public interface IManagerService {
      * @return
      */
     String updateManager(Manager manager);
+
+    /**
+     * 记录登陆历史
+     */
+    void createLoginHistory();
 }
