@@ -28,4 +28,28 @@ qesModule.config(function ($stateProvider) {
             templateUrl: 'tpls/basicManage/instituteManageAdd.html',
             controller: 'instituteManageAddCtrl'
         })
+        //班级信息管理
+        .state("classManage", {
+            url: "/classManage",
+            templateUrl: "tpls/basicManage/classManage.html",
+            controller: "classManageCtrl"
+        })
+        //班级管理详情
+        .state('classManageInfo', {
+            url: "/classManageInfo/:classId",
+            templateUrl: 'tpls/basicManage/classManageInfo.html',
+            controller: "classManageInfoCtrl"
+        })
+        //班级信息编辑
+        .state('classManageEdit', {
+            url: "/classManageEdit/:classId",
+            templateUrl: 'tpls/basicManage/classManageEdit.html',
+            controller: 'classManageEditCtrl'
+        })
+        //班级新增
+        .state('classManageAdd', {
+            url: "/classManageAdd",
+            templateUrl: 'tpls/basicManage/classManageAdd.html',
+            controller: 'classManageAddCtrl'
+        })
 });

@@ -57,6 +57,7 @@ public class Manager implements Serializable {
     /**
      * 所属学院
      */
+    @NotEmpty
     private Integer instituteId;
 
     public static long getSerialVersionUID() {
