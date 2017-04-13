@@ -184,6 +184,179 @@ qesModule.controller('instituteManageCtrl', [
                 };
             };//弹窗结束
         }])
+    .controller("majorManageCtrl", [
+        '$http',
+        '$scope',
+        '$state',
+        '$stateParams',
+        'institute',
+        '$modal',
+        function ($http, $scope, $state, $stateParams, institute, $modal) {
+            //通过路由的resolve注入学院信息到控制器中
+            $scope.institute = institute.data;
+            //根据学院ID查找该学院所有专业
+            $scope.instituteId = $stateParams.instituteId;
+            $http.post("majorManage/" + $scope.instituteId, {}).success(function (rs) {
+                $scope.majorInfo = rs;
+            });
+            //启用停用切换
+            $scope.changeState = function (state, id) {
+                $scope.major = {};
+                $scope.major.majorState = state;
+                $scope.major.majorId = id;
+                $http.post("updateMajorState", $scope.major).success(function (rs) {
+                    $state.go('majorManage', {}, {reload: true});
+                })
+            }
+            $scope.majorEdit = function (majorName, majorId) {
+                $scope.majorParam = {};
+                $scope.majorParam.majorName = majorName;
+                $scope.majorParam.majorId = majorId;
+                $modal
+                    .open({
+                        templateUrl: 'tpls/basicManage/majorManageEdit.html',
+                        controller: 'majorManageEditCtrl',
+                        // 传参
+                        resolve: {
+                            data: function () {
+                                return angular.copy($scope.majorParam);
+                            }
+                        }
+                    });
+            }
+            $scope.majorAdd = function (instituteId) {
+                $scope.major = {};
+                //新增专业默认为启用状态
+                $scope.major.majorState = 0;
+                $scope.major.instituteId = instituteId;
+                $modal
+                    .open({
+                        templateUrl: 'tpls/basicManage/majorManageAdd.html',
+                        controller: 'majorManageAddCtrl',
+                        // 传参
+                        resolve: {
+                            data: function () {
+                                return angular.copy($scope.major);
+                            }
+                        }
+                    });
+            }
+        }])
+    .controller("majorManageEditCtrl", [
+        '$http',
+        '$scope',
+        '$modalInstance',
+        '$modal',
+        '$state',
+        'data',
+        function ($http, $scope, $modalInstance, $modal, $state, data) {
+            //编辑专业
+            $scope.majorParam = data;
+            $scope.result = {};
+            $scope.ok = function () {
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        if ($scope.result.msg == "修改失败,该专业不存在") {
+                        } else {
+                            $state.go('majorManage', {}, {reload: true});
+                        }
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                }
+                $http.post("majorManageEdit", $scope.majorParam).success(function (rs) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = rs;
+                    $scope.open('sm');
+                    $modalInstance.close();
+                });
+                var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                                  requestResults) {
+                    $scope.results = requestResults;
+                    // 确认按钮（close()可以带参数）
+                    $scope.ok = function () {
+                        $modalInstance.close();
+                    };
+                    // 取消按钮
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                };
+            }
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }])
+    .controller("majorManageAddCtrl", [
+        '$http',
+        '$scope',
+        '$modalInstance',
+        '$modal',
+        '$state',
+        'data',
+        function ($http, $scope, $modalInstance, $modal, $state, data) {
+            //新增专业
+            $scope.major = data;
+            $scope.result = {};
+            $scope.ok = function () {
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        $state.go('majorManage', {}, {reload: true});
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                }
+                $http.post("majorManageAdd", $scope.major).success(function (rs) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = rs;
+                    $scope.open('sm');
+                    $modalInstance.close();
+                });
+                var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                                  requestResults) {
+                    $scope.results = requestResults;
+                    // 确认按钮（close()可以带参数）
+                    $scope.ok = function () {
+                        $modalInstance.close();
+                    };
+                    // 取消按钮
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                };
+            }
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }])
     .controller('classManageCtrl', [
         '$scope',
         '$http',

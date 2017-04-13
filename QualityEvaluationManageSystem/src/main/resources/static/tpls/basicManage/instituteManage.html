@@ -112,6 +112,11 @@
                                    ng-if="instituteManage.instituteState=='停用'&&user.superManager">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
+                                <a ng-href="#/majorManage/{{instituteManage.instituteId}}"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="user.superManager||(user.instituteId==instituteManage.instituteId)">
+                                    <i class="fa fa-edit"></i> 专业管理
+                                </a>
                             </td>
                         </tr>
                         </tbody>

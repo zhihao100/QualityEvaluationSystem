@@ -56,8 +56,8 @@ public class ManagerService implements IManagerService {
         /* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
-            Manager exitedManager = managerDao.findByManagerName(manager.getManagerName());
-            if (null == exitedManager) {
+            Manager existedManager = managerDao.findByManagerName(manager.getManagerName());
+            if (null == existedManager) {
                 manager.setRegisterDate(new Date());
                 managerDao.save(manager);
                 return "添加成功";
@@ -77,10 +77,10 @@ public class ManagerService implements IManagerService {
         /* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
-            Manager exitedManager = managerDao.findByManagerId(manager.getManagerId());
-            if (null != exitedManager) {
-                exitedManager.setManagerState(manager.getManagerState());
-                managerDao.save(exitedManager);
+            Manager existedManager = managerDao.findByManagerId(manager.getManagerId());
+            if (null != existedManager) {
+                existedManager.setManagerState(manager.getManagerState());
+                managerDao.save(existedManager);
                 return "修改成功";
             }
         }
@@ -157,25 +157,25 @@ public class ManagerService implements IManagerService {
 		/* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
-            Manager exitedManager = managerDao.findByManagerId(manager.getManagerId());
-            Manager exitedManagerName = managerDao.findByManagerName(manager.getManagerName());
-            if (null == exitedManager) {
+            Manager existedManager = managerDao.findByManagerId(manager.getManagerId());
+            Manager existedManagerName = managerDao.findByManagerName(manager.getManagerName());
+            if (null == existedManager) {
                 return "该管理员不存在";
             }
             if (null == manager.getInstituteId()) {
                 return "请选择学院";
             }
-            if (!exitedManager.getManagerName().equals(manager.getManagerName()) && null != exitedManagerName) {
+            if (!existedManager.getManagerName().equals(manager.getManagerName()) && null != existedManagerName) {
                 return "该管理员已存在";
             }
-            exitedManager.setManagerName(manager.getManagerName());
-            exitedManager.setPassword(manager.getPassword());
-            exitedManager.setManagerState(manager.getManagerState());
-            exitedManager.setInstituteId(manager.getInstituteId());
+            existedManager.setManagerName(manager.getManagerName());
+            existedManager.setPassword(manager.getPassword());
+            existedManager.setManagerState(manager.getManagerState());
+            existedManager.setInstituteId(manager.getInstituteId());
             managerDao.save(manager);
             return "修改成功";
         }
-        return "修改失败,只有超级管理员可执行次操作";
+        return "修改失败,只有超级管理员可执行此操作";
     }
 
     @Transactional
@@ -185,21 +185,21 @@ public class ManagerService implements IManagerService {
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) auth.getDetails();
         String name = userDetails.getUsername();
-        Manager exitedManager = managerDao.findByManagerName(name);
-        if (null != exitedManager) {
+        Manager existedManager = managerDao.findByManagerName(name);
+        if (null != existedManager) {
             LoginHistory loginHistory = new LoginHistory();
             /* 登陆时间 */
             loginHistory.setLoginDate(new Date());
 			/* 登录人类型 */
             loginHistory.setLoginPerson(LoginPerson.管理员);
 			/* 登录人ID */
-            loginHistory.setBusinessId(exitedManager.getManagerId());
-			/* 登录人IP */
+            loginHistory.setBusinessId(existedManager.getManagerId());
+            /* 登录人IP */
             loginHistory.setIp(webAuthenticationDetails.getRemoteAddress());
             loginHistoryDao.save(loginHistory);
 			/* 更新最后登录时间 */
-            exitedManager.setLastLoginDate(new Date());
-            managerDao.save(exitedManager);
+            existedManager.setLastLoginDate(new Date());
+            managerDao.save(existedManager);
         }
     }
 

@@ -3,7 +3,6 @@ package com.lzh.qes.bean;
 import com.lzh.qes.enums.IsEnableState;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

@@ -28,6 +28,17 @@ qesModule.config(function ($stateProvider) {
             templateUrl: 'tpls/basicManage/instituteManageAdd.html',
             controller: 'instituteManageAddCtrl'
         })
+        //专业信息管理
+        .state("majorManage", {
+            url: "/majorManage/:instituteId",
+            templateUrl: "tpls/basicManage/majorManage.html",
+            controller: "majorManageCtrl",
+            resolve: {
+                institute: function ($http, $stateParams) {
+                    return $http.post("showInstituteDetails", $stateParams.instituteId);
+                }
+            }
+        })
         //班级信息管理
         .state("classManage", {
             url: "/classManage",

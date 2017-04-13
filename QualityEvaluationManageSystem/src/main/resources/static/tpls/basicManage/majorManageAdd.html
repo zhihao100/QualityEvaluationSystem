@@ -1,0 +1,33 @@
+<style>
+    .modal {
+        top: 100px;
+    }
+</style>
+<div class=".modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true" ng-click="cancel()">×
+        </button>
+        <h4 class="modal-title" style="font-weight:bold;">专业新增</h4>
+    </div>
+    <div class="modal-body">
+        <div class="portlet-body form">
+            <form action="" class="form-horizontal">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-3 col-md-offset-1 control-label">专业:</label>
+                            <div class="col-md-7">
+                                <input name="majorName" class="form-control" ng-model="major.majorName"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary col-md-2 col-md-offset-5" type="button" ng-click="ok()">确定</button>
+    </div>
+</div>

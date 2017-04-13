@@ -31,8 +31,8 @@ public class InstituteManageService implements IInstituteManageService {
     @Transactional
     @Override
     public String createInstitute(Institute institute) {
-        Institute exitedInstitute = instituteDao.findByInstituteName(institute.getInstituteName());
-        if (null == exitedInstitute) {
+        Institute existedInstitute = instituteDao.findByInstituteName(institute.getInstituteName());
+        if (null == existedInstitute) {
             instituteDao.save(institute);
             return "添加成功";
         }
@@ -42,10 +42,10 @@ public class InstituteManageService implements IInstituteManageService {
 
     @Override
     public String updateInstituteState(Institute institute) {
-        Institute exitedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
-        if (null != exitedInstitute) {
-            exitedInstitute.setInstituteState(institute.getInstituteState());
-            instituteDao.save(exitedInstitute);
+        Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
+        if (null != existedInstitute) {
+            existedInstitute.setInstituteState(institute.getInstituteState());
+            instituteDao.save(existedInstitute);
             return "修改成功";
         }
         return "该学院不存在";
@@ -109,16 +109,16 @@ public class InstituteManageService implements IInstituteManageService {
 
     @Override
     public String updateInstitute(Institute institute) {
-        Institute exitedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
-        Institute exitedInstituteName = instituteDao.findByInstituteName(institute.getInstituteName());
-        if (null == exitedInstitute) {
+        Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
+        Institute existedInstituteName = instituteDao.findByInstituteName(institute.getInstituteName());
+        if (null == existedInstitute) {
             return "该学院不存在";
         }
-        if (!exitedInstitute.getInstituteName().equals(institute.getInstituteName()) && null != exitedInstituteName) {
+        if (!existedInstitute.getInstituteName().equals(institute.getInstituteName()) && null != existedInstituteName) {
             return "该学院已存在";
         }
-        exitedInstitute.setInstituteName(institute.getInstituteName());
-        exitedInstitute.setInstituteState(institute.getInstituteState());
+        existedInstitute.setInstituteName(institute.getInstituteName());
+        existedInstitute.setInstituteState(institute.getInstituteState());
         instituteDao.save(institute);
         return "修改成功";
     }
