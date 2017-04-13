@@ -2,9 +2,8 @@ package com.lzh.qes.service;
 
 import com.lzh.qes.bean.Manager;
 import com.lzh.qes.modal.vo.ManagerVO;
+import com.lzh.qes.search.PageList;
 import com.lzh.qes.utils.PageUtils;
-
-import java.util.List;
 
 /**
  * Created by liuzhihao on 2017/4/7.
@@ -40,7 +39,7 @@ public interface IManagerService {
      * @param pageUtils
      * @return
      */
-    List<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils);
+    PageList<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils);
 
     /**
      * 管理员详情

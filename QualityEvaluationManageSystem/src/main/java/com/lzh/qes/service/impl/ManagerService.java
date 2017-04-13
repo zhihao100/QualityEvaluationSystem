@@ -6,6 +6,7 @@ import com.lzh.qes.dao.LoginHistoryDao;
 import com.lzh.qes.dao.ManagerDao;
 import com.lzh.qes.enums.LoginPerson;
 import com.lzh.qes.modal.vo.ManagerVO;
+import com.lzh.qes.search.PageList;
 import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.service.IManagerService;
 import com.lzh.qes.utils.PageUtils;
@@ -26,9 +27,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by liuzhihao on 2017/4/7.
@@ -89,7 +88,7 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public List<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils) {
+    public PageList<ManagerVO> findAllManagerByMultiConditionAndPage(PageUtils pageUtils) {
         /* 按管理员ID升序排列 */
         Sort sort = new Sort(Sort.Direction.ASC, "managerId");
         PageRequest pageRequest = new PageRequest(pageUtils.getCurrentPage() - 1, pageUtils.getPageSize(), sort);
@@ -105,7 +104,8 @@ public class ManagerService implements IManagerService {
             }
         }, pageRequest);
         List<ManagerVO> voList = new ArrayList<>();
-        for (Manager manager : managerPage) {
+        PageList<ManagerVO> voPageList = new PageList<>();
+        for (Manager manager : managerPage.getContent()) {
             ManagerVO managerVO = new ManagerVO();
             if (manager != null && manager.getInstituteId() != null) {
                 managerVO.setInstituteName(iInstituteManageService.showInstituteDetails(manager.getInstituteId()).getInstituteName());
@@ -113,7 +113,11 @@ public class ManagerService implements IManagerService {
             }
             voList.add(managerVO);
         }
-        return voList;
+        voPageList.setDataList(voList);
+        Map<String, Long> map = new HashMap<>();
+        map.put("totalElements", managerPage.getTotalElements());
+        voPageList.setPagersInfo(map);
+        return voPageList;
     }
 
     /**

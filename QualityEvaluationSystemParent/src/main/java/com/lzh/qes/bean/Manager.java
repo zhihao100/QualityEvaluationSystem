@@ -1,10 +1,11 @@
 package com.lzh.qes.bean;
 
+import com.lzh.qes.enums.IsEnableState;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lzh.qes.enums.IsEnableState;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -57,7 +58,7 @@ public class Manager implements Serializable {
     /**
      * 所属学院
      */
-    @NotEmpty
+    @NotNull
     private Integer instituteId;
 
     public static long getSerialVersionUID() {

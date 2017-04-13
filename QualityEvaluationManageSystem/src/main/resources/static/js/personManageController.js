@@ -13,8 +13,8 @@ qesModule.controller('personManageCtrl', [
                 manager: $scope.personManage,
             };
             $http.post('findAllManagerByMultiConditionAndPage', postData).success(function (response) {
-                $scope.paginationConf.totalItems = response.length;
-                $scope.personManages = response;
+                $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
+                $scope.personManages = response.dataList;
             });
         };
         $scope.search = search;
