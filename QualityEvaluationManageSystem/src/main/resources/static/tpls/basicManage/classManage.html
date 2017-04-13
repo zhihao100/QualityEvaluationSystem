@@ -79,7 +79,9 @@
                         <tr role="row" class="heading">
                             <th width="6%">序号</th>
                             <th width="8%">班级编号</th>
-                            <th width="12%">班级名称</th>
+                            <th width="12%">班级简称</th>
+                            <th width="12%">所属学院</th>
+                            <th width="12%">所属专业</th>
                             <th width="8%">班级状态</th>
                             <th width="18%">操作</th>
                         </tr>
@@ -88,7 +90,9 @@
                         <tr role="row" ng-repeat="classManage in classManages">
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
                             <td ng-bind="classManage.classId"></td>
-                            <td ng-bind="classManage.className"></td>
+                            <td ng-bind="classManage.classShortName"></td>
+                            <td ng-bind="classManage.instituteName"></td>
+                            <td ng-bind="classManage.majorName"></td>
                             <td ng-if="classManage.classState=='停用'"><span
                                     class="label label-sm label-default">停用</span>
                             </td>

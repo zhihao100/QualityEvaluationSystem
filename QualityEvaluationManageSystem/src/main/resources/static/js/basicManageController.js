@@ -371,8 +371,8 @@ qesModule.controller('instituteManageCtrl', [
                     class: $scope.classManage,
                 };
                 $http.post('findAllClassByMultiConditionAndPage', postData).success(function (response) {
-                    $scope.paginationConf.totalItems = response.totalElements;
-                    $scope.classManages = response.content;
+                    $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
+                    $scope.classManages = response.dataList;
                 });
             };
             $scope.search = search;

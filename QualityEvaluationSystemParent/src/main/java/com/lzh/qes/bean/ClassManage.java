@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by liuzhihao on 2017/4/12.
@@ -36,17 +37,17 @@ public class ClassManage {
     /**
      * 所属学院
      */
-    @NotEmpty
+    @NotNull
     private Integer instituteId;
     /**
      * 所属专业
      */
-    @NotEmpty
-    private String major;
+    @NotNull
+    private Integer majorId;
     /**
      * 所在年级
      */
-    @NotEmpty
+    @NotNull
     private Integer grade;
 
     public int getClassId() {
@@ -89,12 +90,12 @@ public class ClassManage {
         this.instituteId = instituteId;
     }
 
-    public String getMajor() {
-        return major;
+    public Integer getMajorId() {
+        return majorId;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setMajorId(Integer majorId) {
+        this.majorId = majorId;
     }
 
     public Integer getGrade() {
