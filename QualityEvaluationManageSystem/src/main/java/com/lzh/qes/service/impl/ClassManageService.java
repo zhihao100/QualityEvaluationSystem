@@ -51,7 +51,7 @@ public class ClassManageService implements IClassManageService {
             @Override
             public Predicate toPredicate(Root<ClassManage> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
                 /* 拼接查询语句 */
-                List<Predicate> predicates = createMultiConditionSQL(root, builder, pageUtils);
+                List<Predicate> predicates = createMultiConditionSQL(root, builder,pageUtils);
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;
             }

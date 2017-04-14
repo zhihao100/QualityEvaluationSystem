@@ -364,31 +364,29 @@ qesModule.controller('instituteManageCtrl', [
         'userService',
         function ($scope, $http, $state,userService) {
             //班级列表
-            $scope.classManage = {};
-            var search = function () {
-                var postData = {
-                    currentPage: $scope.paginationConf.currentPage,
-                    pageSize: $scope.paginationConf.itemsPerPage,
-                    class: $scope.classManage,
-                };
-                $http.post('findAllClassByMultiConditionAndPage', postData).success(function (response) {
-                    $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
-                    $scope.classManages = response.dataList;
-                });
-            };
-            $scope.search = search;
-
+            $scope.classManage={};
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
                 itemsPerPage: 5,
                 perPageOptions: [5, 10, 20]
             };
-            $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);
+            $scope.search = function () {
+                $scope.postData = {
+                    currentPage: $scope.paginationConf.currentPage,
+                    pageSize: $scope.paginationConf.itemsPerPage,
+                    classManage: $scope.classManage
+                };
+                $http.post('findAllClassByMultiConditionAndPage', $scope.postData).success(function (rs) {
+                    $scope.paginationConf.totalItems = rs.pagersInfo.totalElements;
+                    $scope.classManages = rs.dataList;
+                });
+            };
             //清空查询条件
             $scope.reset = function () {
                 $scope.classManage = {};
             }
+
             //启用停用切换
             $scope.changeState = function (state, id) {
                 $scope.class = {};
@@ -398,13 +396,15 @@ qesModule.controller('instituteManageCtrl', [
                     $state.go('classManage', {}, {reload: true});
                 })
             }
-            //查询当前管理员所在学院状态
+            //查询当前管理员所在学院状态以做权限控制
             userService.user().then(function (res) {
                 $scope.user = res.data;
             });
             $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
                 $scope.instituteInfo = response;
             });
+            $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', $scope.search);
+
         }])
     .controller('classManageInfoCtrl', [
         '$scope',

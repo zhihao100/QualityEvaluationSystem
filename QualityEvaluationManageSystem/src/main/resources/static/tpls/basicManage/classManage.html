@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">班级名称：</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" ng-model="classManage.className"/>
+                                    <input type="text" class="form-control" ng-model="classManage.classFullName"/>
                                 </div>
                             </div>
                         </div>
@@ -56,10 +56,10 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12 txtcenter">
-                                    <button type="button" class="btn blue" ng-click="search()">
+                                    <button type="button" class="btn blue" ng-click="search();">
                                         <i class="fa fa-search"></i> 查询
                                     </button>
-                                    <button class="btn default" type="reset" ng-click="reset()">
+                                    <button class="btn default" type="reset" ng-click="reset();">
                                         <i class="fa fa-eraser"></i> 清空
                                     </button>
                                 </div>
