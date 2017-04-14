@@ -68,7 +68,7 @@
                     </div>
                 </form>
                 <div class="clearfix"></div>
-                <div class="table-toolbar ng-scope" ng-if="user.superManager">
+                <div class="table-toolbar ng-scope" ng-if="user.superManager||(instituteInfo.instituteState=='启用')">
                     <div class="btn-group">
                         <a ui-sref="classManageAdd" class="btn blue"> <i class="fa fa-plus"></i> 新增班级</a>
                     </div>
@@ -77,45 +77,45 @@
                     <table class="table table-striped table-bordered table-hover table-btns">
                         <thead>
                         <tr role="row" class="heading">
-                            <th width="6%">序号</th>
-                            <th width="8%">班级编号</th>
+                            <th width="5%">序号</th>
+                            <th width="10%">班级编号</th>
                             <th width="12%">班级简称</th>
-                            <th width="12%">所属学院</th>
-                            <th width="12%">所属专业</th>
+                            <th width="20%">所属学院</th>
+                            <th width="20%">所属专业</th>
                             <th width="8%">班级状态</th>
-                            <th width="18%">操作</th>
+                            <th width="25%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr role="row" ng-repeat="classManage in classManages">
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
-                            <td ng-bind="classManage.classId"></td>
-                            <td ng-bind="classManage.classShortName"></td>
+                            <td ng-bind="classManage.classManage.classId"></td>
+                            <td ng-bind="classManage.classManage.classShortName"></td>
                             <td ng-bind="classManage.instituteName"></td>
                             <td ng-bind="classManage.majorName"></td>
-                            <td ng-if="classManage.classState=='停用'"><span
+                            <td ng-if="classManage.classManage.classState=='停用'"><span
                                     class="label label-sm label-default">停用</span>
                             </td>
-                            <td ng-if="classManage.classState=='启用'"><span
+                            <td ng-if="classManage.classManage.classState=='启用'"><span
                                     class="label label-sm label-success">启用</span>
                             </td>
                             <td>
-                                <a ng-href="#/classManageInfo/{{classManage.classId}}"
+                                <a ng-href="#/classManageInfo/{{classManage.classManage.classId}}"
                                    class="btn btn-xs default btn-editable">
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
-                                <a ng-href="#/classManageEdit/{{classManage.classId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="user.superManager">
+                                <a ng-href="#/classManageEdit/{{classManage.classManage.classId}}"
+                                   class="btn btn-xs default btn-editable" ng-if="classManage.classManage.classState=='启用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
-                                <a ng-click="changeState('停用',classManage.classId)"
+                                <a ng-click="changeState('停用',classManage.classManage.classId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="classManage.classState=='启用'&&user.superManager">
+                                   ng-if="classManage.classManage.classState=='启用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
-                                <a ng-click="changeState('启用',classManage.classId)"
+                                <a ng-click="changeState('启用',classManage.classManage.classId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="classManage.classState=='停用'&&user.superManager">
+                                   ng-if="classManage.classManage.classState=='停用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
                             </td>

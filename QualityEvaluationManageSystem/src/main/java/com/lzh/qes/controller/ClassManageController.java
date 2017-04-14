@@ -1,6 +1,5 @@
 package com.lzh.qes.controller;
 
-
 import com.lzh.qes.bean.ClassManage;
 import com.lzh.qes.modal.vo.ClassManageVO;
 import com.lzh.qes.search.PageList;
@@ -25,8 +24,6 @@ public class ClassManageController {
     @Autowired
     private IClassManageService iClassManageService;
 
-
-
     /**
      * 多条件分页查询班级
      *
@@ -45,5 +42,55 @@ public class ClassManageController {
         PageList<ClassManageVO> classes = iClassManageService.findAllClassByMultiConditionAndPage(pageUtils);
         LOGGER.info("班级数据条数" + classes.getPagersInfo().toString());
         return classes;
+    }
+    /**
+     * 修改班级状态
+     * @param classManage
+     * @return
+     */
+    @RequestMapping(value = "updateClassState", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateClassState(@RequestBody ClassManage classManage) {
+        LOGGER.info("修改班级状态");
+        Assert.notNull(classManage, "班级为空");
+        return iClassManageService.updateClassState(classManage);
+    }
+    /**
+     * 班级详情
+     *
+     * @param classId
+     * @return
+     */
+    @RequestMapping(value = "showClassDetails", method = RequestMethod.POST)
+    @ResponseBody
+    public ClassManageVO showClassDetails(@RequestBody Integer classId) {
+        LOGGER.info("班级详情");
+        Assert.notNull(classId);
+        return iClassManageService.showClassDetails(classId);
+    }
+    /**
+     * 修改班级
+     * @param classManage
+     * @return
+     */
+    @RequestMapping(value = "updateClass", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateClass(@RequestBody ClassManage classManage) {
+        LOGGER.info("修改班级");
+        Assert.notNull(classManage, "班级为空");
+        return iClassManageService.updateClass(classManage);
+    }
+    /**
+     * 添加班级
+     *
+     * @param classManage
+     * @return
+     */
+    @RequestMapping(value = "createClass", method = RequestMethod.POST)
+    @ResponseBody
+    public String createClass(@RequestBody ClassManage classManage) {
+        LOGGER.info("添加班级");
+        Assert.notNull(classManage);
+        return iClassManageService.createClass(classManage);
     }
 }

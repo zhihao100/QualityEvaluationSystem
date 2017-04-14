@@ -37,13 +37,28 @@
                         <section class="infogroup">
                             <h4>班级信息</h4>
                             <div class="row">
-                                <div class="col-md-6">班级编号：<span ng-bind="classInfo.classId"></span></div>
+                                <div class="col-md-6">班级编号：<span ng-bind="classInfo.classManage.classId"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">班级名称：<span ng-bind="classInfo.className"></span></div>
+                                <div class="col-md-6">班级全称：<span ng-bind="classInfo.classManage.classFullName"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">班级状态：<span ng-bind="classInfo.classState"></span></div>
+                                <div class="col-md-6">班级简称：<span ng-bind="classInfo.classManage.classShortName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属学院：<span ng-bind="classInfo.instituteName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属专业：<span ng-bind="classInfo.majorName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属年级：<span ng-bind="classInfo.classManage.grade"></span>级</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">班级状态：
+                                    <span ng-if="classInfo.classManage.classState=='启用'"><b class="label label-sm label-success">启用</b></span>
+                                    <span ng-if="classInfo.classManage.classState=='停用'"><b class="label label-sm label-default">停用</b></span>
+                                </div>
                             </div>
                         </section>
                     </div>

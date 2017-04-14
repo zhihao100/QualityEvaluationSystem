@@ -13,10 +13,6 @@ public class ClassManageVO implements Serializable {
      */
     private ClassManage classManage;
     /**
-     * 班级总数
-     */
-    private Long totalClass;
-    /**
      * 所属学院名称
      */
     private String instituteName;
@@ -31,14 +27,6 @@ public class ClassManageVO implements Serializable {
 
     public void setClassManage(ClassManage classManage) {
         this.classManage = classManage;
-    }
-
-    public Long getTotalClass() {
-        return totalClass;
-    }
-
-    public void setTotalClass(Long totalClass) {
-        this.totalClass = totalClass;
     }
 
     public String getInstituteName() {

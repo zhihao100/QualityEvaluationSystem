@@ -26,4 +26,12 @@ public interface ClassManageDAO extends CrudRepository<ClassManage, Integer> {
      * @return
      */
     ClassManage findByClassId(Integer classId);
+    /**
+     * 根据班级全称查询班级信息
+     *
+     * @param classFullName
+     * @return
+     */
+    ClassManage findByClassFullName(String classFullName);
+
 }

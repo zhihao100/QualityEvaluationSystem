@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -28,6 +29,7 @@ import java.util.Map;
 /**
  * Created by 新乐 on 2017/4/13.
  */
+@Service
 public class ClassManageService implements IClassManageService {
     @Autowired
     private ClassManageDAO classManageDAO;
@@ -102,5 +104,70 @@ public class ClassManageService implements IClassManageService {
             predicates.add(builder.like(root.get("classFullName"), "%" + classManage.getClassFullName() + "%"));
         }
         return predicates;
+    }
+    @Override
+    public String updateClassState(ClassManage classManage) {
+        ClassManage existedClass = classManageDAO.findByClassId(classManage.getClassId());
+        if (null != existedClass) {
+            existedClass.setClassState(classManage.getClassState());
+            classManageDAO.save(existedClass);
+            return "修改成功";
+        }
+        return "该班级不存在";
+    }
+
+    @Override
+    public String updateClass(ClassManage classManage) {
+        if(null==classManage.getInstituteId()){
+            return "请选择学院再修改";
+        }
+        if(null==classManage.getMajorId()){
+            return "请选择专业再修改";
+        }
+        if(null==classManage.getGrade()){
+            return "请选择年级再修改";
+        }
+        if(null==classManage.getClassNumber()){
+            return "请录入班级序号再修改";
+        }
+        ClassManage existedClass=classManageDAO.findByClassId(classManage.getClassId());
+        ClassManage existedClassFullName=classManageDAO.findByClassFullName(classManage.getClassFullName());
+        if (null == existedClass) {
+            return "修改失败，该班级不存在";
+        }
+        if (!existedClass.getClassFullName().equals(classManage.getClassFullName()) && null != existedClassFullName) {
+            return "该班级已存在";
+        }
+        existedClass.setInstituteId(classManage.getInstituteId());
+        existedClass.setMajorId(classManage.getMajorId());
+        existedClass.setGrade(classManage.getGrade());
+        existedClass.setClassFullName(classManage.getClassFullName());
+        existedClass.setClassShortName(classManage.getClassShortName());
+        existedClass.setClassNumber(classManage.getClassNumber());
+        existedClass.setClassState(classManage.getClassState());
+        classManageDAO.save(existedClass);
+        return "修改成功";
+    }
+
+    @Override
+    public String createClass(ClassManage classManage) {
+        if(null==classManage.getInstituteId()){
+            return "请选择学院再添加";
+        }
+        if(null==classManage.getMajorId()){
+            return "请选择专业再添加";
+        }
+        if(null==classManage.getGrade()){
+            return "请选择年级再添加";
+        }
+        if(null==classManage.getClassNumber()){
+            return "请录入班级序号再添加";
+        }
+        ClassManage existedClass=classManageDAO.findByClassFullName(classManage.getClassFullName());
+        if(null==existedClass){
+            classManageDAO.save(classManage);
+            return "新增成功";
+        }
+        return "该班级已存在";
     }
 }

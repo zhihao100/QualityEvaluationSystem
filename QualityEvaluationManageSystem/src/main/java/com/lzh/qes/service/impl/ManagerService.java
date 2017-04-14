@@ -56,18 +56,18 @@ public class ManagerService implements IManagerService {
         /* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
+            if (null == manager.getInstituteId()) {
+                return "请选择学院再添加";
+            }
             Manager existedManager = managerDao.findByManagerName(manager.getManagerName());
             if (null == existedManager) {
                 manager.setRegisterDate(new Date());
                 managerDao.save(manager);
                 return "添加成功";
             }
-            if (null == manager.getInstituteId()) {
-                return "请选择学院再添加";
-            }
             return "该管理员已存在";
         }
-        return "添加失败,只有超级管理员可执行次操作";
+        return "添加失败,只有超级管理员可执行此操作";
     }
 
 

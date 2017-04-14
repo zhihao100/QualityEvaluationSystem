@@ -29,6 +29,11 @@ public class ClassManage {
     @NotEmpty
     private String classShortName;
     /**
+     * 班级序号
+     */
+    @NotNull
+    private  Integer classNumber;
+    /**
      * 班级状态
      */
     @Autowired
@@ -104,5 +109,13 @@ public class ClassManage {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Integer getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(Integer classNumber) {
+        this.classNumber = classNumber;
     }
 }
