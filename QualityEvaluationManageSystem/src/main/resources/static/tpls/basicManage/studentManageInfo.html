@@ -1,0 +1,78 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">学生详情</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">基础设置</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="active">
+            <a ui-sref="studentManage">学生管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">学生详情</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green-sharp bold">学生详情</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <form class="form form-horizontal" role="form">
+                    <div class="form-body">
+                        <section class="infogroup">
+                            <h4>学生信息</h4>
+                            <div class="row">
+                                <div class="col-md-6">学生编号：<span ng-bind="studentInfo.studentManage.studentId"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">学生名称：<span ng-bind="studentInfo.studentManage.studentName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属学院：<span ng-bind="studentInfo.instituteName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属专业：<span ng-bind="studentInfo.majorName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属年级：<span ng-bind="studentInfo.studentManage.grade"></span>级
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">学生状态：
+                                    <span ng-if="studentInfo.studentManage.studentState=='启用'"><b
+                                            class="label label-sm label-success">启用</b></span>
+                                    <span ng-if="studentInfo.studentManage.studentState=='停用'"><b
+                                            class="label label-sm label-default">停用</b></span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="form-action">
+                        <div class="row txtcenter">
+                            <a ui-sref="studentManage" class="btn default"><i class="fa fa-chevron-circle-left"></i>
+                                返回</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

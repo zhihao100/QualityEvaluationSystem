@@ -1,7 +1,7 @@
 package com.lzh.qes.bean;
 
 import com.lzh.qes.enums.IsEnableState;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -21,12 +21,12 @@ public class ClassManage {
     /**
      * 班级名称（全称）
      */
-    @NotEmpty
+    @NotBlank
     private String classFullName;
     /**
      * 班级名称（简称）
      */
-    @NotEmpty
+    @NotBlank
     private String classShortName;
     /**
      * 班级序号

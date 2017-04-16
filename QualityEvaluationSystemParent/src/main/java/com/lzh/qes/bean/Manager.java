@@ -2,7 +2,7 @@ package com.lzh.qes.bean;
 
 import com.lzh.qes.enums.IsEnableState;
 import com.sun.istack.internal.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -25,12 +25,12 @@ public class Manager implements Serializable {
     /**
      * 管理员名称
      */
-    @NotEmpty
+    @NotBlank
     private String managerName;
     /**
      * 管理员密码
      */
-    @NotEmpty
+    @NotBlank
     private String password;
 
     /**

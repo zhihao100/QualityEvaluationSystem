@@ -1,7 +1,7 @@
 package com.lzh.qes.service.impl;
 
 import com.lzh.qes.bean.ClassManage;
-import com.lzh.qes.dao.ClassManageDAO;
+import com.lzh.qes.dao.ClassManageDao;
 import com.lzh.qes.dao.InstituteDao;
 import com.lzh.qes.dao.MajorDao;
 import com.lzh.qes.modal.vo.ClassManageVO;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Service
 public class ClassManageService implements IClassManageService {
     @Autowired
-    private ClassManageDAO classManageDAO;
+    private ClassManageDao classManageDao;
     @Autowired
     private IInstituteManageService iInstituteManageService;
     @Autowired
@@ -46,7 +46,7 @@ public class ClassManageService implements IClassManageService {
         Sort sort = new Sort(Sort.Direction.ASC, "classId");
         PageRequest pageRequest = new PageRequest(pageUtils.getCurrentPage() - 1, pageUtils.getPageSize(), sort);
 
-        Page<ClassManage> classManagePage = classManageDAO.findAll(new Specification<ClassManage>() {
+        Page<ClassManage> classManagePage = classManageDao.findAll(new Specification<ClassManage>() {
 
             @Override
             public Predicate toPredicate(Root<ClassManage> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -76,7 +76,7 @@ public class ClassManageService implements IClassManageService {
 
     @Override
     public ClassManageVO showClassDetails(Integer classId) {
-        ClassManage classManage = classManageDAO.findByClassId(classId);
+        ClassManage classManage = classManageDao.findByClassId(classId);
         ClassManageVO classManageVO = new ClassManageVO();
         classManageVO.setClassManage(classManage);
         classManageVO.setInstituteName(instituteDao.findByInstituteId(classManage.getInstituteId()).getInstituteName());
@@ -107,10 +107,10 @@ public class ClassManageService implements IClassManageService {
     }
     @Override
     public String updateClassState(ClassManage classManage) {
-        ClassManage existedClass = classManageDAO.findByClassId(classManage.getClassId());
+        ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
         if (null != existedClass) {
             existedClass.setClassState(classManage.getClassState());
-            classManageDAO.save(existedClass);
+            classManageDao.save(existedClass);
             return "修改成功";
         }
         return "该班级不存在";
@@ -130,8 +130,8 @@ public class ClassManageService implements IClassManageService {
         if(null==classManage.getClassNumber()){
             return "请录入班级序号再修改";
         }
-        ClassManage existedClass=classManageDAO.findByClassId(classManage.getClassId());
-        ClassManage existedClassFullName=classManageDAO.findByClassFullName(classManage.getClassFullName());
+        ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
+        ClassManage existedClassFullName = classManageDao.findByClassFullName(classManage.getClassFullName());
         if (null == existedClass) {
             return "修改失败，该班级不存在";
         }
@@ -145,7 +145,7 @@ public class ClassManageService implements IClassManageService {
         existedClass.setClassShortName(classManage.getClassShortName());
         existedClass.setClassNumber(classManage.getClassNumber());
         existedClass.setClassState(classManage.getClassState());
-        classManageDAO.save(existedClass);
+        classManageDao.save(existedClass);
         return "修改成功";
     }
 
@@ -163,9 +163,9 @@ public class ClassManageService implements IClassManageService {
         if(null==classManage.getClassNumber()){
             return "请录入班级序号再添加";
         }
-        ClassManage existedClass=classManageDAO.findByClassFullName(classManage.getClassFullName());
+        ClassManage existedClass = classManageDao.findByClassFullName(classManage.getClassFullName());
         if(null==existedClass){
-            classManageDAO.save(classManage);
+            classManageDao.save(classManage);
             return "新增成功";
         }
         return "该班级已存在";

@@ -1,8 +1,6 @@
 package com.lzh.qes.utils;
 
-import com.lzh.qes.bean.ClassManage;
-import com.lzh.qes.bean.Institute;
-import com.lzh.qes.bean.Manager;
+import com.lzh.qes.bean.*;
 
 /**
  * Created by liuzhihao on 2017/4/7.
@@ -31,6 +29,14 @@ public class PageUtils {
      * 班级
      */
     private ClassManage classManage;
+    /**
+     * 学生
+     */
+    private Student student;
+    /**
+     * 专业
+     */
+    private Major major;
 
     public int getCurrentPage() {
         return currentPage;
@@ -70,5 +76,21 @@ public class PageUtils {
 
     public void setClassManage(ClassManage classManage) {
         this.classManage = classManage;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Major getMajor() {
+        return major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
     }
 }

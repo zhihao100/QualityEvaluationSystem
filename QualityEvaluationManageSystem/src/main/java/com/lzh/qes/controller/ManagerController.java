@@ -122,7 +122,7 @@ public class ManagerController {
             pageUtils.setManager(manager);
         }
         PageList<ManagerVO> managers = imanagerService.findAllManagerByMultiConditionAndPage(pageUtils);
-        LOGGER.info("管理员数据条数" + managers.getPagersInfo().toString());
+        LOGGER.info("管理员数据条数" + managers.getPagersInfo().get("totalElements"));
         return managers;
     }
 

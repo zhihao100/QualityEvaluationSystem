@@ -40,7 +40,7 @@ public class ClassManageController {
             pageUtils.setClassManage(classManage);
         }
         PageList<ClassManageVO> classes = iClassManageService.findAllClassByMultiConditionAndPage(pageUtils);
-        LOGGER.info("班级数据条数" + classes.getPagersInfo().toString());
+        LOGGER.info("班级数据条数" + classes.getPagersInfo().get("totalElements"));
         return classes;
     }
     /**

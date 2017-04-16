@@ -1,7 +1,7 @@
 package com.lzh.qes.bean;
 
 import com.lzh.qes.enums.IsEnableState;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ public class Institute implements Serializable {
     /**
      * 学院名称
      */
-    @NotEmpty
+    @NotBlank
     private String instituteName;
     /**
      * 学院状态

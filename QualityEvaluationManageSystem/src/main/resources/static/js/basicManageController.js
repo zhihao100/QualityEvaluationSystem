@@ -600,4 +600,248 @@ qesModule.controller('instituteManageCtrl', [
                     $modalInstance.dismiss('cancel');
                 };
             };//弹窗结束
+        }])
+    .controller('studentManageCtrl', [
+        '$scope',
+        '$http',
+        '$state',
+        'userService',
+        function ($scope, $http, $state, userService) {
+            //学生列表
+            $scope.studentManage = {};
+            //配置分页基本参数
+            $scope.paginationConf = {
+                currentPage: 1,
+                itemsPerPage: 5,
+                perPageOptions: [5, 10, 20]
+            };
+            $scope.search = function () {
+                $scope.postData = {
+                    currentPage: $scope.paginationConf.currentPage,
+                    pageSize: $scope.paginationConf.itemsPerPage,
+                    student: $scope.studentManage,
+                };
+                $http.post('findAllStudentByMultiConditionAndPage', $scope.postData).success(function (rs) {
+                    $scope.paginationConf.totalItems = rs.pagersInfo.totalElements;
+                    $scope.studentManages = rs.dataList;
+                });
+            };
+            //清空查询条件
+            $scope.reset = function () {
+                $scope.studentManage = {};
+            }
+
+            //启用停用切换
+            $scope.changeState = function (state, id) {
+                $scope.student = {};
+                $scope.student.studentState = state;
+                $scope.student.studentId = id;
+                $http.post("updateStudentState", $scope.student).success(function () {
+                    $state.go('studentManage', {}, {reload: true});
+                })
+            }
+            //查询当前管理员所在学院状态以做权限控制
+            userService.user().then(function (res) {
+                $scope.user = res.data;
+            });
+            $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
+                $scope.instituteInfo = response;
+            });
+            $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', $scope.search);
+
+        }])
+    .controller('studentManageInfoCtrl', [
+        '$scope',
+        '$http',
+        '$stateParams',
+        function ($scope, $http, $stateParams) {
+            //学生详情
+            $scope.studentId = $stateParams.studentId;
+            $http.post('showStudentDetails', $scope.studentId).success(function (response) {
+                $scope.studentInfo = response;
+            });
+        }])
+    .controller('studentManageEditCtrl', [
+        '$scope',
+        '$http',
+        '$stateParams',
+        '$modal',
+        '$location',
+        '$log',
+        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+            //学生编辑
+            $scope.studentId = $stateParams.studentId;
+            //动态生成年级
+            $scope.gradeManages = [];
+            $scope.currentYear = (new Date()).getFullYear();
+            for (var i = 0; i < 5; i++) {
+                $scope.gradeManages.push({grade: $scope.currentYear - i, gradeName: ($scope.currentYear - i) + "级"});
+            }
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            $http.post('showStudentDetails', $scope.studentId).success(function (response) {
+                $scope.studentInfo = response.studentManage;
+                //查询某学院下的所有专业
+                $http.post("majorManage/" + $scope.studentInfo.instituteId, {}).success(function (rs) {
+                    $scope.majorManages = rs;
+                });
+            });
+
+            $scope.studentInitState = "启用";
+            //查询某学院下的所有专业
+            $scope.changeInstitute = function (instituteId) {
+                $scope.studentInfo.majorId = null;
+                $http.post("majorManage/" + instituteId, {}).success(function (rs) {
+                    $scope.majorManages = rs;
+                });
+            }
+            $scope.studentSubmit = function () {
+                if ($scope.studentInfo.studentState == null) {
+                    $scope.studentInfo.studentState = '启用';
+                }
+                for (var i = 0; i < $scope.majorManages.length; i++) {
+                    if ($scope.majorManages[i].majorId == $scope.studentInfo.majorId) {
+                        $scope.majorName = $scope.majorManages[i].majorName;
+                    }
+                }
+                //学生全称组合
+                $scope.studentInfo.studentFullName = $scope.studentInfo.grade + "级" + $scope.majorName + $scope.studentInfo.studentNumber + "班";
+                $scope.student = {};
+                $scope.student = $scope.studentInfo;
+                $scope.student.studentId = $scope.studentId;
+                $scope.result = {};
+                $http.post("updateStudent", $scope.student).success(function (response) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = response;
+                    $scope.open('sm');
+                    $scope.$modalInstance = undefined;
+                });
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        // 跳转到列表页面
+                        if ($scope.result.msg == "该学生已存在") {
+
+                        } else {
+                            $location.path('/studentManage');
+                        }
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                };
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                              requestResults) {
+                $scope.results = requestResults;
+                // 确认按钮（close()可以带参数）
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+                // 取消按钮
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };//弹窗结束
+        }])
+    .controller('studentManageAddCtrl', [
+        '$scope',
+        '$http',
+        '$modal',
+        '$location',
+        '$log',
+        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+            //动态生成年级
+            $scope.gradeManages = [];
+            $scope.currentYear = (new Date()).getFullYear();
+            for (var i = 0; i < 5; i++) {
+                $scope.gradeManages.push({grade: $scope.currentYear - i, gradeName: ($scope.currentYear - i) + "级"});
+            }
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            //查询某学院下的所有专业
+            $scope.changeInstitute = function (instituteId) {
+                $http.post("majorManage/" + instituteId, {}).success(function (rs) {
+                    $scope.majorManages = rs;
+                });
+            }
+            //学生添加
+            $scope.studentSubmit = function () {
+                $scope.student = {};
+                $scope.studentInitState = "启用";
+                if ($scope.studentInfo.studentState == null) {
+                    $scope.studentInfo.studentState = '启用';
+                }
+                for (var i = 0; i < $scope.majorManages.length; i++) {
+                    if ($scope.majorManages[i].majorId == $scope.studentInfo.majorId) {
+                        $scope.majorName = $scope.majorManages[i].majorName;
+                    }
+                }
+                //学生全称组合
+                $scope.studentInfo.studentFullName = $scope.studentInfo.grade + "级" + $scope.majorName + $scope.studentInfo.studentNumber + "班";
+                $scope.student = $scope.studentInfo;
+                $scope.result = {};
+                $http.post('createStudent', $scope.student).success(function (response) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = response;
+                    $scope.open('sm');
+                    $scope.$modalInstance = undefined;
+                });
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        // 跳转到列表页面
+                        if ($scope.result.msg == "新增成功") {
+                            $location.path('/studentManage');
+                        }
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                };
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                              requestResults) {
+                $scope.results = requestResults;
+                // 确认按钮（close()可以带参数）
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+                // 取消按钮
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };//弹窗结束
         }]);

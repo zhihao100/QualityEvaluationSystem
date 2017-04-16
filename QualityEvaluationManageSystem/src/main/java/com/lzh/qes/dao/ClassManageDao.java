@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by 新乐 on 2017/4/13.
  */
-public interface ClassManageDAO extends CrudRepository<ClassManage, Integer> {
+public interface ClassManageDao extends CrudRepository<ClassManage, Integer> {
     /**
      * 多条件分页查询班级
      *

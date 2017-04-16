@@ -1,7 +1,7 @@
 package com.lzh.qes.bean;
 
 import com.lzh.qes.enums.IsEnableState;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class Major {
     /**
      * 专业名称
      */
-    @NotEmpty
+    @NotBlank
     private String majorName;
     /**
      * 专业状态

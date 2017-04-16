@@ -43,6 +43,11 @@ public class MajorManageService implements IMajorManageService {
         return "新增成功";
     }
 
+    @Override
+    public Major findMajorByMajorId(Integer majorId) {
+        return majorDao.findByMajorId(majorId);
+    }
+
     /**
      * 修改专业状态
      *

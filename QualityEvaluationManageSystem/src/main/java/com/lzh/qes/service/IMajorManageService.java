@@ -33,4 +33,11 @@ public interface IMajorManageService {
      * @param major
      */
     String addMajor(Major major);
+
+    /**
+     * 通过ID查找该专业
+     *
+     * @param majorId
+     */
+    Major findMajorByMajorId(Integer majorId);
 }
