@@ -896,4 +896,195 @@ qesModule.controller('instituteManageCtrl', [
                     $modalInstance.dismiss('cancel');
                 };
             };//弹窗结束
+        }])
+    .controller('mainRuleManageCtrl', [
+        '$scope',
+        '$http',
+        '$state',
+        function ($scope, $http, $state) {
+            //细则大类列表
+            $scope.mainRuleManage = {};
+            var search = function () {
+                var postData = {
+                    currentPage: $scope.paginationConf.currentPage,
+                    pageSize: $scope.paginationConf.itemsPerPage,
+                    rule: $scope.mainRuleManage,
+                };
+                $http.post('findAllMainRuleByMultiConditionAndPage', postData).success(function (response) {
+                    $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
+                    $scope.mainRuleManages = response.dataList;
+                });
+            };
+            $scope.search = search;
+
+            //配置分页基本参数
+            $scope.paginationConf = {
+                currentPage: 1,
+                itemsPerPage: 5,
+                perPageOptions: [5, 10, 20]
+            };
+            $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);
+            //清空查询条件
+            $scope.reset = function () {
+                $scope.mainRuleManage = {};
+            }
+            //启用停用切换
+            $scope.changeState = function (state, id) {
+                $scope.rule = {};
+                $scope.rule.ruleState = state;
+                $scope.rule.ruleId = id;
+                $http.post("updateMainRuleState", $scope.rule).success(function () {
+                    $state.go('mainRuleManage', {}, {reload: true});
+                })
+            }
+        }])
+    .controller('mainRuleManageInfoCtrl', [
+        '$scope',
+        '$http',
+        '$stateParams',
+        function ($scope, $http, $stateParams) {
+            //细则大类详情
+            $scope.ruleId = $stateParams.ruleId;
+            $http.post('showMainRuleDetails', $scope.ruleId).success(function (response) {
+                $scope.ruleInfo = response;
+            });
+        }])
+    .controller('mainRuleManageEditCtrl', [
+        '$scope',
+        '$http',
+        '$stateParams',
+        '$modal',
+        '$location',
+        '$log',
+        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+            //细则大类编辑
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            $scope.ruleId = $stateParams.ruleId;
+            $http.post('showMainRuleDetails', $scope.ruleId).success(function (response) {
+                $scope.ruleInfo = response;
+            });
+            $scope.manageSubmit = function () {
+                $scope.rule = {};
+                $scope.rule = $scope.ruleInfo.rule;
+                $scope.rule.ruleId = $scope.ruleId;
+                $scope.result = {};
+                $http.post("updateMainRule", $scope.rule).success(function (response) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = response;
+                    $scope.open('sm');
+                    $scope.$modalInstance = undefined;
+                });
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        // 跳转到列表页面
+                        if ($scope.result.msg == "该细则大类已存在" || $scope.result.msg == "该细则大类不存在") {
+
+                        } else {
+                            $location.path('/mainRuleManage');
+                        }
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                };
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                              requestResults) {
+                $scope.results = requestResults;
+                // 确认按钮（close()可以带参数）
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+                // 取消按钮
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };//弹窗结束
+        }])
+    .controller('mainRuleManageAddCtrl', [
+        '$scope',
+        '$http',
+        '$modal',
+        '$location',
+        '$log',
+        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+            //细则大类添加
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            //提交
+            $scope.manageSubmit = function () {
+                $scope.rule = {};
+                $scope.ruleInitState = "启用";
+                if ($scope.ruleInfo.ruleState == null) {
+                    $scope.ruleInfo.ruleState = '启用';
+                }
+                $scope.rule = $scope.ruleInfo;
+                $scope.result = {};
+                $http.post('createMainRule', $scope.rule).success(function (response) {
+                    $scope.result.title = "提示消息";
+                    $scope.result.msg = response;
+                    $scope.open('sm');
+                    $scope.$modalInstance = undefined;
+                });
+                // 弹窗
+                $scope.open = function (size) {
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'tpls/common/popupMessage.html',
+                        controller: ModalInstanceCtrl,
+                        size: size,
+                        resolve: {
+                            requestResults: function () {
+                                return $scope.result;
+                            }
+                        }
+                    });
+                    // 成功的回调方法 （可带参数）
+                    $scope.modalInstance.result.then(function () {
+                        // 跳转到列表页面
+                        if ($scope.result.msg == "该细则大类已存在") {
+
+                        } else {
+                            $location.path('/mainRuleManage');
+                        }
+                        // 失败的回调方法
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                };
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            var ModalInstanceCtrl = function ($scope, $modalInstance,
+                                              requestResults) {
+                $scope.results = requestResults;
+                // 确认按钮（close()可以带参数）
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+                // 取消按钮
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };//弹窗结束
         }]);

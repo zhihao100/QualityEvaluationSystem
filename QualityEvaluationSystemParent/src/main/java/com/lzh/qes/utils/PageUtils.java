@@ -2,11 +2,12 @@ package com.lzh.qes.utils;
 
 import com.lzh.qes.bean.*;
 
+import java.util.Date;
+
 /**
  * Created by liuzhihao on 2017/4/7.
  */
 public class PageUtils {
-
     /**
      * 当前页
      */
@@ -20,7 +21,6 @@ public class PageUtils {
      * 管理员
      */
     private Manager manager;
-
     /**
      * 学院
      */
@@ -37,6 +37,18 @@ public class PageUtils {
      * 专业
      */
     private Major major;
+    /**
+     * 细则大类
+     */
+    private MainRule mainRule;
+    /**
+     * 开始时间
+     */
+    private Date startDate;
+    /**
+     * 结束时间
+     */
+    private Date endDate;
 
     public int getCurrentPage() {
         return currentPage;
@@ -92,5 +104,29 @@ public class PageUtils {
 
     public void setMajor(Major major) {
         this.major = major;
+    }
+
+    public MainRule getMainRule() {
+        return mainRule;
+    }
+
+    public void setMainRule(MainRule mainRule) {
+        this.mainRule = mainRule;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

@@ -1,0 +1,109 @@
+package com.lzh.qes.bean;
+
+import com.lzh.qes.enums.IsEnableState;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
+/**
+ * Created by liuzhihao on 2017/4/17.
+ */
+@Entity
+public class MainRule {
+    /**
+     * 细则大类编号
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer ruleId;
+    /**
+     * 细则大类名称
+     */
+    @NotBlank
+    private String ruleName;
+    /**
+     * 所属学院
+     */
+    @NotNull
+    private Integer instituteId;
+    /**
+     * 所占权重
+     */
+    @NotNull
+    private Double weight;
+    /**
+     * 适用开始时间
+     */
+    @NotBlank
+    private Date suitStartDate;
+    /**
+     * 适用结束时间
+     */
+    @NotBlank
+    private Date suitEndDate;
+    /**
+     * 规则状态
+     */
+    @Autowired
+    @Enumerated(EnumType.ORDINAL)
+    private IsEnableState ruleState;
+
+    public Integer getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(Integer ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public String getRuleName() {
+        return ruleName;
+    }
+
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+    }
+
+    public Integer getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Integer instituteId) {
+        this.instituteId = instituteId;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Date getSuitStartDate() {
+        return suitStartDate;
+    }
+
+    public void setSuitStartDate(Date suitStartDate) {
+        this.suitStartDate = suitStartDate;
+    }
+
+    public Date getSuitEndDate() {
+        return suitEndDate;
+    }
+
+    public void setSuitEndDate(Date suitEndDate) {
+        this.suitEndDate = suitEndDate;
+    }
+
+    public IsEnableState getRuleState() {
+        return ruleState;
+    }
+
+    public void setRuleState(IsEnableState ruleState) {
+        this.ruleState = ruleState;
+    }
+}

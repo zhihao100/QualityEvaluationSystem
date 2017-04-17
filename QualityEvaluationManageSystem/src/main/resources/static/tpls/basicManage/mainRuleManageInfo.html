@@ -1,0 +1,76 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">细则大类详情</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">基础设置</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="active">
+            <a ui-sref="mainRuleManage">细则大类管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则大类详情</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green-sharp bold">细则大类详情</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <form class="form form-horizontal" role="form">
+                    <div class="form-body">
+                        <section class="infogroup">
+                            <h4>人员信息</h4>
+                            <div class="row">
+                                <div class="col-md-6">细则大类编号：<span ng-bind="ruleInfo.rule.ruleId"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">细则大类名称：<span ng-bind="ruleInfo.rule.ruleName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属学院：<span ng-bind="ruleInfo.instituteName"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">细则大类状态：<span ng-bind="ruleInfo.rule.ruleState"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">注册时间：<span
+                                        ng-bind="ruleInfo.rule.registerDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">最后登录时间：<span
+                                        ng-bind="ruleInfo.rule.lastLoginDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="form-action">
+                        <div class="row txtcenter">
+                            <a ui-sref="mainRuleManage" class="btn default"><i class="fa fa-chevron-circle-left"></i>
+                                返回</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
