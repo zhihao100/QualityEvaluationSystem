@@ -35,31 +35,29 @@
                 <form class="form form-horizontal" role="form">
                     <div class="form-body">
                         <section class="infogroup">
-                            <h4>人员信息</h4>
+                            <h4>类别信息</h4>
                             <div class="row">
-                                <div class="col-md-6">细则大类编号：<span ng-bind="ruleInfo.rule.ruleId"></span></div>
+                                <div class="col-md-6">细则大类编号：<span ng-bind="ruleInfo.mainRule.ruleId"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">细则大类名称：<span ng-bind="ruleInfo.rule.ruleName"></span>
+                                <div class="col-md-6">细则大类名称：<span ng-bind="ruleInfo.mainRule.ruleName"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">所属学院：<span ng-bind="ruleInfo.instituteName"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">细则大类状态：<span ng-bind="ruleInfo.rule.ruleState"></span>
+                                <div class="col-md-6">所占权重：<span ng-bind="ruleInfo.mainRule.weight | toPercent"></span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">注册时间：<span
-                                        ng-bind="ruleInfo.rule.registerDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
+                                <div class="col-md-6">细则大类状态：<span ng-if="ruleInfo.mainRule.ruleState=='启用'"><b
+                                        class="label label-sm label-success">启用</b></span>
+                                    <span ng-if="ruleInfo.mainRule.ruleState=='停用'"><b
+                                            class="label label-sm label-default">停用</b></span>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">最后登录时间：<span
-                                        ng-bind="ruleInfo.rule.lastLoginDate | date:'yyyy/MM/dd HH:mm:ss'"></span>
-                                </div>
-                            </div>
+
                         </section>
                     </div>
                     <div class="form-action">

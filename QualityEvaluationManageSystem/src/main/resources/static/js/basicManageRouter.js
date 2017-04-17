@@ -90,25 +90,25 @@ qesModule.config(function ($stateProvider) {
         //细则大类管理
         .state('mainRuleManage', {
             url: "/mainRuleManage",
-            templateUrl: 'tpls/mainRuleManage/mainRuleManage.html',
+            templateUrl: 'tpls/basicManage/mainRuleManage.html',
             controller: "mainRuleManageCtrl"
         })
         //细则大类管理详情
         .state('mainRuleManageInfo', {
             url: "/mainRuleManageInfo/:ruleId",
-            templateUrl: 'tpls/mainRuleManage/mainRuleManageInfo.html',
+            templateUrl: 'tpls/basicManage/mainRuleManageInfo.html',
             controller: "mainRuleManageInfoCtrl"
         })
         //细则大类编辑
         .state('mainRuleManageEdit', {
             url: "/mainRuleManageEdit/:ruleId",
-            templateUrl: 'tpls/mainRuleManage/mainRuleManageEdit.html',
+            templateUrl: 'tpls/basicManage/mainRuleManageEdit.html',
             controller: 'mainRuleManageEditCtrl'
         })
         //细则大类新增
         .state('mainRuleManageAdd', {
             url: "/mainRuleManageAdd",
-            templateUrl: 'tpls/mainRuleManage/mainRuleManageAdd.html',
+            templateUrl: 'tpls/basicManage/mainRuleManageAdd.html',
             controller: 'mainRuleManageAddCtrl'
         })
 });

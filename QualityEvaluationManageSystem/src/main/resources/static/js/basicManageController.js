@@ -901,14 +901,15 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$state',
-        function ($scope, $http, $state) {
+        'userService',
+        function ($scope, $http, $state, userService) {
             //细则大类列表
             $scope.mainRuleManage = {};
             var search = function () {
                 var postData = {
                     currentPage: $scope.paginationConf.currentPage,
                     pageSize: $scope.paginationConf.itemsPerPage,
-                    rule: $scope.mainRuleManage,
+                    mainRule: $scope.mainRuleManage
                 };
                 $http.post('findAllMainRuleByMultiConditionAndPage', postData).success(function (response) {
                     $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
@@ -916,7 +917,10 @@ qesModule.controller('instituteManageCtrl', [
                 });
             };
             $scope.search = search;
-
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
@@ -930,13 +934,20 @@ qesModule.controller('instituteManageCtrl', [
             }
             //启用停用切换
             $scope.changeState = function (state, id) {
-                $scope.rule = {};
-                $scope.rule.ruleState = state;
-                $scope.rule.ruleId = id;
-                $http.post("updateMainRuleState", $scope.rule).success(function () {
+                $scope.mainRule = {};
+                $scope.mainRule.ruleState = state;
+                $scope.mainRule.ruleId = id;
+                $http.post("updateMainRuleState", $scope.mainRule).success(function () {
                     $state.go('mainRuleManage', {}, {reload: true});
                 })
             }
+            //查询当前管理员所在学院状态以做权限控制
+            userService.user().then(function (res) {
+                $scope.user = res.data;
+            });
+            $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
+                $scope.instituteInfo = response;
+            });
         }])
     .controller('mainRuleManageInfoCtrl', [
         '$scope',
@@ -966,9 +977,9 @@ qesModule.controller('instituteManageCtrl', [
             $http.post('showMainRuleDetails', $scope.ruleId).success(function (response) {
                 $scope.ruleInfo = response;
             });
-            $scope.manageSubmit = function () {
+            $scope.mainRuleSubmit = function () {
                 $scope.rule = {};
-                $scope.rule = $scope.ruleInfo.rule;
+                $scope.rule = $scope.ruleInfo.mainRule;
                 $scope.rule.ruleId = $scope.ruleId;
                 $scope.result = {};
                 $http.post("updateMainRule", $scope.rule).success(function (response) {
@@ -992,9 +1003,7 @@ qesModule.controller('instituteManageCtrl', [
                     // 成功的回调方法 （可带参数）
                     $scope.modalInstance.result.then(function () {
                         // 跳转到列表页面
-                        if ($scope.result.msg == "该细则大类已存在" || $scope.result.msg == "该细则大类不存在") {
-
-                        } else {
+                        if ($scope.result.msg == "修改成功") {
                             $location.path('/mainRuleManage');
                         }
                         // 失败的回调方法
@@ -1032,7 +1041,7 @@ qesModule.controller('instituteManageCtrl', [
                 $scope.instituteManages = rs;
             });
             //提交
-            $scope.manageSubmit = function () {
+            $scope.mainRuleSubmit = function () {
                 $scope.rule = {};
                 $scope.ruleInitState = "启用";
                 if ($scope.ruleInfo.ruleState == null) {
@@ -1061,9 +1070,7 @@ qesModule.controller('instituteManageCtrl', [
                     // 成功的回调方法 （可带参数）
                     $scope.modalInstance.result.then(function () {
                         // 跳转到列表页面
-                        if ($scope.result.msg == "该细则大类已存在") {
-
-                        } else {
+                        if ($scope.result.msg == "新增成功") {
                             $location.path('/mainRuleManage');
                         }
                         // 失败的回调方法

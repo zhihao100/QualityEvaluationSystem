@@ -18,4 +18,20 @@ public interface MainRuleDao extends CrudRepository<MainRule, Integer> {
      * @return
      */
     Page<MainRule> findAll(Specification<MainRule> spec, Pageable pageable);
+
+    /**
+     * 通过ruleId查询该类详情
+     *
+     * @param ruleId
+     * @return
+     */
+    MainRule findMainRuleByRuleId(Integer ruleId);
+
+    /**
+     * 通过ruleName和查询instituteId该类详情
+     *
+     * @param ruleName,instituteId
+     * @return
+     */
+    MainRule findMainRuleByRuleNameAndInstituteId(String ruleName, Integer instituteId);
 }

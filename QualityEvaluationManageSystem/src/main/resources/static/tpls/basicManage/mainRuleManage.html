@@ -41,17 +41,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">状态：</label>
+                                <label class="col-md-4 control-label">所属学院：</label>
                                 <div class="col-md-8">
                                     <select class="form-control" data-placeholder="请选择"
-                                            ng-model="mainRuleManage.ruleState"
-                                            required="">
+                                            ng-model="mainRuleManage.instituteId"
+                                            ng-change="changeInstitute(mainRuleManage.instituteId)"
+                                            ng-options="instituteManage.instituteId as instituteManage.instituteName for instituteManage in instituteManages">
                                         <option value="">---请选择---</option>
-                                        <option value="启用">启用</option>
-                                        <option value="停用">停用</option>
                                     </select>
                                 </div>
                             </div>
+
                         </div>
                         <div class="form-actions">
                             <div class="row">
@@ -68,7 +68,7 @@
                     </div>
                 </form>
                 <div class="clearfix"></div>
-                <div class="table-toolbar ng-scope" ng-if="user.superManager">
+                <div class="table-toolbar ng-scope" ng-if="user.superManager||(instituteInfo.instituteState=='启用')">
                     <div class="btn-group">
                         <a ui-sref="mainRuleManageAdd" class="btn blue"> <i class="fa fa-plus"></i> 新增细则大类</a>
                     </div>
@@ -79,43 +79,44 @@
                         <tr role="row" class="heading">
                             <th width="6%">序号</th>
                             <th width="8%">编号</th>
-                            <th width="12%">细则大类名称</th>
-                            <th width="14%">所属学院</th>
-                            <th width="8%">所占权重</th>
-                            <th width="8%">适用学年</th>
-                            <th width="10%">状态</th>
+                            <th width="24%">细则大类名称</th>
+                            <th width="20%">所属学院</th>
+                            <th width="12%">所占权重</th>
+                            <th width="12%">状态</th>
                             <th width="18%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr role="row" ng-repeat="mainRuleManage in mainRuleManages">
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
-                            <td ng-bind="mainRuleManage.rule.ruleId"></td>
-                            <td ng-bind="mainRuleManage.rule.ruleName"></td>
+                            <td ng-bind="mainRuleManage.mainRule.ruleId"></td>
+                            <td ng-bind="mainRuleManage.mainRule.ruleName"></td>
                             <td ng-bind="mainRuleManage.instituteName"></td>
-                            <td ng-if="mainRuleManage.rule.ruleState=='停用'"><span
+                            <td ng-bind="mainRuleManage.mainRule.weight | toPercent"></td>
+                            <td ng-if="mainRuleManage.mainRule.ruleState=='停用'"><span
                                     class="label label-sm label-default">停用</span>
                             </td>
-                            <td ng-if="mainRuleManage.rule.ruleState=='启用'"><span
+                            <td ng-if="mainRuleManage.mainRule.ruleState=='启用'"><span
                                     class="label label-sm label-success">启用</span>
                             </td>
                             <td>
-                                <a ng-href="#/mainRuleManageInfo/{{mainRuleManage.rule.ruleId}}"
+                                <a ng-href="#/mainRuleManageInfo/{{mainRuleManage.mainRule.ruleId}}"
                                    class="btn btn-xs default btn-editable">
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
-                                <a ng-href="#/mainRuleManageEdit/{{mainRuleManage.rule.ruleId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="user.superManager">
+                                <a ng-href="#/mainRuleManageEdit/{{mainRuleManage.mainRule.ruleId}}"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="user.superManager||(user.instituteId==mainRuleManage.mainRule.instituteId)">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
-                                <a ng-click="changeState('停用',mainRuleManage.rule.ruleId)"
+                                <a ng-click="changeState('停用',mainRuleManage.mainRule.ruleId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="mainRuleManage.rule.ruleState=='启用'&&user.superManager">
+                                   ng-if="mainRuleManage.mainRule.ruleState=='启用'&&(user.superManager||(user.instituteId==mainRuleManage.mainRule.instituteId))">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
-                                <a ng-click="changeState('启用',mainRuleManage.rule.ruleId)"
+                                <a ng-click="changeState('启用',mainRuleManage.mainRule.ruleId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="mainRuleManage.rule.ruleState=='停用'&&user.superManager">
+                                   ng-if="mainRuleManage.mainRule.ruleState=='停用'&&(user.superManager||(user.instituteId==mainRuleManage.mainRule.instituteId))">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
                             </td>

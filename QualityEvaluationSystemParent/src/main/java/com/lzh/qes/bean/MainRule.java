@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * Created by liuzhihao on 2017/4/17.
@@ -34,16 +33,7 @@ public class MainRule {
      */
     @NotNull
     private Double weight;
-    /**
-     * 适用开始时间
-     */
-    @NotBlank
-    private Date suitStartDate;
-    /**
-     * 适用结束时间
-     */
-    @NotBlank
-    private Date suitEndDate;
+
     /**
      * 规则状态
      */
@@ -81,22 +71,6 @@ public class MainRule {
 
     public void setWeight(Double weight) {
         this.weight = weight;
-    }
-
-    public Date getSuitStartDate() {
-        return suitStartDate;
-    }
-
-    public void setSuitStartDate(Date suitStartDate) {
-        this.suitStartDate = suitStartDate;
-    }
-
-    public Date getSuitEndDate() {
-        return suitEndDate;
-    }
-
-    public void setSuitEndDate(Date suitEndDate) {
-        this.suitEndDate = suitEndDate;
     }
 
     public IsEnableState getRuleState() {

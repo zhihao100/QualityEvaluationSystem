@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,6 +25,7 @@ import java.util.*;
 /**
  * Created by liuzhihao on 2017/4/17.
  */
+@Service
 public class MainRuleManageService implements IMainRuleManageService {
     @Autowired
     private MainRuleDao mainRuleDao;
@@ -63,6 +65,69 @@ public class MainRuleManageService implements IMainRuleManageService {
         return voPageList;
     }
 
+    @Override
+    public String updateMainRuleState(MainRule mainRule) {
+        MainRule existedMainRule = mainRuleDao.findMainRuleByRuleId(mainRule.getRuleId());
+        if (existedMainRule != null) {
+            existedMainRule.setRuleState(mainRule.getRuleState());
+            mainRuleDao.save(existedMainRule);
+            return "修改成功";
+        }
+        return "修改失败，类别不存在";
+    }
+
+    @Override
+    public MainRuleVO showMainRuleDetails(Integer ruleId) {
+        MainRule mainRule = mainRuleDao.findMainRuleByRuleId(ruleId);
+        MainRuleVO mainRuleVO = new MainRuleVO();
+        mainRuleVO.setInstituteName(iInstituteManageService.showInstituteDetails(mainRule.getInstituteId()).getInstituteName());
+        mainRuleVO.setMainRule(mainRule);
+        return mainRuleVO;
+    }
+
+    @Override
+    public String createMainRule(MainRule mainRule) {
+        if (null == mainRule.getRuleName()) {
+            return "请录入类别名称";
+        }
+        if (null == mainRule.getInstituteId()) {
+            return "请选择学院";
+        }
+        if (null == mainRule.getWeight()) {
+            return "请录入权重";
+        }
+        MainRule existedMainRule = mainRuleDao.findMainRuleByRuleNameAndInstituteId(mainRule.getRuleName(), mainRule.getInstituteId());
+        if (null == existedMainRule) {
+            mainRuleDao.save(mainRule);
+            return "新增成功";
+        }
+        return "该类别已存在";
+    }
+
+    @Override
+    public String updateMainRule(MainRule mainRule) {
+        if (null == mainRule.getRuleName()) {
+            return "请录入类别名称再修改";
+        }
+        if (null == mainRule.getInstituteId()) {
+            return "请选择学院再修改";
+        }
+        if (null == mainRule.getWeight()) {
+            return "请录入权重再修改";
+        }
+        MainRule existedMainRule = mainRuleDao.findMainRuleByRuleId(mainRule.getRuleId());
+        MainRule existedMainRuleName = mainRuleDao.findMainRuleByRuleNameAndInstituteId(mainRule.getRuleName(), mainRule.getInstituteId());
+        if (!existedMainRule.getRuleName().equals(mainRule.getRuleName()) && null != existedMainRuleName) {
+            return "该类别已存在";
+        }
+        existedMainRule.setRuleName(mainRule.getRuleName());
+        existedMainRule.setInstituteId(mainRule.getInstituteId());
+        existedMainRule.setWeight(mainRule.getWeight());
+        existedMainRule.setRuleState(mainRule.getRuleState());
+        mainRuleDao.save(existedMainRule);
+        return "修改成功";
+    }
+
     /**
      * 拼接SQL
      *
@@ -73,25 +138,11 @@ public class MainRuleManageService implements IMainRuleManageService {
      */
     private List<Predicate> createMultiConditionSQL(Root<MainRule> root, CriteriaBuilder builder, PageUtils pageUtils) {
         MainRule mainRule = pageUtils.getMainRule();
-        Date suitStartDate = pageUtils.getStartDate();
-        Date suitEndDate = pageUtils.getEndDate();
         List<Predicate> predicates = new ArrayList<Predicate>();
-		/* 加入细则大类状态 */
-        if (null != mainRule.getRuleState()) {
-            predicates.add(builder.equal(root.get("ruleState"), mainRule.getRuleState()));
-        }
         /* 加入细则大类所属学院 */
         if (null != mainRule.getInstituteId()) {
             predicates.add(builder.equal(root.get("instituteId"), mainRule.getInstituteId()));
         }
-        /* 加入细则大类所属学院 */
-        if (null != mainRule.getInstituteId()) {
-            predicates.add(builder.equal(root.get("instituteId"), mainRule.getInstituteId()));
-        }
-        // 加入细则大类适用时间
-       /* if (null != pageUtils.getStartDate()) {
-            predicates.add(builder.ge(root.<Date>get(pageUtils.getStartDate()), mainRule.getSuitStartDate());
-        }*/
 		/* 加入细则大类名称，模糊查询 */
         if (StringUtils.isNotBlank(mainRule.getRuleName())) {
             predicates.add(builder.like(root.get("ruleName"), "%" + mainRule.getRuleName() + "%"));
