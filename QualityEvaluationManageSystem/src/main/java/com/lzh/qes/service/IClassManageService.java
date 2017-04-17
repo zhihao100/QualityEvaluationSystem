@@ -5,12 +5,14 @@ import com.lzh.qes.modal.vo.ClassManageVO;
 import com.lzh.qes.search.PageList;
 import com.lzh.qes.utils.PageUtils;
 
+import java.util.List;
+
 /**
  * Created by liuzhihao on 2017/4/14.
  */
 public interface IClassManageService {
     /**
-     *
+     *多条件分页查询班级
      * @param pageUtils
      * @return
      */
@@ -44,5 +46,12 @@ public interface IClassManageService {
      * @return
      */
     String createClass(ClassManage classManage);
+
+    /**
+     * 根据专业majorId查询班级
+     * @param majorId
+     * @return
+     */
+    List<ClassManage> findAllClassByMajorId(Integer majorId);
 
 }

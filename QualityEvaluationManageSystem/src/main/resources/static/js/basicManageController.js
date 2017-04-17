@@ -607,6 +607,39 @@ qesModule.controller('instituteManageCtrl', [
         '$state',
         'userService',
         function ($scope, $http, $state, userService) {
+            //动态生成年级
+            $scope.gradeManages = [];
+            $scope.currentYear = (new Date()).getFullYear();
+            for (var i = 0; i < 5; i++) {
+                $scope.gradeManages.push({grade: $scope.currentYear - i, gradeName: ($scope.currentYear - i) + "级"});
+            }
+            //学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            //查询某学院下的所有专业
+            $scope.changeInstitute=function(instituteId){
+                $http.post("majorManage/" + instituteId, {}).success(function (rs) {
+                    $scope.majorManages = rs;
+                    //查询该专业下的所有班级
+                    $scope.changeMajor=function(majorId){
+                        $http.post("findAllClassByMajorId",majorId).success(function(res){
+                            $scope.classManages=res;
+                            //查询该专业该年级下的所有班级
+                            $scope.changeGrade=function(grade){
+                                $scope.selectedGrade=[];
+                                if(grade!=null&&grade!=""){
+                                    $scope.selectedGrade=grade;
+                                }else{
+                                    for(var j=0;j<5;j++){
+                                        $scope.selectedGrade.push($scope.currentYear - i);
+                                    }
+                                }
+                            }
+                        })
+                    }
+                });
+            }
             //学生列表
             $scope.studentManage = {};
             //配置分页基本参数
@@ -629,16 +662,8 @@ qesModule.controller('instituteManageCtrl', [
             //清空查询条件
             $scope.reset = function () {
                 $scope.studentManage = {};
-            }
-
-            //启用停用切换
-            $scope.changeState = function (state, id) {
-                $scope.student = {};
-                $scope.student.studentState = state;
-                $scope.student.studentId = id;
-                $http.post("updateStudentState", $scope.student).success(function () {
-                    $state.go('studentManage', {}, {reload: true});
-                })
+                $scope.majorManages={};
+                $scope.classManages={};
             }
             //查询当前管理员所在学院状态以做权限控制
             userService.user().then(function (res) {
@@ -682,33 +707,48 @@ qesModule.controller('instituteManageCtrl', [
                 $scope.instituteManages = rs;
             });
             $http.post('showStudentDetails', $scope.studentId).success(function (response) {
-                $scope.studentInfo = response.studentManage;
+                $scope.studentInfo = response.student;
                 //查询某学院下的所有专业
                 $http.post("majorManage/" + $scope.studentInfo.instituteId, {}).success(function (rs) {
                     $scope.majorManages = rs;
                 });
+                //查询某专业下的所有班级
+                $http.post("findAllClassByMajorId",$scope.studentInfo.majorId).success(function(res){
+                    $scope.classManages=res;
+                })
             });
-
-            $scope.studentInitState = "启用";
+            $scope.studentInitGender = 0;
             //查询某学院下的所有专业
             $scope.changeInstitute = function (instituteId) {
-                $scope.studentInfo.majorId = null;
-                $http.post("majorManage/" + instituteId, {}).success(function (rs) {
-                    $scope.majorManages = rs;
-                });
+                if(instituteId!=null) {
+                    $http.post("majorManage/" + instituteId, {}).success(function (rs) {
+                        $scope.majorManages = rs;
+                        //查询该专业下的所有班级
+                        $scope.changeMajor = function (majorId) {
+                            if(majorId!=null) {
+                                $http.post("findAllClassByMajorId", majorId).success(function (res) {
+                                    $scope.classManages = res;
+                                    //查询该专业该年级下的所有班级
+                                    $scope.changeGrade = function (grade) {
+                                        $scope.selectedGrade = [];
+                                        if (grade != null && grade != "") {
+                                            $scope.selectedGrade = grade;
+                                        } else {
+                                            for (var j = 0; j < 5; j++) {
+                                                $scope.selectedGrade.push($scope.currentYear - i);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
             }
             $scope.studentSubmit = function () {
-                if ($scope.studentInfo.studentState == null) {
-                    $scope.studentInfo.studentState = '启用';
+                if ($scope.studentInfo.gender == null) {
+                    $scope.studentInfo.gender = 0;
                 }
-                for (var i = 0; i < $scope.majorManages.length; i++) {
-                    if ($scope.majorManages[i].majorId == $scope.studentInfo.majorId) {
-                        $scope.majorName = $scope.majorManages[i].majorName;
-                    }
-                }
-                //学生全称组合
-                $scope.studentInfo.studentFullName = $scope.studentInfo.grade + "级" + $scope.majorName + $scope.studentInfo.studentNumber + "班";
-                $scope.student = {};
                 $scope.student = $scope.studentInfo;
                 $scope.student.studentId = $scope.studentId;
                 $scope.result = {};
@@ -733,9 +773,7 @@ qesModule.controller('instituteManageCtrl', [
                     // 成功的回调方法 （可带参数）
                     $scope.modalInstance.result.then(function () {
                         // 跳转到列表页面
-                        if ($scope.result.msg == "该学生已存在") {
-
-                        } else {
+                        if ($scope.result.msg == "修改成功") {
                             $location.path('/studentManage');
                         }
                         // 失败的回调方法
@@ -779,24 +817,38 @@ qesModule.controller('instituteManageCtrl', [
             });
             //查询某学院下的所有专业
             $scope.changeInstitute = function (instituteId) {
-                $http.post("majorManage/" + instituteId, {}).success(function (rs) {
-                    $scope.majorManages = rs;
-                });
+                if(instituteId!=null) {
+                    $http.post("majorManage/" + instituteId, {}).success(function (rs) {
+                        $scope.majorManages = rs;
+                        //查询该专业下的所有班级
+                        if(majorId!=null) {
+                            $scope.changeMajor = function (majorId) {
+                                $http.post("findAllClassByMajorId", majorId).success(function (res) {
+                                    $scope.classManages = res;
+                                    //查询该专业该年级下的所有班级
+                                    $scope.changeGrade = function (grade) {
+                                        $scope.selectedGrade = [];
+                                        if (grade != null && grade != "") {
+                                            $scope.selectedGrade = grade;
+                                        } else {
+                                            for (var j = 0; j < 5; j++) {
+                                                $scope.selectedGrade.push($scope.currentYear - i);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
             }
             //学生添加
             $scope.studentSubmit = function () {
+                $scope.studentInitGender = 0;
+                if ($scope.studentInfo.gender == null) {
+                    $scope.studentInfo.gender = 0;
+                }
                 $scope.student = {};
-                $scope.studentInitState = "启用";
-                if ($scope.studentInfo.studentState == null) {
-                    $scope.studentInfo.studentState = '启用';
-                }
-                for (var i = 0; i < $scope.majorManages.length; i++) {
-                    if ($scope.majorManages[i].majorId == $scope.studentInfo.majorId) {
-                        $scope.majorName = $scope.majorManages[i].majorName;
-                    }
-                }
-                //学生全称组合
-                $scope.studentInfo.studentFullName = $scope.studentInfo.grade + "级" + $scope.majorName + $scope.studentInfo.studentNumber + "班";
                 $scope.student = $scope.studentInfo;
                 $scope.result = {};
                 $http.post('createStudent', $scope.student).success(function (response) {

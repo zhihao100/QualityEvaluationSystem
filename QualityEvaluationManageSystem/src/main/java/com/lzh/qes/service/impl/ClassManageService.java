@@ -170,4 +170,9 @@ public class ClassManageService implements IClassManageService {
         }
         return "该班级已存在";
     }
+
+    @Override
+    public List<ClassManage> findAllClassByMajorId(Integer majorId) {
+        return classManageDao.findAllClassByMajorId(majorId);
+    }
 }

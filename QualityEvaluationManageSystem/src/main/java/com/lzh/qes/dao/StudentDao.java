@@ -18,4 +18,17 @@ public interface StudentDao extends CrudRepository<Student, Integer> {
      * @return
      */
     Page<Student> findAll(Specification<Student> spec, Pageable pageable);
+
+    /**
+     * 通过学生ID查询该学生详情
+     * @param student
+     * @return
+     */
+    Student findStudentByStudentId(Integer student);
+    /**
+     * 通过学生学号studentNumber查询该学生详情
+     * @param studentNumber
+     * @return
+     */
+    Student findStudentByStudentNumber(Integer studentNumber);
 }

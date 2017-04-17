@@ -43,4 +43,42 @@ public class StudentController {
         LOGGER.info("学生数据条数" + students.getPagersInfo().get("totalElements"));
         return students;
     }
+    /**
+     * 学生详情
+     *
+     * @param studentId
+     * @return
+     */
+    @RequestMapping(value = "showStudentDetails", method = RequestMethod.POST)
+    @ResponseBody
+    public StudentVO showStudentDetails(@RequestBody Integer studentId) {
+        LOGGER.info("班级详情");
+        Assert.notNull(studentId);
+        return iStudentManageService.showStudentDetails(studentId);
+    }
+    /**
+     * 添加学生
+     *
+     * @param student
+     * @return
+     */
+    @RequestMapping(value = "createStudent", method = RequestMethod.POST)
+    @ResponseBody
+    public String createStudent(@RequestBody Student student) {
+        LOGGER.info("添加学生");
+        Assert.notNull(student);
+        return iStudentManageService.createStudent(student);
+    }
+    /**
+     * 修改学生
+     * @param student
+     * @return
+     */
+    @RequestMapping(value = "updateStudent", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateClass(@RequestBody Student student) {
+        LOGGER.info("修改学生");
+        Assert.notNull(student, "学生不存在");
+        return iStudentManageService.updateStudent(student);
+    }
 }

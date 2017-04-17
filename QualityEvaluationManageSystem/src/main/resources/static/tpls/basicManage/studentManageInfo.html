@@ -37,11 +37,20 @@
                         <section class="infogroup">
                             <h4>学生信息</h4>
                             <div class="row">
-                                <div class="col-md-6">学生编号：<span ng-bind="studentInfo.studentManage.studentId"></span>
+                                <div class="col-md-6">学生编号：<span ng-bind="studentInfo.student.studentId"></span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">学生名称：<span ng-bind="studentInfo.studentManage.studentName"></span>
+                                <div class="col-md-6">学生学号：<span ng-bind="studentInfo.student.studentNumber"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">学生姓名：<span ng-bind="studentInfo.student.studentName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">学生性别：<span ng-if="studentInfo.student.gender==0">男</span>
+                                    <span ng-if="studentInfo.student.gender==1">女</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -51,15 +60,11 @@
                                 <div class="col-md-6">所属专业：<span ng-bind="studentInfo.majorName"></span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">所属年级：<span ng-bind="studentInfo.studentManage.grade"></span>级
+                                <div class="col-md-6">所属年级：<span ng-bind="studentInfo.student.grade"></span>级
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">学生状态：
-                                    <span ng-if="studentInfo.studentManage.studentState=='启用'"><b
-                                            class="label label-sm label-success">启用</b></span>
-                                    <span ng-if="studentInfo.studentManage.studentState=='停用'"><b
-                                            class="label label-sm label-default">停用</b></span>
+                                <div class="col-md-6">所属班级：<span ng-bind="studentInfo.classShortName"></span>
                                 </div>
                             </div>
                         </section>

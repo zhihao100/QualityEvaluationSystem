@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Created by 新乐 on 2017/4/13.
  */
@@ -34,4 +36,10 @@ public interface ClassManageDao extends CrudRepository<ClassManage, Integer> {
      */
     ClassManage findByClassFullName(String classFullName);
 
+    /**
+     * 根据专业majorId查询班级
+     * @param majorId
+     * @return
+     */
+    List<ClassManage>  findAllClassByMajorId(Integer majorId);
 }

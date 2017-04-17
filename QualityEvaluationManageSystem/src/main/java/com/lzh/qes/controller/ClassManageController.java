@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by liuzhihao on 2017/4/12.
  */
@@ -92,5 +94,20 @@ public class ClassManageController {
         LOGGER.info("添加班级");
         Assert.notNull(classManage);
         return iClassManageService.createClass(classManage);
+    }
+    /**
+     * 根据专业majorId查询班级
+     *
+     * @param majorId
+     * @return
+     */
+    @RequestMapping(value = "findAllClassByMajorId", method = RequestMethod.POST)
+    @ResponseBody
+    public List<ClassManage> findAllClassByMajorId(@RequestBody Integer majorId) {
+        LOGGER.info("根据专业majorId查询班级");
+        Assert.notNull(majorId, "没有该专业");
+        List<ClassManage> classes = iClassManageService.findAllClassByMajorId(majorId);
+        LOGGER.info("班级数据条数" + classes.size());
+        return classes;
     }
 }

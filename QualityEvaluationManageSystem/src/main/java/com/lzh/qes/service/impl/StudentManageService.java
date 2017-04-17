@@ -1,6 +1,5 @@
 package com.lzh.qes.service.impl;
 
-import com.lzh.qes.bean.Major;
 import com.lzh.qes.bean.Student;
 import com.lzh.qes.dao.StudentDao;
 import com.lzh.qes.modal.vo.StudentVO;
@@ -86,7 +85,6 @@ public class StudentManageService implements IStudentManageService {
      */
     private List<Predicate> createMultiConditionSQL(Root<Student> root, CriteriaBuilder builder, PageUtils pageUtils) {
         Student student = pageUtils.getStudent();
-        Major major = pageUtils.getMajor();
         List<Predicate> predicates = new ArrayList<Predicate>();
         /* 加入学生学号 */
         if (null != student.getStudentNumber()) {
@@ -104,27 +102,95 @@ public class StudentManageService implements IStudentManageService {
         if (null != student.getMajorId()) {
             predicates.add(builder.equal(root.get("majorId"), student.getMajorId()));
         }
-        /* 加入学生所属班级，模糊查询 */
+         /* 加入学生所属年级 */
+        if (null != student.getGrade()) {
+            predicates.add(builder.equal(root.get("grade"), student.getGrade()));
+        }
+        /* 加入学生所属班级 */
         if (null != student.getClassId()) {
-            if (StringUtils.isNotBlank(iClassManageService.showClassDetails(student.getClassId()).getClassManage().getClassFullName())) {
-                predicates.add(builder.like(root.get("classFullName"), "%" + iClassManageService.showClassDetails(student.getClassId()).getClassManage().getClassFullName() + "%"));
-            }
+            predicates.add(builder.equal(root.get("classId"), student.getClassId()));
         }
         return predicates;
     }
 
     @Override
     public StudentVO showStudentDetails(Integer studentId) {
-        return null;
+        Student student=studentDao.findStudentByStudentId(studentId);
+        StudentVO studentVO=new StudentVO();
+        studentVO.setStudent(student);
+        studentVO.setInstituteName(iInstituteManageService.showInstituteDetails(student.getInstituteId()).getInstituteName());
+        studentVO.setMajorName(iMajorManageService.findMajorByMajorId(student.getMajorId()).getMajorName());
+        studentVO.setClassShortName(iClassManageService.showClassDetails(student.getClassId()).getClassManage().getClassShortName());
+        return studentVO;
     }
 
     @Override
     public String updateStudent(Student student) {
-        return null;
+        if(null==student.getStudentNumber()){
+            return "请录入学号再修改";
+        }
+        if(null==student.getStudentName()||""==student.getStudentName()){
+            return "请录入姓名再修改";
+        }
+        if(null==student.getInstituteId()){
+            return "请选择学院再修改";
+        }
+        if(null==student.getMajorId()){
+            return "请选择专业再修改";
+        }
+        if(null==student.getGrade()){
+            return "请选择年级再修改";
+        }
+        if(null==student.getClassId()){
+            return "请选择班级再修改";
+        }
+        Student existedStudent = studentDao.findStudentByStudentId(student.getStudentId());
+        Student existedStudentNumber = studentDao.findStudentByStudentNumber(student.getStudentNumber());
+        if (null == existedStudent) {
+            return "修改失败，该学生不存在";
+        }
+        if (!existedStudent.getStudentNumber().equals(student.getStudentNumber()) && null != existedStudentNumber) {
+            return "该学生已存在";
+        }
+        existedStudent.setStudentNumber(student.getStudentNumber());
+        existedStudent.setStudentName(student.getStudentName());
+        existedStudent.setGender(student.getGender());
+        existedStudent.setInstituteId(student.getInstituteId());
+        existedStudent.setMajorId(student.getMajorId());
+        existedStudent.setGrade(student.getGrade());
+        existedStudent.setClassId(student.getClassId());
+        studentDao.save(existedStudent);
+        return "修改成功";
     }
 
     @Override
     public String createStudent(Student student) {
-        return null;
+        if(null==student.getStudentNumber()){
+            return "请输入学号";
+        }
+        if(null==student.getStudentName()){
+            return "请输入姓名";
+        }
+        if(null==student.getGender()){
+            return "请输入性别";
+        }
+        if(null==student.getInstituteId()){
+            return "请选择学院";
+        }
+        if(null==student.getMajorId()){
+            return "请选择专业";
+        }
+        if(null==student.getGrade()){
+            return "请选择年级";
+        }
+        if(null==student.getClassId()){
+            return "请选择班级";
+        }
+        Student exitedStudent=studentDao.findStudentByStudentNumber(student.getStudentNumber());
+        if(null==exitedStudent){
+            studentDao.save(student);
+            return "新增成功";
+        }
+        return "该学生已存在";
     }
 }

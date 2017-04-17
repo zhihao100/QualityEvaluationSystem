@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">学号：</label>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <input type="text" class="form-control" ng-model="studentManage.studentNumber"/>
                                 </div>
                             </div>
@@ -42,16 +42,54 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">姓名：</label>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <input type="text" class="form-control" ng-model="studentManage.studentName"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label  class="col-md-4 control-label">所属学院：</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="studentManage.instituteId" ng-change="changeInstitute(studentManage.instituteId)"
+                                            ng-options="instituteManage.instituteId as instituteManage.instituteName for instituteManage in instituteManages">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label  class="col-md-4 control-label">所属专业：</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="studentManage.majorId" ng-change="changeMajor(studentManage.majorId)"
+                                            ng-options="majorManage.majorId as majorManage.majorName for majorManage in majorManages">
+                                        <option value="">---请选择---</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">所属专业：</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" ng-model="major.majorName"/>
+                                <label  class="col-md-4 control-label">所属年级：</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="studentManage.grade" ng-change="changeGrade(studentManage.grade)"
+                                            ng-options="gradeManage.grade as gradeManage.gradeName for gradeManage in gradeManages">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">班级：</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="studentManage.classId"
+                                            ng-options="classManage.classId as classManage.classShortName for classManage in classManages | filter:{grade:selectedGrade}">
+                                        <option value="">---请选择---</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +120,7 @@
                             <th width="6%">序号</th>
                             <th width="12%">学号</th>
                             <th width="10%">姓名</th>
-                            <th width="7%">姓别</th>
+                            <th width="7%">性别</th>
                             <th width="18%">所属学院</th>
                             <th width="15%">所属专业</th>
                             <th width="10%">所属班级</th>
