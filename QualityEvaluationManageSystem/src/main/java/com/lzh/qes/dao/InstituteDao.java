@@ -38,9 +38,9 @@ public interface InstituteDao extends CrudRepository<Institute, Integer> {
     Page<Institute> findAll(Specification<Institute> spec, Pageable pageable);
 
     /**
-     * 查询所有学院
+     * 查询所有启用学院
      *
      * @return
      */
-    List<Institute> findAll();
+    List<Institute> findByInstituteState(Integer instituteState);
 }

@@ -93,13 +93,13 @@ public class InstituteManageService implements IInstituteManageService {
     }
 
     /**
-     * 查找所有学院
+     * 查找所有启用学院
      *
      * @return
      */
     @Override
-    public List<Institute> findAllInstitute() {
-        return instituteDao.findAll();
+    public List<Institute> findAllInstitute(Integer instituteState) {
+        return instituteDao.findByInstituteState(instituteState);
     }
 
     @Override

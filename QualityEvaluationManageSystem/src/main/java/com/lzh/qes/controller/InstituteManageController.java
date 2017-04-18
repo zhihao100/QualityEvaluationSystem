@@ -1,6 +1,7 @@
 package com.lzh.qes.controller;
 
 import com.lzh.qes.bean.Institute;
+import com.lzh.qes.enums.IsEnableState;
 import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.utils.PageUtils;
 import org.slf4j.Logger;
@@ -60,13 +61,13 @@ public class InstituteManageController {
     }
 
     /**
-     * 查找所有学院
+     * 查找所有启用学院
      */
     @RequestMapping(value = "findAllInstitute", method = RequestMethod.POST)
     @ResponseBody
     public List<Institute> findAllInstitute() {
-        LOGGER.info("查询所有学院");
-        return instituteManageService.findAllInstitute();
+        LOGGER.info("查询所有启用学院");
+        return instituteManageService.findAllInstitute(IsEnableState.启用.getIndex());
     }
 
     /**

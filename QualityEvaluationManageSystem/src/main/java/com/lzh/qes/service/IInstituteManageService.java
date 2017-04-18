@@ -37,11 +37,11 @@ public interface IInstituteManageService {
     Page<Institute> findAllInstituteByMultiConditionAndPage(PageUtils pageUtils);
 
     /**
-     * 查询所有学院
+     * 查询所有启用学院
      *
      * @return
      */
-    List<Institute> findAllInstitute();
+    List<Institute> findAllInstitute(Integer instituteState);
 
     /**
      * 学院详情

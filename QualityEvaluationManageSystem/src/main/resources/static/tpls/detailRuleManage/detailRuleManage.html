@@ -1,0 +1,132 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">细则管理</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则管理</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase"> 搜索 </span>&nbsp;
+                    <span class="caption-helper"> 输入搜索信息 </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form class="form-horizontal searchbox" class="form-horizontal searchbox">
+                    <div class="form-body">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">细则名称：</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" ng-model="detailRule.classFullName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">细则状态：</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-placeholder="请选择"
+                                            ng-model="detailRule.classState"
+                                            required="">
+                                        <option value="">---请选择---</option>
+                                        <option value="启用">启用</option>
+                                        <option value="停用">停用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 txtcenter">
+                                    <button type="button" class="btn blue" ng-click="search();">
+                                        <i class="fa fa-search"></i> 查询
+                                    </button>
+                                    <button class="btn default" type="reset" ng-click="reset();">
+                                        <i class="fa fa-eraser"></i> 清空
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+                <div class="table-toolbar ng-scope">
+                    <div class="btn-group">
+                        <a ui-sref="detailRuleAdd" class="btn blue"> <i class="fa fa-plus"></i> 新增细则</a>
+                    </div>
+                </div>
+                <div class="table-container ng-scope" id="datatable_ajax">
+                    <table class="table table-striped table-bordered table-hover table-btns">
+                        <thead>
+                        <tr role="row" class="heading">
+                            <th width="10%">序号</th>
+                            <th width="10%">细则编号</th>
+                            <th width="30%">细则名称</th>
+                            <th width="10%">细则状态</th>
+                            <th width="40%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" ng-repeat="detailRule in detailRules">
+                            <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
+                            <td ng-bind="detailRule.ruleId"></td>
+                            <td ng-bind="detailRule.ruleName"></td>
+                            <td ng-if="detailRule.classState=='停用'"><span
+                                    class="label label-sm label-default">停用</span>
+                            </td>
+                            <td ng-if="detailRule.classState=='启用'"><span
+                                    class="label label-sm label-success">启用</span>
+                            </td>
+                            <td>
+                                <a ng-href="#/detailRuleInfo/{{detailRule.ruleId}}"
+                                   class="btn btn-xs default btn-editable">
+                                    <i class="fa fa-file-text-o"></i> 详情
+                                </a>
+                                <a ng-href="#/detailRuleEdit/{{detailRule.ruleId}}"
+                                   class="btn btn-xs default btn-editable" ng-if="detailRule.ruleState=='启用'">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <a ng-href="#/"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="detailRule.ruleState=='启用'">
+                                    <i class="fa fa-edit"></i> 项目管理
+                                </a>
+                                <a ng-click="changeState('停用',detailRule.ruleId)"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="detailRule.ruleState=='启用'">
+                                    <i class="fa fa-lock"></i> 停用
+                                </a>
+                                <a ng-click="changeState('启用',detailRule.ruleId)"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="detailRule.ruleState=='停用'">
+                                    <i class="fa fa-unlock"></i> 启用
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
