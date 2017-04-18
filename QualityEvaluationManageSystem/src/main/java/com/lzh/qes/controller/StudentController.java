@@ -51,7 +51,7 @@ public class StudentController {
      */
     @RequestMapping(value = "showStudentDetails", method = RequestMethod.POST)
     @ResponseBody
-    public StudentVO showStudentDetails(@RequestBody Integer studentId) {
+    public StudentVO showStudentDetails(@RequestBody Long studentId) {
         LOGGER.info("班级详情");
         Assert.notNull(studentId);
         return iStudentManageService.showStudentDetails(studentId);

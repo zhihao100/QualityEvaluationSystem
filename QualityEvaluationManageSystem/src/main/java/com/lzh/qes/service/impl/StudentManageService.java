@@ -114,7 +114,7 @@ public class StudentManageService implements IStudentManageService {
     }
 
     @Override
-    public StudentVO showStudentDetails(Integer studentId) {
+    public StudentVO showStudentDetails(Long studentId) {
         Student student=studentDao.findStudentByStudentId(studentId);
         StudentVO studentVO=new StudentVO();
         studentVO.setStudent(student);

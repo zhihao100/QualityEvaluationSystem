@@ -21,7 +21,7 @@ public interface IStudentManageService {
      * @param studentId
      * @return
      */
-    StudentVO showStudentDetails(Integer studentId);
+    StudentVO showStudentDetails(Long studentId);
 
     /**
      * 修改学生

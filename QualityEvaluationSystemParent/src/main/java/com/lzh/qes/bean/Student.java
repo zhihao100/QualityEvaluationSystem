@@ -18,7 +18,7 @@ public class Student {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer studentId;
+    private Long studentId;
     /**
      * 学生名称
      */
@@ -28,7 +28,7 @@ public class Student {
      * 学生学号
      */
     @NotNull
-    private Integer studentNumber;
+    private String studentNumber;
     /**
      * 学生性别
      */
@@ -55,11 +55,11 @@ public class Student {
     @NotNull
     private Integer classId;
 
-    public Integer getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 
@@ -71,11 +71,11 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public Integer getStudentNumber() {
+    public String getStudentNumber() {
         return studentNumber;
     }
 
-    public void setStudentNumber(Integer studentNumber) {
+    public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
 

@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by liuzhihao on 2017/4/16.
  */
-public interface StudentDao extends CrudRepository<Student, Integer> {
+public interface StudentDao extends CrudRepository<Student, Long> {
     /**
      * 多条件分页查询学生
      *
@@ -21,14 +21,14 @@ public interface StudentDao extends CrudRepository<Student, Integer> {
 
     /**
      * 通过学生ID查询该学生详情
-     * @param student
+     * @param studentId
      * @return
      */
-    Student findStudentByStudentId(Integer student);
+    Student findStudentByStudentId(Long studentId);
     /**
      * 通过学生学号studentNumber查询该学生详情
      * @param studentNumber
      * @return
      */
-    Student findStudentByStudentNumber(Integer studentNumber);
+    Student findStudentByStudentNumber(String studentNumber);
 }
