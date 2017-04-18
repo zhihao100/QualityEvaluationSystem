@@ -82,10 +82,8 @@ qesModule.controller('instituteManageCtrl', [
             //学院添加
             $scope.manageSubmit = function () {
                 $scope.institute = {};
-                $scope.instituteInitState = "启用";
-                if ($scope.instituteInfo.instituteState == null) {
-                    $scope.instituteInfo.instituteState = '启用';
-                }
+                $scope.instituteInfo = {};
+                $scope.instituteInfo.instituteState = '启用';
                 $scope.institute = $scope.instituteInfo;
                 $http.post('createInstitute', $scope.institute).success(function (response) {
                     qemsAlert.show(response, "instituteManage");
@@ -135,7 +133,7 @@ qesModule.controller('instituteManageCtrl', [
             $scope.majorAdd = function (instituteId) {
                 $scope.major = {};
                 //新增专业默认为启用状态
-                $scope.major.majorState = 0;
+                $scope.major.majorState = "启用";
                 $scope.major.instituteId = instituteId;
                 $modal
                     .open({
@@ -155,13 +153,20 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         'qemsAlert',
         'data',
-        function ($http, $scope, qemsAlert, data) {
+        '$modalInstance',
+        function ($http, $scope, qemsAlert, data, $modalInstance) {
             //编辑专业
             $scope.majorParam = data;
+            // 确认按钮
             $scope.ok = function () {
+                $modalInstance.close();
                 $http.post("majorManageEdit", $scope.majorParam).success(function (rs) {
-                    qemsAlert.show(rs, "majorManage")
+                    qemsAlert.show(rs, "majorManage");
                 });
+            };
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
             };
         }])
     .controller("majorManageAddCtrl", [
@@ -169,14 +174,20 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         'qemsAlert',
         'data',
-        function ($http, $scope, qemsAlert, data) {
+        function ($http, $scope, qemsAlert, data, $modalInstance) {
             //新增专业
             $scope.major = data;
+            // 确认按钮
             $scope.ok = function () {
+                $modalInstance.close();
                 $http.post("majorManageAdd", $scope.major).success(function (rs) {
                     qemsAlert.show(rs, "majorManage");
                 });
             }
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         }])
     .controller('classManageCtrl', [
         '$scope',
@@ -264,7 +275,6 @@ qesModule.controller('instituteManageCtrl', [
                 });
             });
 
-            $scope.classInitState = "启用";
             //查询某学院下的所有专业
             $scope.changeInstitute=function(instituteId){
                 $scope.classInfo.majorId=null;
@@ -273,9 +283,6 @@ qesModule.controller('instituteManageCtrl', [
                 });
             }
             $scope.classSubmit = function () {
-                if ($scope.classInfo.classState == null) {
-                    $scope.classInfo.classState = '启用';
-                }
                 for(var i=0;i<$scope.majorManages.length;i++){
                     if($scope.majorManages[i].majorId==$scope.classInfo.majorId){
                         $scope.majorName=$scope.majorManages[i].majorName;
@@ -312,13 +319,11 @@ qesModule.controller('instituteManageCtrl', [
                     $scope.majorManages = rs;
                 });
             }
+            $scope.classInfo = {};
+            $scope.classInfo.classState = "启用";
             //班级添加
             $scope.classSubmit = function () {
                 $scope.class = {};
-                $scope.classInitState = "启用";
-                if ($scope.classInfo.classState == null) {
-                    $scope.classInfo.classState = '启用';
-                }
                 for(var i=0;i<$scope.majorManages.length;i++){
                     if($scope.majorManages[i].majorId==$scope.classInfo.majorId){
                         $scope.majorName=$scope.majorManages[i].majorName;
@@ -446,7 +451,6 @@ qesModule.controller('instituteManageCtrl', [
                     $scope.classManages=res;
                 })
             });
-            $scope.studentInitGender = 0;
             //查询某学院下的所有专业
             $scope.changeInstitute = function (instituteId) {
                 if(instituteId!=null) {
@@ -475,9 +479,6 @@ qesModule.controller('instituteManageCtrl', [
                 }
             }
             $scope.studentSubmit = function () {
-                if ($scope.studentInfo.gender == null) {
-                    $scope.studentInfo.gender = 0;
-                }
                 $scope.student = $scope.studentInfo;
                 $scope.student.studentId = $scope.studentId;
                 $http.post("updateStudent", $scope.student).success(function (response) {
@@ -527,12 +528,11 @@ qesModule.controller('instituteManageCtrl', [
                     });
                 }
             }
+            //新增性别默认为男
+            $scope.studentInfo = {};
+            $scope.studentInfo.gender = 0;
             //学生添加
             $scope.studentSubmit = function () {
-                $scope.studentInitGender = 0;
-                if ($scope.studentInfo.gender == null) {
-                    $scope.studentInfo.gender = 0;
-                }
                 $scope.student = {};
                 $scope.student = $scope.studentInfo;
                 $http.post('createStudent', $scope.student).success(function (response) {
@@ -638,13 +638,11 @@ qesModule.controller('instituteManageCtrl', [
             $http.post("findAllInstitute").success(function (rs) {
                 $scope.instituteManages = rs;
             });
+            $scope.ruleInfo = {};
+            $scope.ruleInfo.ruleState = '启用';
             //提交
             $scope.mainRuleSubmit = function () {
                 $scope.rule = {};
-                $scope.ruleInitState = "启用";
-                if ($scope.ruleInfo.ruleState == null) {
-                    $scope.ruleInfo.ruleState = '启用';
-                }
                 $scope.rule = $scope.ruleInfo;
                 $http.post('createMainRule', $scope.rule).success(function (response) {
                     qemsAlert.show(response, "mainRuleManage");

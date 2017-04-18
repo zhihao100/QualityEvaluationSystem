@@ -85,13 +85,11 @@ qesModule.controller('personManageCtrl', [
             $http.post("findAllInstitute").success(function (rs) {
                 $scope.instituteManages = rs;
             });
+            $scope.managerInfo = {};
+            $scope.managerInfo.managerState = "启用";
             //提交
             $scope.manageSubmit = function () {
                 $scope.manager = {};
-                $scope.managerInitState = "启用";
-                if ($scope.managerInfo.managerState == null) {
-                    $scope.managerInfo.managerState = '启用';
-                }
                 $scope.manager = $scope.managerInfo;
                 $http.post('createManager', $scope.manager).success(function (response) {
                     qemsAlert.show(response, "personManage");

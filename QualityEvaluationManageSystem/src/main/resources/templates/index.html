@@ -137,34 +137,9 @@
                         <span class="selected"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li>
-                            <a ui-sref="dealerAudit">
-                                思想道德素质
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="dealerSearch">
-                                专业素质
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="dealerSearch">
-                                科技创新素质
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="dealerSearch">
-                                人文管理素质
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="dealerSearch">
-                                身体素质
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="dealerSearch">
-                                减分细则
+                        <li ng-repeat="mainRule in mainRules">
+                            <a ui-sref="mainRule.url">
+                                {{mainRule.ruleName}}
                             </a>
                         </li>
                     </ul>
