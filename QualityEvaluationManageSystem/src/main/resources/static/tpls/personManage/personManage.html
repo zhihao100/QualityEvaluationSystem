@@ -110,12 +110,13 @@
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
                                 <a ng-href="#/personManageEdit/{{personManage.manager.managerId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="user.superManager">
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="user.superManager&&personManage.manager.managerState=='启用'">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a ng-click="changeState('停用',personManage.manager.managerId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="personManage.manager.managerState=='启用'&&user.superManager">
+                                   ng-if="personManage.manager.managerState=='启用'&&user.superManager&&personManage.manager.managerId!==1">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
                                 <a ng-click="changeState('启用',personManage.manager.managerId)"
