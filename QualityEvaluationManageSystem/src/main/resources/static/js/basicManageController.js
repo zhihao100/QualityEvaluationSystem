@@ -58,10 +58,8 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$stateParams',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, $stateParams, qemsAlert) {
             //学院编辑
             $scope.instituteId = $stateParams.instituteId;
             $http.post('showInstituteDetails', $scope.instituteId).success(function (response) {
@@ -71,62 +69,16 @@ qesModule.controller('instituteManageCtrl', [
                 $scope.institute = {};
                 $scope.institute = $scope.instituteInfo;
                 $scope.institute.instituteId = $scope.instituteId;
-                $scope.result = {};
                 $http.post("updateInstitute", $scope.institute).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "instituteManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "该学院已存在" || $scope.result.msg == "该学院不存在") {
-
-                        } else {
-                            $location.path('/instituteManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
                 };
-            };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('instituteManageAddCtrl', [
         '$scope',
         '$http',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, qemsAlert) {
             //学院添加
             $scope.manageSubmit = function () {
                 $scope.institute = {};
@@ -135,54 +87,10 @@ qesModule.controller('instituteManageCtrl', [
                     $scope.instituteInfo.instituteState = '启用';
                 }
                 $scope.institute = $scope.instituteInfo;
-                $scope.result = {};
                 $http.post('createInstitute', $scope.institute).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "instituteManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "该学院已存在") {
-
-                        } else {
-                            $location.path('/instituteManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller("majorManageCtrl", [
         '$http',
@@ -245,117 +153,30 @@ qesModule.controller('instituteManageCtrl', [
     .controller("majorManageEditCtrl", [
         '$http',
         '$scope',
-        '$modalInstance',
-        '$modal',
-        '$state',
+        'qemsAlert',
         'data',
-        function ($http, $scope, $modalInstance, $modal, $state, data) {
+        function ($http, $scope, qemsAlert, data) {
             //编辑专业
             $scope.majorParam = data;
-            $scope.result = {};
             $scope.ok = function () {
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        if ($scope.result.msg == "修改失败,该专业不存在") {
-                        } else {
-                            $state.go('majorManage', {}, {reload: true});
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                }
                 $http.post("majorManageEdit", $scope.majorParam).success(function (rs) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = rs;
-                    $scope.open('sm');
-                    $modalInstance.close();
+                    qemsAlert.show(rs, "majorManage")
                 });
-                var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                                  requestResults) {
-                    $scope.results = requestResults;
-                    // 确认按钮（close()可以带参数）
-                    $scope.ok = function () {
-                        $modalInstance.close();
-                    };
-                    // 取消按钮
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                };
-            }
-            // 取消按钮
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
             };
         }])
     .controller("majorManageAddCtrl", [
         '$http',
         '$scope',
-        '$modalInstance',
-        '$modal',
-        '$state',
+        'qemsAlert',
         'data',
-        function ($http, $scope, $modalInstance, $modal, $state, data) {
+        function ($http, $scope, qemsAlert, data) {
             //新增专业
             $scope.major = data;
-            $scope.result = {};
             $scope.ok = function () {
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        $state.go('majorManage', {}, {reload: true});
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                }
                 $http.post("majorManageAdd", $scope.major).success(function (rs) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = rs;
-                    $scope.open('sm');
-                    $modalInstance.close();
+                    qemsAlert.show(rs, "majorManage");
                 });
-                var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                                  requestResults) {
-                    $scope.results = requestResults;
-                    // 确认按钮（close()可以带参数）
-                    $scope.ok = function () {
-                        $modalInstance.close();
-                    };
-                    // 取消按钮
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                };
             }
-            // 取消按钮
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
         }])
     .controller('classManageCtrl', [
         '$scope',
@@ -421,10 +242,8 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$stateParams',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, $stateParams, qemsAlert) {
             //班级编辑
             $scope.classId = $stateParams.classId;
             //动态生成年级
@@ -467,62 +286,16 @@ qesModule.controller('instituteManageCtrl', [
                 $scope.class = {};
                 $scope.class = $scope.classInfo;
                 $scope.class.classId = $scope.classId;
-                $scope.result = {};
                 $http.post("updateClass", $scope.class).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "classManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "该班级已存在") {
-
-                        } else {
-                            $location.path('/classManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('classManageAddCtrl', [
         '$scope',
         '$http',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, qemsAlert) {
             //动态生成年级
             $scope.gradeManages = [];
             $scope.currentYear = (new Date()).getFullYear();
@@ -554,52 +327,10 @@ qesModule.controller('instituteManageCtrl', [
                 //班级全称组合
                 $scope.classInfo.classFullName=$scope.classInfo.grade+"级"+$scope.majorName+$scope.classInfo.classNumber+"班";
                 $scope.class = $scope.classInfo;
-                $scope.result = {};
                 $http.post('createClass', $scope.class).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "classManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "新增成功") {
-                            $location.path('/classManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('studentManageCtrl', [
         '$scope',
@@ -690,10 +421,8 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$stateParams',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, $stateParams, qemsAlert) {
             //学生编辑
             $scope.studentId = $stateParams.studentId;
             //动态生成年级
@@ -751,60 +480,16 @@ qesModule.controller('instituteManageCtrl', [
                 }
                 $scope.student = $scope.studentInfo;
                 $scope.student.studentId = $scope.studentId;
-                $scope.result = {};
                 $http.post("updateStudent", $scope.student).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "studentManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "修改成功") {
-                            $location.path('/studentManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('studentManageAddCtrl', [
         '$scope',
         '$http',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, qemsAlert) {
             //动态生成年级
             $scope.gradeManages = [];
             $scope.currentYear = (new Date()).getFullYear();
@@ -850,52 +535,10 @@ qesModule.controller('instituteManageCtrl', [
                 }
                 $scope.student = {};
                 $scope.student = $scope.studentInfo;
-                $scope.result = {};
                 $http.post('createStudent', $scope.student).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "studentManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "新增成功") {
-                            $location.path('/studentManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('mainRuleManageCtrl', [
         '$scope',
@@ -964,10 +607,9 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$stateParams',
-        '$modal',
-        '$location',
         '$log',
-        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, $stateParams, $log, qemsAlert) {
             //细则大类编辑
             //学院查询
             $http.post("findAllInstitute").success(function (rs) {
@@ -981,60 +623,16 @@ qesModule.controller('instituteManageCtrl', [
                 $scope.rule = {};
                 $scope.rule = $scope.ruleInfo.mainRule;
                 $scope.rule.ruleId = $scope.ruleId;
-                $scope.result = {};
                 $http.post("updateMainRule", $scope.rule).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "mainRuleManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "修改成功") {
-                            $location.path('/mainRuleManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('mainRuleManageAddCtrl', [
         '$scope',
         '$http',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, qemsAlert) {
             //细则大类添加
             //学院查询
             $http.post("findAllInstitute").success(function (rs) {
@@ -1048,50 +646,8 @@ qesModule.controller('instituteManageCtrl', [
                     $scope.ruleInfo.ruleState = '启用';
                 }
                 $scope.rule = $scope.ruleInfo;
-                $scope.result = {};
                 $http.post('createMainRule', $scope.rule).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "mainRuleManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "新增成功") {
-                            $location.path('/mainRuleManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }]);

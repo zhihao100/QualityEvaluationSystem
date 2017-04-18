@@ -40,7 +40,7 @@ public class MajorManageService implements IMajorManageService {
             return "该专业已存在";
         }
         majorDao.save(major);
-        return "新增成功";
+        return "新增完成";
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MajorManageService implements IMajorManageService {
         if (null != existedMajor) {
             existedMajor.setMajorState(major.getMajorState());
             majorDao.save(existedMajor);
-            return "修改成功";
+            return "修改完成";
         }
 
         return "修改失败,该专业不存在";
@@ -86,6 +86,6 @@ public class MajorManageService implements IMajorManageService {
         }
         existedMajor.setMajorName(major.getMajorName());
         majorDao.save(existedMajor);
-        return "修改成功";
+        return "修改完成";
     }
 }

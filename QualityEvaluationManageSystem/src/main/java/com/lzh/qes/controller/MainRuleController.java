@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * 细则大类控制层
  * Created by liuzhihao on 2017/4/17.
@@ -99,5 +101,19 @@ public class MainRuleController {
         LOGGER.info("修改细则大类");
         Assert.notNull(mainRule, "细则大类为空");
         return iMainRuleManageService.updateMainRule(mainRule);
+    }
+
+    /**
+     * 根据instituteId查询细则大类详情
+     *
+     * @param instituteId
+     * @return
+     */
+    @RequestMapping(value = "showMainRuleDetailsByInstituteId", method = RequestMethod.POST)
+    @ResponseBody
+    public List<MainRule> showMainRuleDetailsByInstituteId(@RequestBody Integer instituteId) {
+        LOGGER.info("根据instituteId细则大类详情");
+        Assert.notNull(instituteId, "学院不存在");
+        return iMainRuleManageService.showMainRuleDetailsByInstituteId(instituteId);
     }
 }

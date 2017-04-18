@@ -34,7 +34,7 @@ public class InstituteManageService implements IInstituteManageService {
         Institute existedInstitute = instituteDao.findByInstituteName(institute.getInstituteName());
         if (null == existedInstitute) {
             instituteDao.save(institute);
-            return "添加成功";
+            return "新增成功";
         }
         return "该学院已存在";
     }
@@ -46,7 +46,7 @@ public class InstituteManageService implements IInstituteManageService {
         if (null != existedInstitute) {
             existedInstitute.setInstituteState(institute.getInstituteState());
             instituteDao.save(existedInstitute);
-            return "修改成功";
+            return "修改完成";
         }
         return "该学院不存在";
     }

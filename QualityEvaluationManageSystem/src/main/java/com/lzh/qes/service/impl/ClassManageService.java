@@ -111,7 +111,7 @@ public class ClassManageService implements IClassManageService {
         if (null != existedClass) {
             existedClass.setClassState(classManage.getClassState());
             classManageDao.save(existedClass);
-            return "修改成功";
+            return "修改完成";
         }
         return "该班级不存在";
     }

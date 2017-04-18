@@ -71,7 +71,7 @@ public class MainRuleManageService implements IMainRuleManageService {
         if (existedMainRule != null) {
             existedMainRule.setRuleState(mainRule.getRuleState());
             mainRuleDao.save(existedMainRule);
-            return "修改成功";
+            return "修改完成";
         }
         return "修改失败，类别不存在";
     }
@@ -126,6 +126,12 @@ public class MainRuleManageService implements IMainRuleManageService {
         existedMainRule.setRuleState(mainRule.getRuleState());
         mainRuleDao.save(existedMainRule);
         return "修改成功";
+    }
+
+    @Override
+    public List<MainRule> showMainRuleDetailsByInstituteId(Integer instituteId) {
+        List<MainRule> mainRuleList = mainRuleDao.findMainRuleByInstituteId(instituteId);
+        return mainRuleList;
     }
 
     /**

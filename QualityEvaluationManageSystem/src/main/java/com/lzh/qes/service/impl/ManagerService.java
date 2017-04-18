@@ -63,7 +63,7 @@ public class ManagerService implements IManagerService {
             if (null == existedManager) {
                 manager.setRegisterDate(new Date());
                 managerDao.save(manager);
-                return "添加成功";
+                return "新增成功";
             }
             return "该管理员已存在";
         }
@@ -81,7 +81,7 @@ public class ManagerService implements IManagerService {
             if (null != existedManager) {
                 existedManager.setManagerState(manager.getManagerState());
                 managerDao.save(existedManager);
-                return "修改成功";
+                return "修改完成";
             }
         }
         return "修改失败,只有超级管理员可执行次操作";

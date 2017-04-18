@@ -55,10 +55,8 @@ qesModule.controller('personManageCtrl', [
         '$scope',
         '$http',
         '$stateParams',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $stateParams, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, $stateParams, qemsAlert) {
             //管理员编辑
             //学院查询
             $http.post("findAllInstitute").success(function (rs) {
@@ -72,62 +70,16 @@ qesModule.controller('personManageCtrl', [
                 $scope.manager = {};
                 $scope.manager = $scope.managerInfo.manager;
                 $scope.manager.managerId = $scope.managerId;
-                $scope.result = {};
                 $http.post("updateManager", $scope.manager).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "personManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "该管理员已存在" || $scope.result.msg == "该管理员不存在") {
-
-                        } else {
-                            $location.path('/personManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }])
     .controller('personManageAddCtrl', [
         '$scope',
         '$http',
-        '$modal',
-        '$location',
-        '$log',
-        function ($scope, $http, $modal, $location, $log, $modalInstance) {
+        'qemsAlert',
+        function ($scope, $http, qemsAlert) {
             //管理员添加
             //学院查询
             $http.post("findAllInstitute").success(function (rs) {
@@ -141,52 +93,8 @@ qesModule.controller('personManageCtrl', [
                     $scope.managerInfo.managerState = '启用';
                 }
                 $scope.manager = $scope.managerInfo;
-                $scope.result = {};
                 $http.post('createManager', $scope.manager).success(function (response) {
-                    $scope.result.title = "提示消息";
-                    $scope.result.msg = response;
-                    $scope.open('sm');
-                    $scope.$modalInstance = undefined;
+                    qemsAlert.show(response, "personManage");
                 });
-                // 弹窗
-                $scope.open = function (size) {
-                    $scope.modalInstance = $modal.open({
-                        templateUrl: 'tpls/common/popupMessage.html',
-                        controller: ModalInstanceCtrl,
-                        size: size,
-                        resolve: {
-                            requestResults: function () {
-                                return $scope.result;
-                            }
-                        }
-                    });
-                    // 成功的回调方法 （可带参数）
-                    $scope.modalInstance.result.then(function () {
-                        // 跳转到列表页面
-                        if ($scope.result.msg == "该管理员已存在") {
-
-                        } else {
-                            $location.path('/personManage');
-                        }
-                        // 失败的回调方法
-                    }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
-                    });
-                };
             };
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            var ModalInstanceCtrl = function ($scope, $modalInstance,
-                                              requestResults) {
-                $scope.results = requestResults;
-                // 确认按钮（close()可以带参数）
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
-                // 取消按钮
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };//弹窗结束
         }]);
