@@ -57,6 +57,8 @@
     <script type="text/javascript" src="js/indexController.js"></script>
     <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="framework/tm.pagination.js"></script>
+    <script type="text/javascript" src="js/detailRuleManageRouter.js"></script>
+    <script type="text/javascript" src="js/detailRuleManageController.js"></script>
     <script type="text/javascript" src="js/personManageRouter.js"></script>
     <script type="text/javascript" src="js/personManageController.js"></script>
     <script type="text/javascript" src="js/basicManageRouter.js"></script>
@@ -138,7 +140,7 @@
                     </a>
                     <ul class="sub-menu">
                         <li ng-repeat="mainRule in mainRules">
-                            <a ui-sref="mainRule.url">
+                            <a ui-sref="mainRule.url{{mainRule.ruleId}}">
                                 {{mainRule.ruleName}}
                             </a>
                         </li>

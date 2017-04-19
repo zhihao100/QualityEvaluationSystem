@@ -13,7 +13,7 @@ qesModule.controller("indexCtrl", [
                 $scope.mainRules = rs;
                 //细则大类的URL定义
                 for (var i = 0; i < $scope.mainRules.length; i++) {
-                    $scope.mainRules[i].url = "F" + (i + 1);
+                    $scope.mainRules[i].url = "detailRule";
                 }
             });
         });
