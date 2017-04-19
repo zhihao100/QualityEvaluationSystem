@@ -1,6 +1,7 @@
 package com.lzh.qes.service;
 
 import com.lzh.qes.bean.Major;
+import com.lzh.qes.enums.IsEnableState;
 
 import java.util.List;
 
@@ -12,6 +13,11 @@ public interface IMajorManageService {
      * 根据学院ID查找该学院所有专业
      */
     List<Major> findMajorByInstituteIdList(Integer instituteId);
+
+    /**
+     * 根据学院ID查找该学院所有启用专业
+     */
+    List<Major> findMajorByInstituteIdAndMajorState(Integer instituteId, IsEnableState majorState);
 
     /**
      * 修改专业状态

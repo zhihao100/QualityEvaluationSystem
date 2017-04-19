@@ -1,6 +1,7 @@
 package com.lzh.qes.controller;
 
 import com.lzh.qes.bean.Major;
+import com.lzh.qes.enums.IsEnableState;
 import com.lzh.qes.service.IMajorManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,16 @@ public class MajorController {
         return iMajorManageService.findMajorByInstituteIdList(instituteId);
     }
 
+    /**
+     * 根据启用学院ID查找该学院所有启用专业
+     */
+    @RequestMapping(value = "enabledMajorManage/{instituteId}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Major> findEnabledMajorByInstituteIdList(@PathVariable("instituteId") Integer instituteId) {
+        LOGGER.info("查找该启用学院启用专业列表");
+        Assert.notNull(instituteId);
+        return iMajorManageService.findMajorByInstituteIdAndMajorState(instituteId, IsEnableState.启用);
+    }
     /**
      * 修改专业状态
      *

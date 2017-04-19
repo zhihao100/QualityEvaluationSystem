@@ -1,6 +1,7 @@
 package com.lzh.qes.dao;
 
 import com.lzh.qes.bean.Institute;
+import com.lzh.qes.enums.IsEnableState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,5 +43,5 @@ public interface InstituteDao extends CrudRepository<Institute, Integer> {
      *
      * @return
      */
-    List<Institute> findByInstituteState(Integer instituteState);
+    List<Institute> findByInstituteState(IsEnableState instituteState);
 }

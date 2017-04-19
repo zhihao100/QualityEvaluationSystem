@@ -2,6 +2,7 @@ package com.lzh.qes.service.impl;
 
 import com.lzh.qes.bean.Major;
 import com.lzh.qes.dao.MajorDao;
+import com.lzh.qes.enums.IsEnableState;
 import com.lzh.qes.service.IMajorManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,15 @@ public class MajorManageService implements IMajorManageService {
     @Override
     public List<Major> findMajorByInstituteIdList(Integer instituteId) {
         return majorDao.findByInstituteId(instituteId);
+    }
+
+    /**
+     * 根据学院ID查找该学院所有启用专业
+     */
+    @Transactional
+    @Override
+    public List<Major> findMajorByInstituteIdAndMajorState(Integer instituteId, IsEnableState majorState) {
+        return majorDao.findByInstituteIdAndMajorState(instituteId, majorState);
     }
 
     /**

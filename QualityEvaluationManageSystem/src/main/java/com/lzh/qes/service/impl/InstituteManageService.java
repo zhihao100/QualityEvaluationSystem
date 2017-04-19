@@ -2,6 +2,7 @@ package com.lzh.qes.service.impl;
 
 import com.lzh.qes.bean.Institute;
 import com.lzh.qes.dao.InstituteDao;
+import com.lzh.qes.enums.IsEnableState;
 import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -98,7 +99,7 @@ public class InstituteManageService implements IInstituteManageService {
      * @return
      */
     @Override
-    public List<Institute> findAllInstitute(Integer instituteState) {
+    public List<Institute> findEnabledInstitute(IsEnableState instituteState) {
         return instituteDao.findByInstituteState(instituteState);
     }
 

@@ -116,7 +116,7 @@
                                 </a>
                                 <a ng-click="changeState('停用',personManage.manager.managerId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="personManage.manager.managerState=='启用'&&user.superManager&&personManage.manager.managerId!==1">
+                                   ng-if="personManage.manager.managerState=='启用'&&user.superManager&&(!personManage.manager.superManager)">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
                                 <a ng-click="changeState('启用',personManage.manager.managerId)"

@@ -1,6 +1,7 @@
 package com.lzh.qes.service;
 
 import com.lzh.qes.bean.Institute;
+import com.lzh.qes.enums.IsEnableState;
 import com.lzh.qes.utils.PageUtils;
 import org.springframework.data.domain.Page;
 
@@ -41,7 +42,7 @@ public interface IInstituteManageService {
      *
      * @return
      */
-    List<Institute> findAllInstitute(Integer instituteState);
+    List<Institute> findEnabledInstitute(IsEnableState instituteState);
 
     /**
      * 学院详情

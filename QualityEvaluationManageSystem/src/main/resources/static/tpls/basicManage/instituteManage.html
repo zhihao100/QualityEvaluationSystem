@@ -99,7 +99,8 @@
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
                                 <a ng-href="#/instituteManageEdit/{{instituteManage.instituteId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="user.superManager">
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="user.superManager&&instituteManage.instituteState=='启用'">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a ng-click="changeState('停用',instituteManage.instituteId)"

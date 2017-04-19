@@ -106,7 +106,7 @@
                                 </a>
                                 <a ng-href="#/mainRuleManageEdit/{{mainRuleManage.mainRule.ruleId}}"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="user.superManager||(user.instituteId==mainRuleManage.mainRule.instituteId)">
+                                   ng-if="mainRuleManage.mainRule.ruleState=='启用'&&(user.superManager||(user.instituteId==mainRuleManage.mainRule.instituteId))">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a ng-click="changeState('停用',mainRuleManage.mainRule.ruleId)"

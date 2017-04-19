@@ -21,8 +21,8 @@ import java.util.List;
  * Created by liuzhihao on 2017/4/11.
  */
 @Controller
-public class InstituteManageController {
-    private static Logger LOGGER = LoggerFactory.getLogger(InstituteManageController.class);
+public class InstituteController {
+    private static Logger LOGGER = LoggerFactory.getLogger(InstituteController.class);
     @Autowired
     private IInstituteManageService instituteManageService;
 
@@ -65,9 +65,9 @@ public class InstituteManageController {
      */
     @RequestMapping(value = "findAllInstitute", method = RequestMethod.POST)
     @ResponseBody
-    public List<Institute> findAllInstitute() {
+    public List<Institute> findEnabledInstitute() {
         LOGGER.info("查询所有启用学院");
-        return instituteManageService.findAllInstitute(IsEnableState.启用.getIndex());
+        return instituteManageService.findEnabledInstitute(IsEnableState.启用);
     }
 
     /**
