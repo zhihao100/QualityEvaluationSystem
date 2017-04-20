@@ -2,8 +2,6 @@ package com.lzh.qes.utils;
 
 import com.lzh.qes.bean.*;
 
-import java.util.Date;
-
 /**
  * Created by liuzhihao on 2017/4/7.
  */
@@ -42,13 +40,10 @@ public class PageUtils {
      */
     private MainRule mainRule;
     /**
-     * 开始时间
+     * 细则
      */
-    private Date startDate;
-    /**
-     * 结束时间
-     */
-    private Date endDate;
+    private DetailRule detailRule;
+
 
     public int getCurrentPage() {
         return currentPage;
@@ -114,19 +109,11 @@ public class PageUtils {
         this.mainRule = mainRule;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public DetailRule getDetailRule() {
+        return detailRule;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDetailRule(DetailRule detailRule) {
+        this.detailRule = detailRule;
     }
 }

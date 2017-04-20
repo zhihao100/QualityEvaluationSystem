@@ -5,8 +5,8 @@ qesModule.config(function ($stateProvider) {
     $stateProvider
     //细则列表页
         .state('detailRule', {
-            url: "/detailRule/:ruleId",
-            templateUrl: "tpls/detailRuleManage/detailRuleManage.html",
-            controller: "detailRuleManageCtrl"
+            url: "/detailRule?ruleId&mainRuleName",
+            templateUrl: "tpls/detailRuleManage/detailRule.html",
+            controller: "detailRuleManageCtrl",
         });
 })

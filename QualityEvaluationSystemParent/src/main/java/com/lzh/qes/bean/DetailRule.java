@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by liuzhihao on 2017/4/18.
  */
 @Entity
-public class DetailsRule {
+public class DetailRule implements Serializable {
     /**
      * 细则编号
      */

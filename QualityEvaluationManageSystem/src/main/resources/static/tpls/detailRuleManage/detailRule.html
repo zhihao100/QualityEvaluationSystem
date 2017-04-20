@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">细则管理</h3>
+<h3 class="page-title">{{mainRuleName}}</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li class="active">
@@ -12,7 +12,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="javascript:void(0)">细则管理</a>
+            <a href="javascript:void(0)">{{mainRuleName}}</a>
         </li>
     </ul>
 </div>
@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">细则名称：</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" ng-model="detailRule.classFullName"/>
+                                    <input type="text" class="form-control" ng-model="detailRule.ruleName"/>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                 <label class="col-md-4 control-label">细则状态：</label>
                                 <div class="col-md-8">
                                     <select class="form-control" data-placeholder="请选择"
-                                            ng-model="detailRule.classState"
+                                            ng-model="detailRule.ruleState"
                                             required="">
                                         <option value="">---请选择---</option>
                                         <option value="启用">启用</option>
@@ -89,10 +89,10 @@
                             <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
                             <td ng-bind="detailRule.ruleId"></td>
                             <td ng-bind="detailRule.ruleName"></td>
-                            <td ng-if="detailRule.classState=='停用'"><span
+                            <td ng-if="detailRule.ruleState=='停用'"><span
                                     class="label label-sm label-default">停用</span>
                             </td>
-                            <td ng-if="detailRule.classState=='启用'"><span
+                            <td ng-if="detailRule.ruleState=='启用'"><span
                                     class="label label-sm label-success">启用</span>
                             </td>
                             <td>
