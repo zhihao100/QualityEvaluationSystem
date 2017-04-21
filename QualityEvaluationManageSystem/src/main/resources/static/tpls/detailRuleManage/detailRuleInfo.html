@@ -1,0 +1,82 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">细则详情</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="active">
+            <a ui-sref="detailRule({mainRuleId:detailRuleInfo.mainRule.ruleId,mainRuleName:detailRuleInfo.mainRule.ruleName})">{{detailRuleInfo.mainRule.ruleName}}</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则详情</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green-sharp bold">细则详情</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <form class="form form-horizontal" role="form">
+                    <div class="form-body">
+                        <section class="infogroup">
+                            <h4>细则信息</h4>
+                            <div class="row">
+                                <div class="col-md-6">细则编号：<span ng-bind="detailRuleInfo.detailRule.ruleId"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">细则名称：<span ng-bind="detailRuleInfo.detailRule.ruleName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所属大类：<span ng-bind="detailRuleInfo.mainRule.ruleName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">所占权重：<span
+                                        ng-bind="detailRuleInfo.mainRule.weight | toPercent"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">细则状态：
+                                    <span ng-if="detailRuleInfo.detailRule.ruleState=='启用'"><b
+                                            class="label label-sm label-success">启用</b></span>
+                                    <span ng-if="detailRuleInfo.detailRule.ruleState=='停用'"><b
+                                            class="label label-sm label-default">停用</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"><span style="padding:0;">细则备注：</span><span
+                                        ng-bind="detailRuleInfo.detailRule.remark" style="white-space:pre-wrap;"></span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="form-action">
+                        <div class="row txtcenter">
+                            <a ui-sref="detailRule({mainRuleId:detailRuleInfo.mainRule.ruleId,mainRuleName:detailRuleInfo.mainRule.ruleName})"
+                               class="btn default"><i class="fa fa-chevron-circle-left"></i>
+                                返回</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

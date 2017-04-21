@@ -1,0 +1,73 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">{{mainRuleName}}-新增细则</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="active">
+            <a ui-sref="detailRule({mainRuleId:detailRule.mainRuleId,mainRuleName:mainRuleName})">{{mainRuleName}}</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">细则新增</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green-sharp bold">细则新增</span>
+                </div>
+            </div>
+            <form class="form form-horizontal" role="form" name="myForm">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="ruleName" class="col-md-3 control-label">细则名称：</label>
+                        <div class="col-md-4"><input type="text" ng-model="detailRule.ruleName" class="form-control"
+                                                     id="ruleName"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">细则状态：</label>
+                        <div class="col-md-4">
+                            <input type="radio" class="radio-inline" name="ruleState"
+                                   ng-model="detailRule.ruleState" value="启用"> 启用
+                            <input type="radio" class="radio-inline" name="ruleState"
+                                   ng-model="detailRule.ruleState" value="停用"> 停用
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remark" class="col-md-3 control-label">备注：</label>
+                        <div class="col-md-4"><textarea type="text" ng-model="detailRule.remark" class="form-control"
+                                                        id="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-action">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-4">
+                                <a ui-sref="detailRule({mainRuleId:detailRule.mainRuleId,mainRuleName:mainRuleName})"
+                                   class="btn default"><i class="fa fa-chevron-circle-left"></i>
+                                    返回</a>
+                                <button class="btn btn-primary" ng-click="detailRuleSubmit()"><i
+                                        class="fa fa fa-check"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

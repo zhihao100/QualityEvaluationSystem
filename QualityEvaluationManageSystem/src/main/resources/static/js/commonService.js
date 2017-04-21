@@ -20,10 +20,10 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
                 $scope.ok = function () {
                     $modalInstance.close();
                     if ($scope.results.msg == "新增成功" || $scope.results.msg == "修改成功") {
-                        $location.path("/" + $scope.results.doSomething);
+                        $location.url("/" + $scope.results.doNext);
                     }
                     if ($scope.results.msg == "新增完成" || $scope.results.msg == "修改完成") {
-                        $state.go($scope.results.doSomething, {}, {reload: true});
+                        $state.go($scope.results.doNext, {}, {reload: true});
                     }
                 };
                 // 取消按钮
@@ -35,7 +35,7 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
             title: '提示消息',
             msg: ''
         };
-        var cfg = (Object.prototype.toString.call(config) === "[object String]") ? $.extend(DEFAULT, {msg: config}, {doSomething: addressTo}) : $.extend(DEFAULT, config, addressTo);
+        var cfg = (Object.prototype.toString.call(config) === "[object String]") ? $.extend(DEFAULT, {msg: config}, {doNext: addressTo}) : $.extend(DEFAULT, config, addressTo);
 
         //创建弹框对象
         var modalInstance = $modal.open({
@@ -44,7 +44,7 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
             size: cfg.size,
             resolve: {
                 items: function () {
-                    return {title: cfg.title, msg: cfg.msg, doSomething: cfg.doSomething};
+                    return {title: cfg.title, msg: cfg.msg, doNext: cfg.doNext};
                 }
             }
         });

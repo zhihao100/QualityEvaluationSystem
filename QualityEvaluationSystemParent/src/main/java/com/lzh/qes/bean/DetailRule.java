@@ -38,7 +38,6 @@ public class DetailRule implements Serializable {
     /**
      * 细则备注
      */
-    @NotBlank
     private String remark;
 
     public Integer getRuleId() {

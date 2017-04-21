@@ -25,7 +25,7 @@ qesModule.controller('instituteManageCtrl', [
         //配置分页基本参数
         $scope.paginationConf = {
             currentPage: 1,
-            itemsPerPage: 5,
+            itemsPerPage: 10,
             perPageOptions: [5, 10, 20]
         };
         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);
@@ -202,7 +202,7 @@ qesModule.controller('instituteManageCtrl', [
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
-                itemsPerPage: 5,
+                itemsPerPage: 10,
                 perPageOptions: [5, 10, 20]
             };
             $scope.search = function () {
@@ -384,7 +384,7 @@ qesModule.controller('instituteManageCtrl', [
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
-                itemsPerPage: 5,
+                itemsPerPage: 10,
                 perPageOptions: [5, 10, 20]
             };
             //只能查询自己学院的学生
@@ -575,7 +575,7 @@ qesModule.controller('instituteManageCtrl', [
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
-                itemsPerPage: 5,
+                itemsPerPage: 10,
                 perPageOptions: [5, 10, 20]
             };
             $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);

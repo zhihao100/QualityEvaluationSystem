@@ -1,6 +1,7 @@
 package com.lzh.qes.controller;
 
 import com.lzh.qes.bean.DetailRule;
+import com.lzh.qes.modal.vo.DetailRuleVO;
 import com.lzh.qes.service.IDetailRuleService;
 import com.lzh.qes.utils.PageUtils;
 import org.slf4j.Logger;
@@ -42,4 +43,61 @@ public class DetailRuleController {
         LOGGER.info("细则数据条数" + detailRules.getTotalElements());
         return detailRules;
     }
+
+    /**
+     * 修改细则状态
+     *
+     * @param detailRule
+     * @return
+     */
+    @RequestMapping(value = "updateDetailRuleState", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateDetailRuleState(@RequestBody DetailRule detailRule) {
+        LOGGER.info("修改细则状态");
+        Assert.notNull(detailRule, "细则为空");
+        return iDetailRuleService.updateDetailRuleState(detailRule);
+    }
+
+    /**
+     * 新增细则
+     *
+     * @param detailRule
+     * @return
+     */
+    @RequestMapping(value = "createDetailRule", method = RequestMethod.POST)
+    @ResponseBody
+    public String createDetailRule(@RequestBody DetailRule detailRule) {
+        LOGGER.info("新增细则");
+        Assert.notNull(detailRule, "细则为空");
+        return iDetailRuleService.createDetailRule(detailRule);
+    }
+
+    /**
+     * 细则详情
+     *
+     * @param ruleId
+     * @return
+     */
+    @RequestMapping(value = "showDetailRuleInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public DetailRuleVO showDetailRuleInfo(@RequestBody Integer ruleId) {
+        LOGGER.info("细则详情");
+        Assert.notNull(ruleId, "细则不存在");
+        return iDetailRuleService.showDetailRuleInfo(ruleId);
+    }
+
+    /**
+     * 修改细则
+     *
+     * @param detailRule
+     * @return
+     */
+    @RequestMapping(value = "updateDetailRule", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateDetailRule(@RequestBody DetailRule detailRule) {
+        LOGGER.info("修改细则");
+        Assert.notNull(detailRule, "细则为空");
+        return iDetailRuleService.updateDetailRule(detailRule);
+    }
+
 }

@@ -19,4 +19,21 @@ public interface DetailRuleDao extends CrudRepository<DetailRule, Long> {
      * @return
      */
     Page<DetailRule> findAll(Specification<DetailRule> spec, Pageable pageable);
+
+    /**
+     * 根据大类ID和细则名查找细则信息
+     *
+     * @param name
+     * @return
+     */
+    DetailRule findByMainRuleIdAndRuleName(Integer mainRuleId, String name);
+
+    /**
+     * 根据细则id查找细则信息
+     *
+     * @param ruleId
+     * @return
+     */
+    DetailRule findByRuleId(Integer ruleId);
+
 }

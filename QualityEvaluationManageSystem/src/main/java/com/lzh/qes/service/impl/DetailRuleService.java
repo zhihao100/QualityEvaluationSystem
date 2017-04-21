@@ -1,7 +1,10 @@
 package com.lzh.qes.service.impl;
 
 import com.lzh.qes.bean.DetailRule;
+import com.lzh.qes.bean.MainRule;
 import com.lzh.qes.dao.DetailRuleDao;
+import com.lzh.qes.dao.MainRuleDao;
+import com.lzh.qes.modal.vo.DetailRuleVO;
 import com.lzh.qes.service.IDetailRuleService;
 import com.lzh.qes.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +30,8 @@ import java.util.List;
 public class DetailRuleService implements IDetailRuleService {
     @Autowired
     private DetailRuleDao detailRuleDao;
+    @Autowired
+    private MainRuleDao mainRuleDao;
 
     @Override
     public Page<DetailRule> findDetailRuleByMultiConditionAndPage(PageUtils pageUtils) {
@@ -45,6 +50,57 @@ public class DetailRuleService implements IDetailRuleService {
             }
         }, pageRequest);
         return detailRulePage;
+    }
+
+    @Override
+    public String createDetailRule(DetailRule detailRule) {
+        if (null == detailRule.getRuleName() || "" == detailRule.getRuleName()) {
+            return "请输入细则名称";
+        }
+        DetailRule existedDetailRule = detailRuleDao.findByMainRuleIdAndRuleName(detailRule.getMainRuleId(), detailRule.getRuleName());
+        if (null != existedDetailRule) {
+            return "该细则已存在";
+        }
+        detailRuleDao.save(detailRule);
+        return "新增成功";
+    }
+
+    @Override
+    public String updateDetailRuleState(DetailRule detailRule) {
+        DetailRule existedDetailRule = detailRuleDao.findByRuleId(detailRule.getRuleId());
+        if (null != existedDetailRule) {
+            existedDetailRule.setRuleState(detailRule.getRuleState());
+            detailRuleDao.save(existedDetailRule);
+            return "修改完成";
+        }
+        return "修改失败，该细则不存在";
+    }
+
+    @Override
+    public DetailRuleVO showDetailRuleInfo(Integer ruleId) {
+        DetailRule detailRule = detailRuleDao.findByRuleId(ruleId);
+        MainRule mainRule = mainRuleDao.findMainRuleByRuleId(detailRule.getMainRuleId());
+        DetailRuleVO detailRuleVO = new DetailRuleVO();
+        detailRuleVO.setDetailRule(detailRule);
+        detailRuleVO.setMainRule(mainRule);
+        return detailRuleVO;
+    }
+
+    @Override
+    public String updateDetailRule(DetailRule detailRule) {
+        if (null == detailRule.getRuleName() || "" == detailRule.getRuleName()) {
+            return "请输入细则名称";
+        }
+        DetailRule existedDetailRule = detailRuleDao.findByRuleId(detailRule.getRuleId());
+        DetailRule existedDetailRuleName = detailRuleDao.findByMainRuleIdAndRuleName(detailRule.getMainRuleId(), detailRule.getRuleName());
+        if (!existedDetailRule.getRuleName().equals(detailRule.getRuleName()) && null != existedDetailRuleName) {
+            return "该细则已存在";
+        }
+        existedDetailRule.setRuleName(detailRule.getRuleName());
+        existedDetailRule.setRuleState(detailRule.getRuleState());
+        existedDetailRule.setRemark(detailRule.getRemark());
+        detailRuleDao.save(existedDetailRule);
+        return "修改成功";
     }
 
     /**
