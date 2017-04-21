@@ -91,4 +91,14 @@ qesModule.controller("detailRuleCtrl", [
                     qemsAlert.show(response, "detailRule?mainRuleId=" + $scope.mainRule.ruleId + "&mainRuleName=" + $scope.mainRule.ruleName);
                 });
             }
+        }])
+    .controller('itemRuleCtrl', [
+        '$scope',
+        '$http',
+        '$stateParams',
+        function ($scope, $http, $stateParams) {
+            //项目管理列表
+            $http.post('itemRule', $stateParams.ruleId).success(function (response) {
+                $scope.itemRule = response;
+            });
         }]);

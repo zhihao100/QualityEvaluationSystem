@@ -12,7 +12,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li class="active">
-            <a ui-sref="detailRule">{{}}</a>
+            <a ui-sref="detailRule({mainRuleId:itemRule.mainRule.ruleId,mainRuleName:itemRule.mainRule.ruleName})">{{itemRule.mainRule.ruleName}}</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -25,28 +25,20 @@
 <div class="row">
     <div class="col-md-12">
         <div class="portlet light">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject font-green-sharp bold font-gree">项目管理</span>
-                </div>
-            </div>
             <div class="portlet-body">
                 <form class="form form-horizontal" role="form">
                     <div class="form-body">
                         <div>
                             <section class="infogroup">
                                 <div class="row">
-                                    <div class="col-md-12">所属大类：<span ng-bind="itemRule.mainRuleName"></span></div>
+                                    <div class="col-md-12">所属大类：<span ng-bind="itemRule.mainRule.ruleName"></span></div>
                                 </div>
-                            </section>
-                            <section class="infogroup">
                                 <div class="row">
-                                    <div class="col-md-12">所占权重：<span ng-bind="itemRule.weight"></span></div>
+                                    <div class="col-md-12">所占权重：<span
+                                            ng-bind="itemRule.mainRule.weight | toPercent"></span></div>
                                 </div>
-                            </section>
-                            <section class="infogroup">
                                 <div class="row">
-                                    <div class="col-md-12">所属细则：<span ng-bind="itemRlue.detailRuleName"></span></div>
+                                    <div class="col-md-12">所属细则：<span ng-bind="itemRule.detailRuleName"></span></div>
                                 </div>
                             </section>
                             <section class="infogroup">
@@ -59,39 +51,44 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8 table-container ng-scope">
+                                <div class="col-md-10 table-container ng-scope">
                                     <table class="table table-striped table-bordered table-hover table-btns mb30">
                                         <thead>
                                         <tr role="row" class="heading">
-                                            <th width="15%">序号</th>
-                                            <th width="40%">项目名称</th>
-                                            <th width="20%">状态</th>
-                                            <th width="25%">操作</th>
+                                            <th width="10%">序号</th>
+                                            <th width="12%">项目编号</th>
+                                            <th width="30%">项目名称</th>
+                                            <th width="12%">项目分值</th>
+                                            <th width="8%">状态</th>
+                                            <th width="38%">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="item in majorInfo">
+                                        <tr ng-repeat="item in itemRule.itemRuleList">
                                             <td ng-bind="$index+1"></td>
-                                            <td ng-bind="item.majorName"></td>
-                                            <td ng-if="item.majorState=='停用'"><span
+                                            <td ng-bind="item.itemId"></td>
+                                            <td ng-bind="item.itemName"></td>
+                                            <td><span ng-bind="item.itemScore"></span>分</td>
+                                            <td ng-if="item.itemState=='停用'"><span
                                                     class="label label-sm label-default">停用</span></td>
-                                            <td ng-if="item.majorState=='启用'"><span
+                                            <td ng-if="item.itemState=='启用'"><span
                                                     class="label label-sm label-success">启用</span></td>
                                             <td>
-                                                <a ng-click="changeState('停用',item.majorId)"
-                                                   class="btn btn-xs default btn-editable"
-                                                   ng-if="item.majorState=='启用'">
-                                                    <i class="fa fa-lock"></i> 停用
-                                                </a>
-                                                <a ng-click="changeState('启用',item.majorId)"
-                                                   class="btn btn-xs default btn-editable"
-                                                   ng-if="item.majorState=='停用'">
-                                                    <i class="fa fa-unlock"></i> 启用
-                                                </a>
-                                                <a ng-click="majorEdit(item.majorName,item.majorId)"
+                                                <a ng-click="itemEdit(item)"
                                                    class="btn btn-xs default btn-editable">
                                                     <i class="fa fa-edit"></i> 编辑
                                                 </a>
+                                                <a ng-click="changeState('停用',item.itemId)"
+                                                   class="btn btn-xs default btn-editable"
+                                                   ng-if="item.itemState=='启用'">
+                                                    <i class="fa fa-lock"></i> 停用
+                                                </a>
+                                                <a ng-click="changeState('启用',item.itemId)"
+                                                   class="btn btn-xs default btn-editable"
+                                                   ng-if="item.itemState=='停用'">
+                                                    <i class="fa fa-unlock"></i> 启用
+                                                </a>
+
                                             </td>
                                         </tr>
                                         </tbody>
@@ -102,7 +99,8 @@
                             <div>
                                 <div class="form-action">
                                     <div class="row txtcenter">
-                                        <a ui-sref="instituteManage" class="btn default"><i
+                                        <a ui-sref="detailRule({mainRuleId:itemRule.mainRule.ruleId,mainRuleName:itemRule.mainRule.ruleName})"
+                                           class="btn default"><i
                                                 class="fa fa-chevron-circle-left"></i> 返回</a>
                                     </div>
                                 </div>

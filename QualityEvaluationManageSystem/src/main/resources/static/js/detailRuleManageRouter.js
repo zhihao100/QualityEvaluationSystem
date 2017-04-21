@@ -26,5 +26,11 @@ qesModule.config(function ($stateProvider) {
             url: "/detailRuleEdit/:ruleId",
             templateUrl: "tpls/detailRuleManage/detailRuleEdit.html",
             controller: "detailRuleEditCtrl"
+        })
+        //项目列表页
+        .state('itemRule', {
+            url: "/itemRule/:ruleId",
+            templateUrl: "tpls/detailRuleManage/itemRule.html",
+            controller: "itemRuleCtrl"
         });
 })
