@@ -77,6 +77,9 @@ public class ManagerService implements IManagerService {
         /* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
+            if (null == (Long) manager.getManagerId()) {
+                return "该管理员不存在";
+            }
             Manager existedManager = managerDao.findByManagerId(manager.getManagerId());
             if (null != existedManager) {
                 existedManager.setManagerState(manager.getManagerState());
@@ -84,7 +87,7 @@ public class ManagerService implements IManagerService {
                 return "修改完成";
             }
         }
-        return "修改失败,只有超级管理员可执行次操作";
+        return "修改失败,只有超级管理员可执行此操作";
     }
 
     @Override
@@ -157,11 +160,11 @@ public class ManagerService implements IManagerService {
 		/* 获取当前登录的管理员，并判断是否为超级管理员 */
         Manager superManager = findManager();
         if (superManager.isSuperManager()) {
-            Manager existedManager = managerDao.findByManagerId(manager.getManagerId());
-            Manager existedManagerName = managerDao.findByManagerName(manager.getManagerName());
-            if (null == existedManager) {
+            if (null == (Long) manager.getManagerId()) {
                 return "该管理员不存在";
             }
+            Manager existedManager = managerDao.findByManagerId(manager.getManagerId());
+            Manager existedManagerName = managerDao.findByManagerName(manager.getManagerName());
             if (null == manager.getInstituteId()) {
                 return "请选择学院";
             }

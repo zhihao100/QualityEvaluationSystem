@@ -40,11 +40,10 @@ public class InstituteManageService implements IInstituteManageService {
         return "该学院已存在";
     }
 
-
     @Override
     public String updateInstituteState(Institute institute) {
-        Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
-        if (null != existedInstitute) {
+        if (null != (Integer) institute.getInstituteId()) {
+            Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
             existedInstitute.setInstituteState(institute.getInstituteState());
             instituteDao.save(existedInstitute);
             return "修改完成";
@@ -110,11 +109,11 @@ public class InstituteManageService implements IInstituteManageService {
 
     @Override
     public String updateInstitute(Institute institute) {
-        Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
-        Institute existedInstituteName = instituteDao.findByInstituteName(institute.getInstituteName());
-        if (null == existedInstitute) {
+        if (null == (Integer) institute.getInstituteId()) {
             return "该学院不存在";
         }
+        Institute existedInstitute = instituteDao.findByInstituteId(institute.getInstituteId());
+        Institute existedInstituteName = instituteDao.findByInstituteName(institute.getInstituteName());
         if (!existedInstitute.getInstituteName().equals(institute.getInstituteName()) && null != existedInstituteName) {
             return "该学院已存在";
         }

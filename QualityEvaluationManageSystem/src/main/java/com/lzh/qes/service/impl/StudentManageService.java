@@ -126,6 +126,9 @@ public class StudentManageService implements IStudentManageService {
 
     @Override
     public String updateStudent(Student student) {
+        if (null == student.getStudentId()) {
+            return "修改失败，该学生不存在";
+        }
         if(null==student.getStudentNumber()){
             return "请录入学号再修改";
         }
@@ -144,11 +147,9 @@ public class StudentManageService implements IStudentManageService {
         if(null==student.getClassId()){
             return "请选择班级再修改";
         }
+
         Student existedStudent = studentDao.findStudentByStudentId(student.getStudentId());
         Student existedStudentNumber = studentDao.findStudentByStudentNumber(student.getStudentNumber());
-        if (null == existedStudent) {
-            return "修改失败，该学生不存在";
-        }
         if (!existedStudent.getStudentNumber().equals(student.getStudentNumber()) && null != existedStudentNumber) {
             return "该学生已存在";
         }

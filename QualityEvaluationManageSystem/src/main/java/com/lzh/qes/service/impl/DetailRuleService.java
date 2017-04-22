@@ -67,8 +67,8 @@ public class DetailRuleService implements IDetailRuleService {
 
     @Override
     public String updateDetailRuleState(DetailRule detailRule) {
-        DetailRule existedDetailRule = detailRuleDao.findByRuleId(detailRule.getRuleId());
-        if (null != existedDetailRule) {
+        if (null != detailRule.getRuleId()) {
+            DetailRule existedDetailRule = detailRuleDao.findByRuleId(detailRule.getRuleId());
             existedDetailRule.setRuleState(detailRule.getRuleState());
             detailRuleDao.save(existedDetailRule);
             return "修改完成";
@@ -88,6 +88,9 @@ public class DetailRuleService implements IDetailRuleService {
 
     @Override
     public String updateDetailRule(DetailRule detailRule) {
+        if (null == detailRule.getRuleId()) {
+            return "该细则不存在";
+        }
         if (null == detailRule.getRuleName() || "" == detailRule.getRuleName()) {
             return "请输入细则名称";
         }

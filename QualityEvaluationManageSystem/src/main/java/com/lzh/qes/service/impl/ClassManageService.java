@@ -107,8 +107,8 @@ public class ClassManageService implements IClassManageService {
     }
     @Override
     public String updateClassState(ClassManage classManage) {
-        ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
-        if (null != existedClass) {
+        if (null != (Integer) classManage.getClassId()) {
+            ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
             existedClass.setClassState(classManage.getClassState());
             classManageDao.save(existedClass);
             return "修改完成";
@@ -130,11 +130,11 @@ public class ClassManageService implements IClassManageService {
         if(null==classManage.getClassNumber()){
             return "请录入班级序号再修改";
         }
-        ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
-        ClassManage existedClassFullName = classManageDao.findByClassFullName(classManage.getClassFullName());
-        if (null == existedClass) {
+        if (null == (Integer) classManage.getClassId()) {
             return "修改失败，该班级不存在";
         }
+        ClassManage existedClass = classManageDao.findByClassId(classManage.getClassId());
+        ClassManage existedClassFullName = classManageDao.findByClassFullName(classManage.getClassFullName());
         if (!existedClass.getClassFullName().equals(classManage.getClassFullName()) && null != existedClassFullName) {
             return "该班级已存在";
         }

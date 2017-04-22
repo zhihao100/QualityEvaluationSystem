@@ -67,13 +67,12 @@ public class MajorManageService implements IMajorManageService {
     @Transactional
     @Override
     public String updateMajorState(Major major) {
-        Major existedMajor = majorDao.findByMajorId(major.getMajorId());
-        if (null != existedMajor) {
+        if (null != major.getMajorId()) {
+            Major existedMajor = majorDao.findByMajorId(major.getMajorId());
             existedMajor.setMajorState(major.getMajorState());
             majorDao.save(existedMajor);
             return "修改完成";
         }
-
         return "修改失败,该专业不存在";
     }
 
@@ -86,11 +85,12 @@ public class MajorManageService implements IMajorManageService {
     @Transactional
     @Override
     public String editMajor(Major major) {
-        Major existedMajor = majorDao.findByMajorId(major.getMajorId());
-        Major existedMajorName = majorDao.findByMajorName(major.getMajorName());
-        if (null == existedMajor) {
+        if (null == major.getMajorId()) {
             return "修改失败,该专业不存在";
         }
+        Major existedMajor = majorDao.findByMajorId(major.getMajorId());
+        Major existedMajorName = majorDao.findByMajorName(major.getMajorName());
+
         if (!existedMajor.getMajorName().equals(major.getMajorName()) && null != existedMajorName) {
             return "该专业已存在";
         }

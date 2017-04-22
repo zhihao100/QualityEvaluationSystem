@@ -67,8 +67,8 @@ public class MainRuleManageService implements IMainRuleManageService {
 
     @Override
     public String updateMainRuleState(MainRule mainRule) {
-        MainRule existedMainRule = mainRuleDao.findMainRuleByRuleId(mainRule.getRuleId());
-        if (existedMainRule != null) {
+        if (null != mainRule.getRuleId()) {
+            MainRule existedMainRule = mainRuleDao.findMainRuleByRuleId(mainRule.getRuleId());
             existedMainRule.setRuleState(mainRule.getRuleState());
             mainRuleDao.save(existedMainRule);
             return "修改完成";
@@ -106,6 +106,9 @@ public class MainRuleManageService implements IMainRuleManageService {
 
     @Override
     public String updateMainRule(MainRule mainRule) {
+        if (null == mainRule.getRuleId()) {
+            return "该类别不存在";
+        }
         if (null == mainRule.getRuleName()) {
             return "请录入类别名称再修改";
         }
