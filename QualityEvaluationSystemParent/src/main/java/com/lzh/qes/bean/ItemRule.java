@@ -28,7 +28,7 @@ public class ItemRule implements Serializable {
      * 项目分值
      */
     @NotNull
-    private Integer itemScore;
+    private Double itemScore;
     /**
      * 所属细则
      */
@@ -57,11 +57,11 @@ public class ItemRule implements Serializable {
         this.itemName = itemName;
     }
 
-    public Integer getItemScore() {
+    public Double getItemScore() {
         return itemScore;
     }
 
-    public void setItemScore(Integer itemScore) {
+    public void setItemScore(Double itemScore) {
         this.itemScore = itemScore;
     }
 

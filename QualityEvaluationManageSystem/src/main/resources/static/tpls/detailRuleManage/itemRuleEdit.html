@@ -1,0 +1,49 @@
+<style>
+    .modal {
+        top: 100px;
+    }
+</style>
+<div class=".modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true" ng-click="cancel()">×
+        </button>
+        <h4 class="modal-title" style="font-weight:bold;">项目编辑</h4>
+    </div>
+    <div class="modal-body">
+        <div class="portlet-body form">
+            <form action="" class="form-horizontal">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-3 col-md-offset-1 control-label">项目名称:</label>
+                            <div class="col-md-7">
+                                <input name="itemName" type="text" class="form-control" ng-model="itemRule.itemName"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-md-offset-1 control-label">项目分值:</label>
+                            <div class="col-md-7">
+                                <input name="itemScore" type="number" class="form-control"
+                                       ng-model="itemRule.itemScore"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-md-offset-1 control-label">项目状态:</label>
+                            <div class="col-md-7">
+                                <input name="itemState" type="radio" class="radio-inline" ng-model="itemRule.itemState"
+                                       value="启用"/>启用
+                                <input name="itemState" type="radio" class="radio-inline" ng-model="itemRule.itemState"
+                                       value="停用"/>停用
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary col-md-2 col-md-offset-5" type="button" ng-click="ok()">确定</button>
+    </div>
+</div>

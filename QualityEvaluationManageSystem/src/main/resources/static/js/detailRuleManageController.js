@@ -38,7 +38,6 @@ qesModule.controller("detailRuleCtrl", [
         }
         //启用停用切换
         $scope.changeState = function (state, id) {
-            $scope.detailRule = {};
             $scope.detailRule.ruleState = state;
             $scope.detailRule.ruleId = id;
             $http.post("updateDetailRuleState", $scope.detailRule).success(function (response) {
@@ -96,9 +95,93 @@ qesModule.controller("detailRuleCtrl", [
         '$scope',
         '$http',
         '$stateParams',
-        function ($scope, $http, $stateParams) {
+        'qemsAlert',
+        '$modal',
+        function ($scope, $http, $stateParams, qemsAlert, $modal) {
             //项目管理列表
             $http.post('itemRule', $stateParams.ruleId).success(function (response) {
                 $scope.itemRule = response;
             });
-        }]);
+            //启用停用切换
+            $scope.changeState = function (state, id) {
+                $scope.itemRule.itemState = state;
+                $scope.itemRule.itemId = id;
+                $http.post("updateItemRuleState", $scope.itemRule).success(function (response) {
+                    qemsAlert.show(response, "itemRule");
+                })
+            }
+            //新增项目
+            $scope.itemAdd = function () {
+                $scope.itemRule.itemName = "";
+                $scope.itemRule.itemScore = "";
+                $scope.itemRule.itemState = "启用";
+                $scope.itemRule.detailRuleId = $stateParams.ruleId;
+                $modal.open({
+                    templateUrl: "tpls/detailRuleManage/itemRuleAdd.html",
+                    controller: "itemRuleAddCtrl",
+                    resolve: {
+                        itemRule: function () {
+                            return angular.copy($scope.itemRule);
+                        }
+                    }
+                })
+            }
+            //编辑项目
+            $scope.itemEdit = function (item) {
+                $modal
+                    .open({
+                        templateUrl: 'tpls/detailRuleManage/itemRuleEdit.html',
+                        controller: 'itemRuleEditCtrl',
+                        // 传参
+                        resolve: {
+                            item: function () {
+                                return angular.copy(item);
+                            }
+                        }
+                    });
+            }
+        }])
+    .controller("itemRuleAddCtrl", [
+        '$scope',
+        '$http',
+        'itemRule',
+        'qemsAlert',
+        '$modalInstance',
+        function ($scope, $http, itemRule, qemsAlert, $modalInstance) {
+            //新增项目
+            $scope.itemRule = itemRule;
+            // 确认按钮
+            $scope.ok = function () {
+                $modalInstance.close();
+                $http.post("itemRuleAdd", $scope.itemRule).success(function (rs) {
+                    qemsAlert.show(rs, "itemRule");
+                })
+            }
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+    ])
+    .controller("itemRuleEditCtrl", [
+        '$scope',
+        '$http',
+        'item',
+        'qemsAlert',
+        '$modalInstance',
+        function ($scope, $http, item, qemsAlert, $modalInstance) {
+            //编辑项目
+            $scope.itemRule = item;
+            // 确认按钮
+            $scope.ok = function () {
+                $modalInstance.close();
+                $http.post("itemRuleEdit", $scope.itemRule).success(function (rs) {
+                    qemsAlert.show(rs, "itemRule");
+                })
+            }
+            // 取消按钮
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }
+    ]);
