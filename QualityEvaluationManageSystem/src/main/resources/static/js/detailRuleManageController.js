@@ -97,7 +97,18 @@ qesModule.controller("detailRuleCtrl", [
         '$stateParams',
         'qemsAlert',
         '$modal',
-        function ($scope, $http, $stateParams, qemsAlert, $modal) {
+        'scoreRule',
+        function ($scope, $http, $stateParams, qemsAlert, $modal, scoreRule) {
+            //请求课程成绩加分规则数据
+            scoreRule.scoreRule().then(function (res) {
+                $scope.scoreRules = res.data;
+            })
+            $scope.scoreRule = {};
+            //班级人数切换
+            $scope.newPeopleNum = 20;
+            $scope.changePeopleNum = function (newPeopleNum) {
+                $scope.newPeopleNum = newPeopleNum;
+            }
             //项目管理列表
             $http.post('itemRule', $stateParams.ruleId).success(function (response) {
                 $scope.itemRule = response;
