@@ -6,8 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 /**
  * Created by liuzhihao on 2017/4/17.
  */
@@ -35,13 +33,7 @@ public interface MainRuleDao extends CrudRepository<MainRule, Integer> {
      * @param ruleName,instituteId
      * @return
      */
-    MainRule findMainRuleByRuleNameAndInstituteId(String ruleName, Integer instituteId);
+    MainRule findMainRuleByRuleName(String ruleName);
 
-    /**
-     * 根据instituteId查询细则大类详情
-     *
-     * @param instituteId
-     * @return
-     */
-    List<MainRule> findMainRuleByInstituteId(Integer instituteId);
+
 }

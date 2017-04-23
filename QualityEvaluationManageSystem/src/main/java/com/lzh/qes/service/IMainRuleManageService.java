@@ -1,11 +1,8 @@
 package com.lzh.qes.service;
 
 import com.lzh.qes.bean.MainRule;
-import com.lzh.qes.modal.vo.MainRuleVO;
-import com.lzh.qes.search.PageList;
 import com.lzh.qes.utils.PageUtils;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  * Created by liuzhihao on 2017/4/17.
@@ -16,7 +13,7 @@ public interface IMainRuleManageService {
      * @param pageUtils
      * @return
      */
-    PageList<MainRuleVO> findAllMainRuleByMultiConditionAndPage(PageUtils pageUtils);
+    Page<MainRule> findAllMainRuleByMultiConditionAndPage(PageUtils pageUtils);
 
     /**
      * 修改细则大类状态
@@ -32,7 +29,7 @@ public interface IMainRuleManageService {
      * @param ruleId
      * @return
      */
-    MainRuleVO showMainRuleDetails(Integer ruleId);
+    MainRule showMainRuleDetails(Integer ruleId);
 
     /**
      * 新增细则大类
@@ -50,11 +47,4 @@ public interface IMainRuleManageService {
      */
     String updateMainRule(MainRule mainRule);
 
-    /**
-     * 根据instituteId查询细则大类详情
-     *
-     * @param instituteId
-     * @return
-     */
-    List<MainRule> showMainRuleDetailsByInstituteId(Integer instituteId);
 }

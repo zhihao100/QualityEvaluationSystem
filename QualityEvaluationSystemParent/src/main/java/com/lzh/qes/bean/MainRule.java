@@ -24,11 +24,6 @@ public class MainRule {
     @NotBlank
     private String ruleName;
     /**
-     * 所属学院
-     */
-    @NotNull
-    private Integer instituteId;
-    /**
      * 所占权重
      */
     @NotNull
@@ -55,14 +50,6 @@ public class MainRule {
 
     public void setRuleName(String ruleName) {
         this.ruleName = ruleName;
-    }
-
-    public Integer getInstituteId() {
-        return instituteId;
-    }
-
-    public void setInstituteId(Integer instituteId) {
-        this.instituteId = instituteId;
     }
 
     public Double getWeight() {

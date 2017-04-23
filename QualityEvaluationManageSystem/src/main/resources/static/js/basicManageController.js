@@ -197,14 +197,35 @@ qesModule.controller('instituteManageCtrl', [
         '$state',
         'userService',
         function ($scope, $http, $state,userService) {
-            //班级列表(只显示学院和专业都启用的情况）
+            //查询当前管理员所在学院
+            userService.user().then(function (res) {
+                $scope.user = res.data;
+            });
+
+            //班级列表
             $scope.classManage={};
+            //默认只查询自己学院的学生
+            $scope.classManage.instituteId = $scope.user.instituteId;
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
                 itemsPerPage: 10,
                 perPageOptions: [5, 10, 20]
             };
+            //启用状态学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
+            //默认显示该学院下的专业
+            $http.post("enabledMajorManage/" + $scope.user.instituteId, {}).success(function (rs) {
+                $scope.majorManages = rs;
+            });
+            //查询启用状态学院下的所有启用状态专业
+            $scope.changeInstitute = function (instituteId) {
+                $http.post("enabledMajorManage/" + instituteId, {}).success(function (rs) {
+                    $scope.majorManages = rs;
+                });
+            }
             $scope.search = function () {
                 $scope.postData = {
                     currentPage: $scope.paginationConf.currentPage,
@@ -230,13 +251,7 @@ qesModule.controller('instituteManageCtrl', [
                     $state.go('classManage', {}, {reload: true});
                 })
             }
-            //查询当前管理员所在学院状态以做权限控制
-            userService.user().then(function (res) {
-                $scope.user = res.data;
-            });
-            $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
-                $scope.instituteInfo = response;
-            });
+
             $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', $scope.search);
 
         }])
@@ -349,17 +364,19 @@ qesModule.controller('instituteManageCtrl', [
             userService.user().then(function (res) {
                 $scope.user = res.data;
             });
-            $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
-                $scope.instituteInfo = response;
-            });
             //动态生成年级
             $scope.gradeManages = [];
             $scope.currentYear = (new Date()).getFullYear();
             for (var i = 0; i < 5; i++) {
                 $scope.gradeManages.push({grade: $scope.currentYear - i, gradeName: ($scope.currentYear - i) + "级"});
             }
+            //启用状态学院查询
+            $http.post("findAllInstitute").success(function (rs) {
+                $scope.instituteManages = rs;
+            });
             //查询该学院下的所有启用专业
-            $http.post("enabledMajorManage/" + $scope.user.instituteId, {}).success(function (rs) {
+            $scope.changeInstitute = function (instituteId) {
+                $http.post("enabledMajorManage/" + instituteId, {}).success(function (rs) {
                     $scope.majorManages = rs;
                     //查询该专业下的所有班级
                     $scope.changeMajor=function(majorId){
@@ -379,6 +396,7 @@ qesModule.controller('instituteManageCtrl', [
                         })
                     }
                 });
+            }
             //学生列表
             $scope.studentManage = {};
             //配置分页基本参数
@@ -387,7 +405,7 @@ qesModule.controller('instituteManageCtrl', [
                 itemsPerPage: 10,
                 perPageOptions: [5, 10, 20]
             };
-            //只能查询自己学院的学生
+            //默认只查询自己学院的学生
             $scope.studentManage.instituteId = $scope.user.instituteId;
             $scope.search = function () {
                 $scope.postData = {
@@ -403,7 +421,6 @@ qesModule.controller('instituteManageCtrl', [
             //清空查询条件
             $scope.reset = function () {
                 $scope.studentManage = {};
-                $scope.studentManage.instituteId = $scope.user.instituteId;
                 $scope.majorManages={};
                 $scope.classManages={};
             }
@@ -543,19 +560,10 @@ qesModule.controller('instituteManageCtrl', [
         '$scope',
         '$http',
         '$state',
-        'userService',
-        function ($scope, $http, $state, userService) {
-            //查询当前管理员所在学院状态以做权限控制
-            userService.user().then(function (res) {
-                $scope.user = res.data;
-            });
-            $http.post('showInstituteDetails', $scope.user.instituteId).success(function (response) {
-                $scope.instituteInfo = response;
-            });
+        'qemsAlert',
+        function ($scope, $http, $state, qemsAlert) {
             //细则大类列表
             $scope.mainRuleManage = {};
-            //只能查询自己学院的细则大类
-            $scope.mainRuleManage.instituteId = $scope.user.instituteId;
             var search = function () {
                 var postData = {
                     currentPage: $scope.paginationConf.currentPage,
@@ -563,15 +571,11 @@ qesModule.controller('instituteManageCtrl', [
                     mainRule: $scope.mainRuleManage
                 };
                 $http.post('findAllMainRuleByMultiConditionAndPage', postData).success(function (response) {
-                    $scope.paginationConf.totalItems = response.pagersInfo.totalElements;
-                    $scope.mainRuleManages = response.dataList;
+                    $scope.paginationConf.totalItems = response.totalElements;
+                    $scope.mainRules = response.content;
                 });
             };
             $scope.search = search;
-            //学院查询
-            $http.post("findAllInstitute").success(function (rs) {
-                $scope.instituteManages = rs;
-            });
             //配置分页基本参数
             $scope.paginationConf = {
                 currentPage: 1,
@@ -582,15 +586,14 @@ qesModule.controller('instituteManageCtrl', [
             //清空查询条件
             $scope.reset = function () {
                 $scope.mainRuleManage = {};
-                $scope.mainRuleManage.instituteId = $scope.user.instituteId;
             }
             //启用停用切换
             $scope.changeState = function (state, id) {
                 $scope.mainRule = {};
                 $scope.mainRule.ruleState = state;
                 $scope.mainRule.ruleId = id;
-                $http.post("updateMainRuleState", $scope.mainRule).success(function () {
-                    $state.go('mainRuleManage', {}, {reload: true});
+                $http.post("updateMainRuleState", $scope.mainRule).success(function (rs) {
+                    qemsAlert.show(rs, "mainRuleManage");
                 })
             }
 
@@ -614,17 +617,12 @@ qesModule.controller('instituteManageCtrl', [
         'qemsAlert',
         function ($scope, $http, $stateParams, $log, qemsAlert) {
             //细则大类编辑
-            //学院查询
-            $http.post("findAllInstitute").success(function (rs) {
-                $scope.instituteManages = rs;
-            });
             $scope.ruleId = $stateParams.ruleId;
             $http.post('showMainRuleDetails', $scope.ruleId).success(function (response) {
                 $scope.ruleInfo = response;
             });
             $scope.mainRuleSubmit = function () {
-                $scope.rule = {};
-                $scope.rule = $scope.ruleInfo.mainRule;
+                $scope.rule = $scope.ruleInfo;
                 $scope.rule.ruleId = $scope.ruleId;
                 $http.post("updateMainRule", $scope.rule).success(function (response) {
                     qemsAlert.show(response, "mainRuleManage");
@@ -637,10 +635,6 @@ qesModule.controller('instituteManageCtrl', [
         'qemsAlert',
         function ($scope, $http, qemsAlert) {
             //细则大类添加
-            //学院查询
-            $http.post("findAllInstitute").success(function (rs) {
-                $scope.instituteManages = rs;
-            });
             $scope.ruleInfo = {};
             $scope.ruleInfo.ruleState = '启用';
             //提交
