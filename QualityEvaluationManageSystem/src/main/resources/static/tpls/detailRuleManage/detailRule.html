@@ -68,7 +68,7 @@
                     </div>
                 </form>
                 <div class="clearfix"></div>
-                <div class="table-toolbar ng-scope">
+                <div class="table-toolbar ng-scope" ng-if="user.superManager">
                     <div class="btn-group">
                         <a ui-sref="detailRuleAdd({mainRuleId:detailRule.mainRuleId,mainRuleName:mainRuleName})"
                            class="btn blue"> <i class="fa fa-plus"></i> 新增细则</a>
@@ -102,7 +102,8 @@
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
                                 <a ng-href="#/detailRuleEdit/{{detailRule.ruleId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="detailRule.ruleState=='启用'">
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="detailRule.ruleState=='启用'&&user.superManager">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a ng-href="#/itemRule/{{detailRule.ruleId}}"
@@ -112,12 +113,12 @@
                                 </a>
                                 <a ng-click="changeState('停用',detailRule.ruleId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="detailRule.ruleState=='启用'">
+                                   ng-if="detailRule.ruleState=='启用'&&user.superManager">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
                                 <a ng-click="changeState('启用',detailRule.ruleId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="detailRule.ruleState=='停用'">
+                                   ng-if="detailRule.ruleState=='停用'&&user.superManager">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
                             </td>

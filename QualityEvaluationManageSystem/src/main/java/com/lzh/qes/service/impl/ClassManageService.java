@@ -95,7 +95,15 @@ public class ClassManageService implements IClassManageService {
     private List<Predicate> createMultiConditionSQL(Root<ClassManage> root, CriteriaBuilder builder, PageUtils pageUtils) {
         ClassManage classManage = pageUtils.getClassManage();
         List<Predicate> predicates = new ArrayList<Predicate>();
-		/* 加入班级状态 */
+        /* 加入所属学院 */
+        if (null != classManage.getInstituteId()) {
+            predicates.add(builder.equal(root.get("instituteId"), classManage.getInstituteId()));
+        }
+        /* 加入所属专业 */
+        if (null != classManage.getMajorId()) {
+            predicates.add(builder.equal(root.get("majorId"), classManage.getMajorId()));
+        }
+        /* 加入班级状态 */
         if (null != classManage.getClassState()) {
             predicates.add(builder.equal(root.get("classState"), classManage.getClassState()));
         }

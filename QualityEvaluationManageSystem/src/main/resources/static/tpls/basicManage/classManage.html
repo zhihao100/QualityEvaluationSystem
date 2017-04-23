@@ -33,6 +33,31 @@
                     <div class="form-body">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="col-md-4 control-label">所属学院：</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-placeholder="请选择"
+                                            ng-model="classManage.instituteId"
+                                            ng-change="changeInstitute(classManage.instituteId)"
+                                            ng-options="instituteManage.instituteId as instituteManage.instituteName for instituteManage in instituteManages">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">所属专业：</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="classManage.majorId"
+                                            ng-change="changeMajor(classManage.majorId)"
+                                            ng-options="majorManage.majorId as majorManage.majorName for majorManage in majorManages">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">班级名称：</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" ng-model="classManage.classFullName"/>
@@ -68,7 +93,7 @@
                     </div>
                 </form>
                 <div class="clearfix"></div>
-                <div class="table-toolbar ng-scope" ng-if="user.superManager||(instituteInfo.instituteState=='启用')">
+                <div class="table-toolbar ng-scope" ng-if="user.superManager">
                     <div class="btn-group">
                         <a ui-sref="classManageAdd" class="btn blue"> <i class="fa fa-plus"></i> 新增班级</a>
                     </div>
@@ -105,17 +130,18 @@
                                     <i class="fa fa-file-text-o"></i> 详情
                                 </a>
                                 <a ng-href="#/classManageEdit/{{classManage.classManage.classId}}"
-                                   class="btn btn-xs default btn-editable" ng-if="classManage.classManage.classState=='启用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="classManage.classManage.classState=='启用'&&user.superManager">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a ng-click="changeState('停用',classManage.classManage.classId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="classManage.classManage.classState=='启用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
+                                   ng-if="classManage.classManage.classState=='启用'&&user.superManager">
                                     <i class="fa fa-lock"></i> 停用
                                 </a>
                                 <a ng-click="changeState('启用',classManage.classManage.classId)"
                                    class="btn btn-xs default btn-editable"
-                                   ng-if="classManage.classManage.classState=='停用'&&instituteInfo.instituteState=='启用'&&(user.superManager||(user.instituteId==classManage.classManage.instituteId))">
+                                   ng-if="classManage.classManage.classState=='停用'&&user.superManager">
                                     <i class="fa fa-unlock"></i> 启用
                                 </a>
                             </td>

@@ -22,7 +22,7 @@ qesModule.controller('personManageCtrl', [
         //配置分页基本参数
         $scope.paginationConf = {
             currentPage: 1,
-            itemsPerPage: 5,
+            itemsPerPage: 10,
             perPageOptions: [5, 10, 20]
         };
         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', search);

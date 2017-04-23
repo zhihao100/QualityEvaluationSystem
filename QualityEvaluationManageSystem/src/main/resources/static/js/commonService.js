@@ -51,3 +51,11 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
         return modalInstance;
     }
 }]);
+qesModule.service("scoreRule", function ($http) {
+    //请求课程成绩加分规则数据
+    return {
+        scoreRule: function () {
+            return $http.get("data/scoreRule.json");
+        }
+    }
+});
