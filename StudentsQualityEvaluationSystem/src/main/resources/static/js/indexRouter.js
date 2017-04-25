@@ -12,7 +12,7 @@ sqesModule.config(function ($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'index.html'
                 },
-                'home@index': {
+                'home': {
                     templateUrl: 'tpls/home.html',
                     controller: 'indexCtrl'
                 }

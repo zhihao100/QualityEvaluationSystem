@@ -1,0 +1,36 @@
+.head {
+    box-shadow: 0px 1px 10px 0px rgba(50, 50, 50, 0.2);
+    height: 68px;
+}
+
+.head-logo {
+    margin: 14px 0;
+}
+
+.head-title {
+    margin-top: 10px;
+    border-left: 1px solid #999
+}
+
+.head-title h3 {
+    color: #3598dc;
+    font-weight: bold;
+    font-family: "Microsoft YaHei UI Light";
+    margin-top: 14px
+}
+
+.dropdown {
+    margin-right: 15px;
+    height: 68px;
+}
+
+.dropdown > a:hover {
+    opacity: 0.7
+}
+
+.dropdown > a .username {
+    color: #7f96ac;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+}
