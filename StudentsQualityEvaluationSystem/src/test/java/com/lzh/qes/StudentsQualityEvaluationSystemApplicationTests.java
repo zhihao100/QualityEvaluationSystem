@@ -1,4 +1,4 @@
-package com.lzh;
+package com.lzh.qes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
