@@ -30,6 +30,11 @@ public class Student {
     @NotNull
     private String studentNumber;
     /**
+     * 学生登录密码
+     */
+    @NotBlank
+    private String studentPassword;
+    /**
      * 学生性别
      */
     @NotNull
@@ -77,6 +82,14 @@ public class Student {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public String getStudentPassword() {
+        return studentPassword;
+    }
+
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
     }
 
     public Integer getGender() {

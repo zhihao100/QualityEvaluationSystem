@@ -1,13 +1,14 @@
 package com.lzh.qes.config;
 
 import com.lzh.qes.dao.ManagerDao;
+import com.lzh.qes.bean.Manager;
+import com.lzh.qes.enums.IsEnableState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.lzh.qes.enums.IsEnableState;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String managername) throws UsernameNotFoundException {
-        com.lzh.qes.bean.Manager manager = managerDao.findByManagerName(managername);
+        Manager manager = managerDao.findByManagerName(managername);
         if (manager.getManagerState().equals(IsEnableState.停用)) {
             return null;
         }

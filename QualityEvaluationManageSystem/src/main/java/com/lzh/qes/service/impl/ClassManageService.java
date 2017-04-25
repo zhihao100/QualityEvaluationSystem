@@ -1,12 +1,12 @@
 package com.lzh.qes.service.impl;
 
 import com.lzh.qes.bean.ClassManage;
-import com.lzh.qes.dao.ClassManageDao;
 import com.lzh.qes.dao.InstituteDao;
+import com.lzh.qes.dao.ClassManageDao;
 import com.lzh.qes.dao.MajorDao;
 import com.lzh.qes.modal.vo.ClassManageVO;
-import com.lzh.qes.search.PageList;
 import com.lzh.qes.service.IClassManageService;
+import com.lzh.qes.search.PageList;
 import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;

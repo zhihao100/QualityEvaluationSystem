@@ -2,9 +2,9 @@ package com.lzh.qes.controller;
 
 import com.lzh.qes.bean.ClassManage;
 import com.lzh.qes.modal.vo.ClassManageVO;
-import com.lzh.qes.search.PageList;
 import com.lzh.qes.service.IClassManageService;
 import com.lzh.qes.utils.PageUtils;
+import com.lzh.qes.search.PageList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

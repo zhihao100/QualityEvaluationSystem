@@ -1,14 +1,14 @@
 package com.lzh.qes.service.impl;
 
+import com.lzh.qes.dao.LoginHistoryDao;
+import com.lzh.qes.enums.LoginPerson;
 import com.lzh.qes.bean.LoginHistory;
 import com.lzh.qes.bean.Manager;
-import com.lzh.qes.dao.LoginHistoryDao;
 import com.lzh.qes.dao.ManagerDao;
-import com.lzh.qes.enums.LoginPerson;
 import com.lzh.qes.modal.vo.ManagerVO;
-import com.lzh.qes.search.PageList;
 import com.lzh.qes.service.IInstituteManageService;
 import com.lzh.qes.service.IManagerService;
+import com.lzh.qes.search.PageList;
 import com.lzh.qes.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
