@@ -4,11 +4,11 @@
 }
 
 .head-logo {
-    margin: 14px 0;
+    margin: 12px 0;
 }
 
 .head-title {
-    margin-top: 10px;
+    margin-top: 8px;
     border-left: 1px solid #999
 }
 
@@ -16,7 +16,7 @@
     color: #3598dc;
     font-weight: bold;
     font-family: "Microsoft YaHei UI Light";
-    margin-top: 14px
+    margin-top: 12px
 }
 
 .dropdown {
@@ -33,4 +33,14 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
+}
+
+.head .nav-title {
+    margin-top: 10px;
+    font-family: "Microsoft YaHei UI";
+    font-size: 20px;
+}
+
+.home {
+    margin-top: 68px;
 }

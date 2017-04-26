@@ -26,7 +26,7 @@
 <body ng-controller="indexCtrl">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER INNER -->
-<div class="navbar  navbar-fixed-top row head">
+<div class="row navbar navbar-fixed-top head">
     <div class="col-md-4">
         <!-- BEGIN LOGO -->
         <div class="col-md-2 head-logo">
@@ -40,7 +40,27 @@
         </div>
     </div>
     <div class="col-md-8">
+        <nav class="navigation col-md-6 nav-title">
         <ul class="nav navbar-nav pull-right">
+            <li class="active"><a href="#">首页</a></li>
+            <li class="dropdown"><a href="#" data-toggle="dropdown" data-hover="dropdown"
+                                    data-close-others="true">素测申请</a>
+                <ul class="dropdown-menu dropdown-menu-default">
+                    <li>
+                        <a>思想道德素质</a>
+                        <a>专业素质</a>
+                        <a>科技创新素质</a>
+                        <a>人文管理素质素质</a>
+                        <a>身体素质</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#">素测管理</a></li>
+            <li><a href="#">通知公告</a></li>
+        </ul>
+
+        </nav>
+        <ul class="nav navbar-nav  pull-right">
             <li class="dropdown">
                 <a href="javascript:;" data-toggle="dropdown" data-hover="dropdown"
                    data-close-others="true">
@@ -60,7 +80,8 @@
 </div>
 <!-- END HEADER INNER -->
 <!-- END HEADER -->
-<div class="clearfix"></div>
+<div class="row">
 <div ui-view="home"></div>
+</div>
 </body>
 </html>
