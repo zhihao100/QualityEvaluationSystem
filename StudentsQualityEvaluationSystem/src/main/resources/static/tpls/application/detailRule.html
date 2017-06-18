@@ -1,0 +1,51 @@
+<h3>{{mainRuleName}}</h3>
+<div class="nav navbar">
+    <ul class="breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">素测申请</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">{{mainRuleName}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div class="table-container ng-scope" id="datatable_ajax">
+                    <table class="table table-striped table-bordered table-hover table-btns">
+                        <thead>
+                        <tr role="row" class="heading">
+                            <th width="10%">序号</th>
+                            <th width="10%">细则编号</th>
+                            <th width="40%">细则名称</th>
+                            <th width="40%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" ng-repeat="detailRule in detailRules">
+                            <td ng-bind="$index+1+paginationConf.itemsPerPage*(paginationConf.currentPage-1)"></td>
+                            <td ng-bind="detailRule.ruleId"></td>
+                            <td ng-bind="detailRule.ruleName"></td>
+                            <td>
+                                <a ng-href="#/itemRule/{{detailRule.ruleId}}/{{detailRule.mainRuleId}}"
+                                   class="btn btn-xs default btn-editable"
+                                   ng-if="detailRule.ruleState=='启用'">
+                                    <i class="fa fa-edit"></i> 细则所含项目
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

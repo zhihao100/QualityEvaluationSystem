@@ -1,0 +1,20 @@
+<style>
+    .modal {
+        top: 100px;
+    }
+</style>
+<div class=".modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true" ng-click="cancel()">×
+        </button>
+        <h3 class="modal-title" data-ng-bind='results.title'></h3>
+    </div>
+    <div class="modal-body" style="text-align:center">
+        <span data-ng-bind='results.msg'></span>
+    </div>
+    <div class="modal-footer" style="text-align:center">
+        <button class="btn btn-primary" type="button" data-ng-click="ok()">确认</button>
+        <button class="btn" type="button" data-ng-click="cancel()">取消</button>
+    </div>
+</div>

@@ -43,6 +43,10 @@ public class PageUtils {
      * 细则
      */
     private DetailRule detailRule;
+    /**
+     * 申请
+     */
+    private Application application;
 
 
     public int getCurrentPage() {
@@ -115,5 +119,13 @@ public class PageUtils {
 
     public void setDetailRule(DetailRule detailRule) {
         this.detailRule = detailRule;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
     }
 }

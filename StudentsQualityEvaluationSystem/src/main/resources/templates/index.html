@@ -18,8 +18,13 @@
     <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="framework/ui-bootstrap-tpls-0.11.0.js"></script>
     <script type="text/javascript" src="js/indexRouter.js"></script>
+    <script type="text/javascript" src="js/commonService.js"></script>
     <script type="text/javascript" src="js/indexController.js"></script>
+    <script type="text/javascript" src="js/applicationRouter.js"></script>
+    <script type="text/javascript" src="js/applicationController.js"></script>
+    <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="framework/tm.pagination.js"></script>
 </head>
 <!-- BEGIN BODY -->
@@ -40,23 +45,21 @@
         </div>
     </div>
     <div class="col-md-8">
-        <nav class="navigation col-md-6 nav-title">
-        <ul class="nav navbar-nav pull-right">
+        <nav class="navigation col-md-8 nav-title">
+            <ul class="nav navbar-nav">
             <li class="active"><a href="#">首页</a></li>
             <li class="dropdown"><a href="#" data-toggle="dropdown" data-hover="dropdown"
                                     data-close-others="true">素测申请</a>
                 <ul class="dropdown-menu dropdown-menu-default">
-                    <li>
-                        <a>思想道德素质</a>
-                        <a>专业素质</a>
-                        <a>科技创新素质</a>
-                        <a>人文管理素质素质</a>
-                        <a>身体素质</a>
+                    <li ng-repeat="mainRule in mainRules">
+                        <a ui-sref="{{mainRule.url}}({mainRuleId:mainRule.ruleId,mainRuleName:mainRule.ruleName})">
+                            {{mainRule.ruleName}}
+                        </a>
                     </li>
                 </ul>
             </li>
             <li><a href="#">素测管理</a></li>
-            <li><a href="#">通知公告</a></li>
+                <li><a href="#">个人资料</a></li>
         </ul>
 
         </nav>
@@ -65,7 +68,7 @@
                 <a href="javascript:;" data-toggle="dropdown" data-hover="dropdown"
                    data-close-others="true">
                     <img alt="" class="img-circle" src="assets/global/img/avatar.png"/>
-                    <span class="username">liuzhihao</span>
+                    <span class="username" ng-bind="user.studentName"></span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-default">
@@ -80,8 +83,8 @@
 </div>
 <!-- END HEADER INNER -->
 <!-- END HEADER -->
-<div class="row">
-<div ui-view="home"></div>
+<div class="container home">
+    <div ui-view=""></div>
 </div>
 </body>
 </html>

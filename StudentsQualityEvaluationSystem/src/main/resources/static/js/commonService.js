@@ -1,15 +1,15 @@
 /**
  * Created by liuzhihao on 2017/4/11.
  */
-qesModule.factory("userService", ['$http', function ($http) {
+sqesModule.factory("userService", ['$http', function ($http) {
     //登录进入，获取用户名显示
     return {
         user: function () {
-            return $http.post("getCurrentManager");
+            return $http.post("getCurrentUser");
         }
     };
 }]);
-qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', function ($modal, $http, $location, $state) {
+sqesModule.service("sqesAlert", ['$modal', '$http', '$location', '$state', function ($modal, $http, $location, $state) {
     /*消息提示模式窗口*/
     this.show = function (config, addressTo) {
         var DEFAULT = {
@@ -19,10 +19,10 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
                 // 确认按钮
                 $scope.ok = function () {
                     $modalInstance.close();
-                    if ($scope.results.msg == "新增成功" || $scope.results.msg == "修改成功") {
+                    if ($scope.results.msg == "申请成功" || $scope.results.msg == "修改成功") {
                         $location.url("/" + $scope.results.doNext);
                     }
-                    if ($scope.results.msg == "新增完成" || $scope.results.msg == "修改完成" || $scope.results.msg == "审核完成") {
+                    if ($scope.results.msg == "撤回成功" || $scope.results.msg == "修改完成") {
                         $state.go($scope.results.doNext, {}, {reload: true});
                     }
                 };
@@ -51,7 +51,7 @@ qesModule.service("qemsAlert", ['$modal', '$http', '$location', '$state', functi
         return modalInstance;
     }
 }]);
-qesModule.service("scoreRule", function ($http) {
+sqesModule.service("scoreRule", function ($http) {
     //请求课程成绩加分规则数据
     return {
         scoreRule: function () {

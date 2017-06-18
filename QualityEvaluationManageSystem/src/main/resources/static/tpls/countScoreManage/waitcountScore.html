@@ -1,0 +1,125 @@
+<h3 class="page-title">待审核申请</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li class="active">
+            <i class="fa fa-home"></i>
+            <a ui-sref="home">首页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">计分管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0)">待审核申请</a>
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase"> 搜索 </span>&nbsp;
+                    <span class="caption-helper"> 输入搜索信息 </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form class="form-horizontal searchbox" class="form-horizontal searchbox">
+                    <div class="form-body">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">申请人：</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" ng-model="application.studentName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">项目名称：</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" ng-model="application.itemName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">项目所属大类：</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="loan.distillery"
+                                            ng-options="distillery.distilleryName for distillery in allDistillerys"
+                                            required="">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">项目所属细则：</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" data-placeholder="请选择" ng-model="loan.distillery"
+                                            ng-options="distillery.distilleryName for distillery in allDistillerys"
+                                            required="">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 txtcenter">
+                                <button type="button" class="btn blue" ng-click="search()">
+                                    <i class="fa fa-search"></i> 查询
+                                </button>
+                                <button class="btn default" type="reset" ng-click="reset()" id="reset">
+                                    <i class="fa fa-eraser"></i> 清空
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+                <div class="table-container ng-scope" id="datatable_ajax">
+                    <table class="table table-striped table-bordered table-hover table-btns">
+                        <thead>
+                        <tr role="row" class="heading">
+                            <th width="7%">序号</th>
+                            <th width="15%">申请人</th>
+                            <th width="20%">项目名称</th>
+                            <th width="20%">项目所属细则</th>
+                            <th width="20%">项目所属大类</th>
+                            <th width="18%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" ng-repeat="application in applications">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="application.application.studentName"></td>
+                            <td ng-bind="application.itemName"></td>
+                            <td><span ng-bind="application.detailRuleName"></span></td>
+                            <td><span ng-bind="application.mainRuleName"></span></td>
+                            <td>
+                                <a ng-click="pass(application.application.applicationId)"
+                                   class="btn btn-xs default btn-editable">
+                                    <i class="fa fa-edit"></i> 通过
+                                </a>
+                                <a ng-click="refuse(application.application.applicationId)"
+                                   class="btn btn-xs default btn-editable">
+                                    <i class="fa fa-edit"></i>拒绝
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
